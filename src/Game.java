@@ -26,9 +26,10 @@ public class Game {
             
         gs[0].setFullScreenWindow(frame);
        
-        frame.setResizable(false);
+//        frame.setResizable(false);
  //       frame.setUndecorated(true);
-        frame.setAlwaysOnTop(true);
+//        frame.setAlwaysOnTop(true);
+		frame.setVisible(false);
 
 //        frame.setBounds(0, 0, screenSize.width, screenSize.height);
 
