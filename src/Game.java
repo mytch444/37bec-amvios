@@ -25,13 +25,13 @@ public class Game {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             
         gs[0].setFullScreenWindow(frame);
- /*       
-            frame.setResizable(false);
-            frame.setUndecorated(true);
-            frame.setAlwaysOnTop(true);
+       
+        frame.setResizable(false);
+ //       frame.setUndecorated(true);
+        frame.setAlwaysOnTop(true);
 
-            frame.setBounds(0, 0, screenSize.width, screenSize.height);
-*/
+//        frame.setBounds(0, 0, screenSize.width, screenSize.height);
+
         // Create a custom panel.
 		GamePanel panel = new GamePanel(frame.getWidth(), frame.getHeight());
         panel.setPreferredSize(screenSize);
