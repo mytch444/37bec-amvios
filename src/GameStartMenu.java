@@ -23,6 +23,8 @@ public class GameStartMenu implements KeyListener {
         metrics = p.getGraphics().getFontMetrics(p.getFont());
         
         message = new String[] {
+            "37BEC-AMVIOUS -- Game Of The Gods",
+                "",
                 "This is by general concencus of the population of me considered",
                 "the best game ever created by a mortal.",
                 "",

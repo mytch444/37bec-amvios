@@ -36,7 +36,7 @@ public class GameButton implements MouseListener {
         g.fillRect(x, y, w, h);
 
         g.setColor(Color.black);
-        g.drawString(name, x + w / 2 - metrics.stringWidth(name) / 2, y + h - 5);
+        g.drawString(name, x + w / 2 - metrics.stringWidth(name) / 2, y + metrics.getHeight() + 5);
     }
 
     // If clicked then set the panel mode.

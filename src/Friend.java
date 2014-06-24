@@ -26,7 +26,7 @@ public class Friend extends Part {
         yv = rand.nextInt(10) - 5;
         w = 64;
         h = 64;
-        lives = 5;
+        lives = 3;
 
         hit = 0;
         showHit = false;

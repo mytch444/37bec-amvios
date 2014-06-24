@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.image.*;
+import java.io.*;
 
 public class GamePanel extends JPanel {
 
@@ -35,7 +36,15 @@ public class GamePanel extends JPanel {
         // Set the bounds and background.
 		setBounds(0, 0, w, h);
         setBackground(Color.black);
-        font = new Font("monospaced", Font.PLAIN, 16);
+
+        try {
+            InputStream is = getClass().getResourceAsStream("/font/UbuntuMono-R.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(16f);
+        } catch (Exception e) {
+            System.out.println("Using default monospace font.");
+            font = new Font("monospaced", Font.PLAIN, 16);
+        }
+
 
         // Create and start the thread.
         loop = new UpdaterThread(this);
