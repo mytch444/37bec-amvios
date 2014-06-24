@@ -20,7 +20,9 @@ public class HighscoreBox implements KeyListener {
         panel = p;
 
         score = s;
-        name = new char[64];;
+        name = new char[64];
+        for (int i = 0; i < 64; i++)
+            name[i] = '\0';
         cursor = 0;
       
         metrics = p.getGraphics().getFontMetrics(p.getFont());
@@ -82,7 +84,10 @@ public class HighscoreBox implements KeyListener {
         String mess = "Highscore! Enter your name below:";
         g.drawString(mess, x + w / 2 - metrics.stringWidth(mess) / 2, y + h / 2 - metrics.getHeight() / 3 * 2);
 
-        int lx = x + w / 2 - metrics.stringWidth(new String(name)) / 2;
+        int len;
+        for (len = 1; name[len] != '\0'; len++);
+
+        int lx = x + w / 2 - metrics.stringWidth(new String(name, 0, len)) / 2;
         int ly = y + h / 2 + metrics.getHeight() / 3 * 2;
         g.drawString(new String(name), lx, ly);
         g.drawString("_", lx + metrics.stringWidth(new String(name, 0, cursor)), ly);
@@ -173,7 +178,7 @@ public class HighscoreBox implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_LEFT && cursor > 0) {
             cursor--;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && name[cursor + 1] != '\0') {
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && name[cursor] != '\0') {
             cursor++;
         }
         panel.repaint();
