@@ -31,11 +31,11 @@ public class Enemy extends Part {
 
         color = bg;
 
-        int px = x;
-        int py = y;
-        int pw = 40;
-        int ph = 40;
-        int lw = 0;
+        double px = x;
+        double py = y;
+        double pw = 40;
+        double ph = 40;
+        double lw = 0;
 
         h = w = 0;
         parts = new ArrayList<EnemyPart>();
@@ -85,14 +85,15 @@ public class Enemy extends Part {
     }
 
     public boolean collides(Player p) {
+        boolean hit = false;
         for (int i = 0; i < parts.size(); i++) {
             EnemyPart e = parts.get(i);
             if (e.collides(p)) {
                 parts.remove(e);
-                return true;
+                hit = true;
             }
         }
-        return false;
+        return hit;
     }
 
     public boolean collides(Bullet b) {

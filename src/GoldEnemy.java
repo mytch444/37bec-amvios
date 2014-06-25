@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class GoldEnemy extends Enemy {
 
-    int maxW, maxH, minW, minH;
+    double maxW, maxH, minW, minH;
 
 	public GoldEnemy(GameControler c) {
         super(c, "*\n", new Color(255, 255, 0));
@@ -42,9 +42,5 @@ public class GoldEnemy extends Enemy {
         if (parts.size() == 0) controler.removeOther(this);
 
         return hit;
-    }
-
-    public void remove(EnemyPart p) {
-        parts.remove(p);
     }
 }

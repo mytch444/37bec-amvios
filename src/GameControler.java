@@ -171,10 +171,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public Enemy newEnemy() {
         Enemy e;
-        switch (rand.nextInt(4)) {
+        switch (rand.nextInt(10)) {
             case 1: e = new ExplosiveBulletEnemy(this);
                     break;
-            case 2: e = new GoldEnemy(this);
+            case 2: e = new ExplosiveBulletEnemy(this);
+                    break;
+            case 3: e = new GoldEnemy(this);
                     break;
             default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
                      break;
@@ -207,16 +209,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         player.mouseMoved(e);
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == ' ') panel.setMode(GamePanel.PAUSE);
+    }
+
     public void keyPressed(KeyEvent e) {
         if (paused) return;
         player.keyPressed(e);
     }
     public void keyReleased(KeyEvent e) {
-        if (paused) {
-            if (e.getKeyChar() == ' ') panel.setMode(GamePanel.PAUSE);
-            else return;
-        }
+        if (paused) return;
         player.keyReleased(e);
     }
 }

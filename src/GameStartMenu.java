@@ -23,19 +23,19 @@ public class GameStartMenu implements KeyListener {
         metrics = p.getGraphics().getFontMetrics(p.getFont());
         
         message = new String[] {
-            "37BEC-AMVIOS -- Game Of The Gods",
+            "37Bec-Amvious",
                 "",
                 "This is by general consensus of the population of me considered",
                 "the best game ever created by a mortal.",
                 "",
                 "Don't let any SQUARES get past you or they will do horrible things",
-                "from behind you.",
+                "behind you.",
                 "",
                 "Move up and down with <w> and <s>. Aim and shoot with that annoyingly",
                 "useless thing called a mouse.",
                 "",
-                "You can also stop them by blocking them with yourself, this will",
-                "gain you 10 times as many points as if you shot them but will", 
+                "You can also stop them by placing yourself between them and the end,",
+                "this will gain you 10 times as many points as if you shot them but will", 
                 "immobilise you for a short time.",
                 "",
                 "DON'T DIE.",
@@ -58,7 +58,6 @@ public class GameStartMenu implements KeyListener {
 
         x = panel.getWidth() / 2 - w / 2;
         y = panel.getHeight() / 2 - h / 2;
-
 	}
 
 	public void paint(Graphics g) {

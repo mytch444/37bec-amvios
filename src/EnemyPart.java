@@ -9,11 +9,11 @@ import java.lang.Math;
 public class EnemyPart {
 
     Enemy parent;
-    int x, y, w, h;
+    double x, y, w, h;
     double xv, yv;
     Color fgcolor, bgcolor;
 
-    public EnemyPart(Enemy p, int w, int h, int x, int y, double xv, double xy, Color fg, Color bg) {
+    public EnemyPart(Enemy p, double w, double h, double x, double y, double xv, double xy, Color fg, Color bg) {
         parent = p;
         this.w = w;
         this.h = h;
@@ -27,9 +27,9 @@ public class EnemyPart {
 
 	public void paint(Graphics g) {
         g.setColor(bgcolor);
-        g.fillRect(x, y, w, h);
+        g.fillRect((int) x, (int) y, (int) w, (int) h);
         g.setColor(fgcolor);
-        g.drawRect(x, y, w, h);
+        g.drawRect((int) x, (int) y, (int) w, (int) h);
 	}
 
     public void update() {
@@ -47,17 +47,17 @@ public class EnemyPart {
         return false;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getWidth() { return w; }
-    public int getHeight() { return h; }
+    public double getX() { return x; }
+    public double getY() { return y; }
+    public double getWidth() { return w; }
+    public double getHeight() { return h; }
     public double getXV() { return xv; }
     public double getYV() { return yv; }
 
-    public void setX(int x) { this.x = x; }
-    public void setY(int x) { this.y = x; }
-    public void setWidth(int x) { this.w = x; }
-    public void setHeight(int x) { this.h = x; }
+    public void setX(double x) { this.x = x; }
+    public void setY(double x) { this.y = x; }
+    public void setWidth(double x) { this.w = x; }
+    public void setHeight(double x) { this.h = x; }
     public void setXV(double v) { xv = v; }
     public void setYV(double v) { yv = v; }
 }

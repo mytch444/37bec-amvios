@@ -43,10 +43,10 @@ public class Player extends Part {
 	public void paint(Graphics g1) {
         Graphics2D g = (Graphics2D) g1;
 
-        g.rotate(angle, x, y);
-        if (showHit) g.drawImage(imageHit, x - w / 2, y - h / 2, null);
-        else g.drawImage(image, x - w / 2, y - h / 2, null);
-        g.rotate(-angle, x, y);
+        g.rotate(angle, (int) x, (int) y);
+        if (showHit) g.drawImage(imageHit, (int) (x - w / 2), (int) (y - h / 2), null);
+        else g.drawImage(image, (int) (x - w / 2), (int) (y - h / 2), null);
+        g.rotate(-angle, (int) x, (int) y);
 	}
 
     public void update() {

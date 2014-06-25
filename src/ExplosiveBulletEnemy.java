@@ -21,7 +21,6 @@ public class ExplosiveBulletEnemy extends Enemy {
     public boolean collides(Bullet b) {
         if (super.collides(b)) {
             controler.givePlayerBullet(new ExplosiveBullet(controler));
-
             return true;
         }
         return false;

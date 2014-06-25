@@ -40,8 +40,8 @@ public class Friend extends Part {
 	}
 
 	public void paint(Graphics g) {
-        if (showHit) g.drawImage(imageHit, x - w / 2, y - h / 2, null);
-        else g.drawImage(image, x - w / 2, y - h / 2, null);
+        if (showHit) g.drawImage(imageHit, (int)(x - w / 2), (int) (y - h / 2), null);
+        else g.drawImage(image, (int) (x - w / 2), (int) (y - h / 2), null);
 	}
 
     public void update() {

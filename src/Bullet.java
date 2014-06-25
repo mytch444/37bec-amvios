@@ -10,12 +10,12 @@ public class Bullet extends Part {
         color = new Color(255, 0, 255);
     }
 
-	public Bullet(GameControler c, int x, int y, double angle) {
+	public Bullet(GameControler c, double x, double y, double angle) {
         this(c);
         init(x, y, angle);
     }
 
-    public void init(int x, int y, double angle) {
+    public void init(double x, double y, double angle) {
         this.x = x;
         this.y = y;
         xv = -SPEED * Math.cos(angle);
@@ -24,7 +24,7 @@ public class Bullet extends Part {
 
 	public void paint(Graphics g) {
         g.setColor(color);
-        g.drawLine((int) x, (int) y, (int) (x + xv), (int) (y + yv));
+        g.drawLine((int) x, (int) y, (int) (x - xv), (int) (y - yv));
 	}
 
     public void update() {

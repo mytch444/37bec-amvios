@@ -13,7 +13,7 @@ public class HighscoreMenu {
     GamePanel panel;
     ArrayList<String[]> board;
     int x, y, w, h;
-    String head;
+    String head, foot;
     FontMetrics metrics;
 
 	public HighscoreMenu(GamePanel p) {
@@ -22,6 +22,7 @@ public class HighscoreMenu {
         board = new ArrayList<String[]>(); // The highscores.
         
         head = "Highscores";
+        foot = "Click <New Game> for the obvious result.";
     
         metrics = p.getGraphics().getFontMetrics(p.getFont());
         h = 20;
@@ -58,6 +59,7 @@ public class HighscoreMenu {
         g.drawRect(x, y - metrics.getHeight() * 3, w, h + metrics.getHeight() * 3);
 
         g.drawString(head, x + w / 2 - metrics.stringWidth(head) / 2, y - metrics.getHeight() / 2 * 3);
+        g.drawString(foot, x + w / 2 - metrics.stringWidth(foot) / 2, y + h - metrics.getHeight() / 2);
             
         for (int i = 0; i < board.size(); i++) {
             String name = board.get(i)[0];
