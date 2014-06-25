@@ -1,16 +1,37 @@
-/*
- * The target you must click repeatidly to flip some bits that represent your worth.
- */
-
 import java.awt.event.*;
 import java.awt.*;
 import java.lang.Math;
 
 public class ExplosiveBullet extends Bullet {
-    
-    public ExplosiveBullet(GameControler c) {
+   
+    int more;
+
+    public ExplosiveBullet(GameControler c, int m) {
         super(c);
         color = new Color(255, 0, 0);
+        more = m;
+    }
+
+    public ExplosiveBullet(GameControler c) {
+        this(c, 5);
+    }
+
+    public void init(int x, int y, double angle) {
+        super.init(x, y, angle);
+        System.out.println("inited");
+/*        if (more > 0) {
+            System.out.println("Gave another");
+        }
+        more = 0;
+*/
+    }
+
+    public void update() {
+        super.update();
+
+        if (more > 0)
+            controler.givePlayerBullet(new ExplosiveBullet(controler, more - 1));
+        more = 0;
     }
 
     public void hitSomething() {

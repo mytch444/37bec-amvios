@@ -174,6 +174,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         switch (rand.nextInt(4)) {
             case 1: e = new ExplosiveBulletEnemy(this);
                     break;
+            case 2: e = new GoldEnemy(this);
+                    break;
             default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
                      break;
         }

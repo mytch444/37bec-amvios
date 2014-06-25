@@ -33,12 +33,8 @@ public class Player extends Part {
         showHit = false;
 
         try {
-/*            image = ImageIO.read(new File("images/player.png"));
-            imageHit = ImageIO.read(new File("images/player_hit.png")); */
-
             image = ImageIO.read(getClass().getResourceAsStream("/images/player.png"));
             imageHit = ImageIO.read(getClass().getResourceAsStream("/images/player_hit.png"));
-
         } catch (Exception e) {
             e.printStackTrace();
         }

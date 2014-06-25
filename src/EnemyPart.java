@@ -53,7 +53,11 @@ public class EnemyPart {
     public int getHeight() { return h; }
     public double getXV() { return xv; }
     public double getYV() { return yv; }
- 
-    public void setXV(double v) { xv = v; };
-    public void setYV(double v) { yv = v; };
+
+    public void setX(int x) { this.x = x; }
+    public void setY(int x) { this.y = x; }
+    public void setWidth(int x) { this.w = x; }
+    public void setHeight(int x) { this.h = x; }
+    public void setXV(double v) { xv = v; }
+    public void setYV(double v) { yv = v; }
 }
