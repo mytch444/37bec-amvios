@@ -75,8 +75,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             end = true;
         }
 
-        if (end) paused = true;
-        if (paused) {
+        if (paused || end) {
             g.setColor(Color.white);
             String message = "Paused";
             if (end) message = "Game Over";
@@ -84,6 +83,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             return;
         }
 
+    }
+
+    public void update() {
+        if (paused || end) return;
         player.update();
         
         if (rand.nextInt(1000) == 0) others.add(new Friend(this));
@@ -97,8 +100,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         
         for (int i = 0; i < others.size(); i++) {
             Part p = others.get(i);
+            if (!p.isAlive()) {
+                removeOther(p);
+                continue;
+            }
             p.update();
-           
+
             if (p.collides(player)) {
                 player.hit();
                 score += SCORE_SHOT * 10;

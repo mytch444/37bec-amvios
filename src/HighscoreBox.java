@@ -159,6 +159,7 @@ public class HighscoreBox implements KeyListener {
 
             // Change the mode to view the highscores
             panel.setMode(GamePanel.HIGH_SCORE_MENU);
+            highscore = false; // Stops it from showing the box.
         } catch (Exception e) {
             System.out.println("An error occured when trying to save your score");
             e.printStackTrace();

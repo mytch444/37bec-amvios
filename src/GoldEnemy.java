@@ -1,7 +1,5 @@
-import java.awt.*;
-import java.util.Random;
-import java.lang.Math;
-import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class GoldEnemy extends EnemyPart {
 
@@ -18,6 +16,15 @@ public class GoldEnemy extends EnemyPart {
         w = maxW;
         h = maxW;
 	}
+
+    public boolean collides(Player p) {
+        if (collidesSquare(p)) {
+            controler.removeOther(this);
+            return true;
+        }
+
+        return false;
+    }
 
     public boolean collides(Bullet b) {
         boolean hit = false;

@@ -17,7 +17,7 @@ public class Friend extends Part {
     boolean showHit;
 
 	public Friend(GameControler c) {
-        super(c);
+        super(c, null);
         
         // Give it a random location on the screen and a random velocity.
         x = rand.nextInt(controler.getWidth()) - controler.getWidth();
@@ -54,7 +54,7 @@ public class Friend extends Part {
         x += xv;
         y += yv;
 
-        if (y + h > controler.getHeight() || y < 0) yv = -yv;
+        if ((y + h > controler.getHeight() && yv > 0) || (y < 0 && yv < 0)) yv = -yv;
 
         if (x > controler.getWidth()) {
             controler.addScore(GameControler.SCORE_SHOT * 100);

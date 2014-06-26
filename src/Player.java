@@ -10,7 +10,6 @@ public class Player extends Part {
 
     Bullet nextBullet;
     double angle;
-    int moving;
     int hit;
     boolean showHit;
 
@@ -20,13 +19,13 @@ public class Player extends Part {
     BufferedImage image, imageHit; 
 
 	public Player(GameControler c) {
-        super(c);
+        super(c, null);
         angle = 0;
-        moving = 0;
         shooting = false;
         shooting_delay = SHOOTING_DELAY;
         hit = 0;
         showHit = false;
+        yv = 0;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/images/player.png"));
@@ -58,14 +57,10 @@ public class Player extends Part {
             return;
         } else showHit = false;
 
-        if (moving == 1) {
-            y += 5;
-            if (y > controler.getHeight()) y = controler.getHeight();
-        }
-        if (moving == -1) {
-            y -= 5;
-            if (y < 0) y = 0;
-        }
+        y += yv;
+        if (y < 0 && yv < 0) y = 0;
+        if (y > controler.getHeight() && yv > 0) y = controler.getHeight(); 
+        
         if (shooting && shooting_delay == 0) {
             if (nextBullet == null) 
                 nextBullet = new Bullet(controler, x, y, angle);
@@ -88,12 +83,12 @@ public class Player extends Part {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_S) moving = 1;
-        if (e.getKeyCode() == KeyEvent.VK_W) moving = -1;
+        if (e.getKeyCode() == KeyEvent.VK_S) yv = 5;
+        if (e.getKeyCode() == KeyEvent.VK_W) yv = -5;
     }
 
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) moving = 0;
+        if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) yv = 0;
     }
 
     public void mousePressed(MouseEvent e) {

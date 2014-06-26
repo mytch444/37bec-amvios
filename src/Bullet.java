@@ -6,8 +6,7 @@ public class Bullet extends Part {
     public double SPEED = 30;
 
     public Bullet(GameControler c) {
-        super(c);
-        color = new Color(255, 0, 255);
+        super(c, new Color(255, 0, 255));
     }
 
 	public Bullet(GameControler c, double x, double y, double angle) {

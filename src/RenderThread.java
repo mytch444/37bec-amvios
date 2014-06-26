@@ -1,9 +1,9 @@
-public class UpdaterThread extends Thread {
+public class RenderThread extends Thread {
 	GamePanel panel;
     boolean end;
-    long frameTime; 
+    long frameTime;
 
-	public UpdaterThread(GamePanel p, long t) {
+	public RenderThread(GamePanel p, long t) {
 		panel = p;
         frameTime = t;
 	}
@@ -19,8 +19,8 @@ public class UpdaterThread extends Thread {
             start = System.currentTimeMillis();
 
             // Repaint the panel.
-            panel.update();
-           
+            panel.repaint();
+            
             // Figure out how long it took to paint, if this is positive sleep for however long it takes to
             // keep the frames the same length. Helps with consistancy.
             time = frameTime - (System.currentTimeMillis() - start);

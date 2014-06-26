@@ -9,7 +9,7 @@ import java.io.*;
 public class Game {
     // Function to return the name and path of the highscores file.
     public static String HIGHSCORES_FILE() {
-        return System.getProperty("user.home") + "/.java_game";
+        return System.getProperty("user.home") + "/.37bec-amvios";
     }
 
     // Main method, this is called by java when the class is run. Fuck java forcing everything into a class.

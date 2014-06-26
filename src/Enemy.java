@@ -1,22 +1,17 @@
 import java.util.Random;
 import java.lang.Math;
-import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Color;
 
 public class Enemy extends Part {
     
-    public static String[] PATTERNS = {"***\n*\n*\n***\n", "*\n*\n*\n*\n", "***\n***\n***\n", "*\n", "*\n", "*\n", "***\n", "*\n**\n***\n**\n*\n"};
+    public static String[] PATTERNS = {"***\n*\n*\n***\n", "*\n*\n*\n*\n", "***\n***\n***\n", "*\n", "***\n", "*\n**\n***\n**\n*\n", "* * *\n * * \n* * *\n"};
 
-    ArrayList<EnemyPart> parts;
+    EnemyPart[] parts;
     boolean shot;
 
-    public Enemy(GameControler c, String pattern) {
-        this(c, pattern, Color.white);
-    }
-
-	public Enemy(GameControler c, String pattern, Color bg) {
-        super(c);
+	public Enemy(GameControler co, String pattern) {
+        super(co, Color.white);
         
         // Give it a random location on the screen and a random velocity.
         x = rand.nextInt(controler.getWidth()) - controler.getWidth() - 100;
@@ -25,34 +20,36 @@ public class Enemy extends Part {
         yv = rand.nextInt(10) - 5;
         shot = false;
 
-        color = bg;
+        double px, py, pw, ph;
+        int len = 0;
+        for (int i = 0; i < pattern.length(); i++) if (pattern.charAt(i) == '*') len++;
+        parts = new EnemyPart[len];
 
-        double px = x;
-        double py = y;
-        double pw = 40;
-        double ph = 40;
-        double lw = 0;
+        px = x;
+        py = y;
+        pw = 40;
+        ph = 40;
 
+        int i = 0;
         h = w = 0;
-        parts = new ArrayList<EnemyPart>();
-        for (int i = 0; i < pattern.length(); i++) {
-            if (pattern.charAt(i) == '\n') {
-                py += pw; 
-                px = x;
+        for (int c = 0; c < pattern.length(); c++) {
+            if (pattern.charAt(c) == '\n') {
+                py += ph; 
                 h += ph;
-                if (lw > w) w = lw;
-                lw = 0;
-            } else {
-                parts.add(new EnemyPart(controler, pw, ph, px, py, xv, yv, color)); 
-                px += pw;
-                lw += pw;
+                if (px - x > w) w = px - x;
+                px = x;
+                continue;
+            } else if (pattern.charAt(c) == '*') {
+                parts[i++] = new EnemyPart(controler, pw, ph, px, py, xv, yv, color); 
             }
+
+            px += pw;
         }
 	}
 
 	public void paint(Graphics g) {
-        for (int i = 0; i < parts.size(); i++)
-            parts.get(i).paint(g);
+        for (int i = 0; i < parts.length; i++)
+            parts[i].paint(g);
 	}
 
     public void update() {
@@ -61,64 +58,52 @@ public class Enemy extends Part {
             y += yv;
         }
 
-        for (int i = 0; i < parts.size(); i++) {
-            EnemyPart p = parts.get(i);
+        alive = false;
+        for (int i = 0; i < parts.length; i++) {
+            EnemyPart p = parts[i];
+            if (p.isAlive()) alive = true;
             p.update();
+        }
 
-            if (p.getX() > controler.getWidth()) {
-                remove(p);
-                controler.lowerLives();
-            }
-            
-            if (shot && ((p.getYV() > 0 && p.getY() + p.getHeight() > controler.getHeight()) || (p.getYV() < 0 && p.getY() < 0))) {
-                p.setYV(-p.getYV());
-            }
+        if (!alive) {
+            controler.addScore(controler.SCORE_SHOT * 2);
+            controler.removeOther(this);
         }
     }
 
     public boolean collides(Player p) {
-        boolean hit = false;
-        for (int i = 0; i < parts.size(); i++) {
-            EnemyPart e = parts.get(i);
+        for (int i = 0; i < parts.length; i++) {
+            EnemyPart e = parts[i];
             if (e.collides(p)) {
-                parts.remove(e);
-                hit = true;
+                controler.removeOther(this);
+                return true;
             }
         }
-        return hit;
+        return false;
     }
 
     public boolean collides(Bullet b) {
         boolean hit = false;
         boolean wasshot = shot;
-        for (int i = 0; i < parts.size(); i++) {
-            EnemyPart e = parts.get(i);
+        for (int i = 0; i < parts.length; i++) {
+            EnemyPart e = parts[i];
             if (e.collides(b)) {
                 shot = true;
                 e.hit();
-            //    parts.remove(e);
                 controler.addScore(controler.SCORE_SHOT);
                 hit = true;
-            }
+            }    
         }
 
         if (wasshot != shot) {
-            for (int i = 0; i < parts.size(); i++) {
-                EnemyPart e = parts.get(i);
+            for (int i = 0; i < parts.length; i++) {
+                EnemyPart e = parts[i];
                 e.setXV(rand.nextInt(5));
                 e.setYV(rand.nextInt(10) - 5);
+                e.setBounce(true);
             } 
-        }
-   
-        if (parts.size() == 0) {
-            controler.addScore(controler.SCORE_SHOT * 2);
-            controler.removeOther(this);
         }
 
         return hit;
-    }
-
-    public void remove(EnemyPart p) {
-        parts.remove(p);
     }
 }

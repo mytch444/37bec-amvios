@@ -10,6 +10,7 @@ import java.awt.image.*;
 import java.io.*;
 
 public class GamePanel extends JPanel {
+    public static int TIME = 1000 / 50;
 
     // Panel event codes would be a good name I suppose.
     public static int NEW_GAME = 0;
@@ -24,7 +25,8 @@ public class GamePanel extends JPanel {
     GameMenu menu;
   
     // A thread that will continue to update this panel every so often (60 times a second or so).
-    UpdaterThread loop;
+    UpdaterThread uloop;
+    RenderThread rloop;
 
     int mode;
     Font font;
@@ -47,20 +49,23 @@ public class GamePanel extends JPanel {
 
 
         // Create and start the thread.
-        loop = new UpdaterThread(this);
-        loop.start();
+        rloop = new RenderThread(this, TIME);
+        rloop.start();
+        uloop = new UpdaterThread(this, TIME);
+        uloop.start();
 
         mode = -1;
-	}
+    }
 
-    // Clear and draw depending on the state.
+    public void initPaint(Graphics g) {
+        g.setFont(font);
+        menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
+        setMode(NEW_GAME);
+    }
+
 	public void paintComponent(Graphics g) {
-        if (mode == -1) {
-            g.setFont(font);
-            menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
-            setMode(NEW_GAME);
-        }
-        
+        if (mode == -1) initPaint(g);
+
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -72,6 +77,11 @@ public class GamePanel extends JPanel {
         if (gsmenu != null)
             gsmenu.paint(g);
 	}
+
+    public void update() {
+        if (controler == null) return;
+        controler.update();
+    }
 
     public void setMode(int m) {
         mode = m;
@@ -111,13 +121,9 @@ public class GamePanel extends JPanel {
 
     // Call this to close the frame and exit the program.
     public void quit() {
-        loop.end();
+        rloop.end();
+        uloop.end();
         ((JFrame) SwingUtilities.getRoot(this)).dispose();
-    }
-
-    // A getter method for the thread.
-    public UpdaterThread thread() {
-        return loop;
     }
 
     public Font getFont() {

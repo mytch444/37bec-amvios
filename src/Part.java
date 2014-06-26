@@ -1,11 +1,7 @@
-/*
- * The target you must click repeatidly to flip some bits that represent your worth.
- */
-
-import java.awt.event.*;
-import java.awt.*;
 import java.lang.Math;
 import java.util.Random;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class Part {
 	GameControler controler;
@@ -13,9 +9,16 @@ public class Part {
     double xv, yv;
     Color color;
     Random rand;
+    boolean alive;
 
-	public Part(GameControler c) { controler = c; rand = new Random(); }
-	public void paint(Graphics g1) {}
+	public Part(GameControler co, Color c) { 
+        controler = co;
+        rand = new Random();
+        color = c;
+        alive = true; 
+    }
+
+	public void paint(Graphics g) {}
     public void update() {}
     public double getX() { return x; }
     public void setX(double x) { this.x = x; }
@@ -29,6 +32,7 @@ public class Part {
     public void setXV(double x) { xv = x; }
     public double getYV() { return yv; }
     public void setYV(double y) { yv = y; }
+    public boolean isAlive() { return alive; }
     public boolean collides(Player p) { return false; };
     public boolean collides(Bullet b) { return false; };
     public boolean collidesSquare(Part p) {
