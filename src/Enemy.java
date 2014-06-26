@@ -89,7 +89,7 @@ public class Enemy extends Part {
             EnemyPart e = parts[i];
             if (e.collides(b)) {
                 shot = true;
-                e.hit();
+                e.hit(b);
                 controler.addScore(controler.SCORE_SHOT);
                 hit = true;
             }    

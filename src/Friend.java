@@ -1,13 +1,8 @@
-/*
- * The target you must click repeatidly to flip some bits that represent your worth.
- */
-
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.Random;
-import java.lang.Math;
-import javax.imageio.*;
-import java.io.*;
+import javax.imageio.ImageIO;
 
 public class Friend extends Part {
     

@@ -9,7 +9,7 @@ import java.io.*;
 
 public class HighscoreBox implements KeyListener {
 
-    GamePanel panel;
+    GameControler controler;
     long score;
     char[] name;
     int cursor;
@@ -17,8 +17,8 @@ public class HighscoreBox implements KeyListener {
     FontMetrics metrics;
     boolean highscore;
 
-	public HighscoreBox(GamePanel p, long s) {
-        panel = p;
+	public HighscoreBox(GameControler c, long s) {
+        controler = c;
 
         score = s;
         name = new char[64];
@@ -26,12 +26,12 @@ public class HighscoreBox implements KeyListener {
             name[i] = '\0';
         cursor = 0;
       
-        metrics = p.getGraphics().getFontMetrics(p.getFont());
+        metrics = controler.getGraphics().getFontMetrics(controler.getPanel().getFont());
 
         h = metrics.getHeight() * 4;
         w = metrics.stringWidth(" ") * 70;
-        x = panel.getWidth() / 2 - w / 2;
-        y = panel.getHeight() / 2 - h / 2;
+        x = controler.getWidth() / 2 - w / 2;
+        y = controler.getHeight() / 2 - h / 2;
 
         highscore = true;
  
@@ -65,7 +65,7 @@ public class HighscoreBox implements KeyListener {
             if (num < 10) ishighscore = true;
             // If it is not a highscore then change to panel mode to view highscores.
             if (!ishighscore) {
-                panel.setMode(GamePanel.HIGH_SCORE_MENU);
+                controler.getPanel().setMode(GamePanel.HIGH_SCORE_MENU);
                 highscore = false;
                 return;
             }
@@ -74,9 +74,7 @@ public class HighscoreBox implements KeyListener {
         }
     
         // I am listening to EVERY KEY YOU PRESS!!!!!
-        panel.addKeyListener(this);
-        // ANY YOU ARE DEFINATALLY TALKING TO ME PUNK!!
-        panel.requestFocus(); 
+        controler.getPanel().addKeyListener(this);
 	}
 
 	public void paint(Graphics g) {
@@ -155,10 +153,10 @@ public class HighscoreBox implements KeyListener {
             out.close();
             tmp.delete(); // Delete the tmp file.
          
-            panel.removeKeyListener(this);
+            controler.getPanel().removeKeyListener(this);
 
             // Change the mode to view the highscores
-            panel.setMode(GamePanel.HIGH_SCORE_MENU);
+            controler.getPanel().setMode(GamePanel.HIGH_SCORE_MENU);
             highscore = false; // Stops it from showing the box.
         } catch (Exception e) {
             System.out.println("An error occured when trying to save your score");
@@ -174,7 +172,6 @@ public class HighscoreBox implements KeyListener {
             for (int i = name.length - 2; i > cursor; i--) name[i] = name[i - 1];
             name[cursor++] = e.getKeyChar();
         }
-        panel.repaint();
     }
    
     public void keyPressed(KeyEvent e) {
@@ -188,7 +185,6 @@ public class HighscoreBox implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT && name[cursor] != '\0') {
             cursor++;
         }
-        panel.repaint();
     }
 
     public void keyReleased(KeyEvent e) {}

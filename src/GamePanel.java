@@ -28,6 +28,8 @@ public class GamePanel extends JPanel {
     UpdaterThread uloop;
     RenderThread rloop;
 
+    long renderTime;
+
     int mode;
     Font font;
 
@@ -46,28 +48,27 @@ public class GamePanel extends JPanel {
             System.out.println("Using default monospace font.");
             font = new Font("monospaced", Font.PLAIN, 16);
         }
-
+        
+        mode = -1;
+        renderTime = 0;
 
         // Create and start the thread.
-        rloop = new RenderThread(this, TIME);
-        rloop.start();
         uloop = new UpdaterThread(this, TIME);
+        rloop = new RenderThread(this, TIME);
         uloop.start();
-
-        mode = -1;
+        rloop.start();
     }
 
-    public void initPaint(Graphics g) {
-        g.setFont(font);
-        menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
-        setMode(NEW_GAME);
-    }
+    public void paintComponent(Graphics g) {
+        long start = System.currentTimeMillis();
 
-	public void paintComponent(Graphics g) {
-        if (mode == -1) initPaint(g);
+        requestFocus();
 
-        g.setColor(Color.black);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        if (mode == -1) {
+            g.setFont(font);
+            menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
+            setMode(NEW_GAME);
+        }
 
         controler.paint(g);
         menu.paint(g);
@@ -76,6 +77,9 @@ public class GamePanel extends JPanel {
             hsmenu.paint(g); 
         if (gsmenu != null)
             gsmenu.paint(g);
+
+        g.dispose();
+        renderTime = System.currentTimeMillis() - start;
 	}
 
     public void update() {
@@ -128,5 +132,9 @@ public class GamePanel extends JPanel {
 
     public Font getFont() {
         return font;
+    }
+
+    public long renderTime() {
+        return renderTime;
     }
 }

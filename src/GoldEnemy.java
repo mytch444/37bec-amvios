@@ -34,7 +34,7 @@ public class GoldEnemy extends EnemyPart {
             hit = true;
         }
 
-        if (w < minW || h < minH) hit();
+        if (w < minW || h < minH) hit(b);
 
         return hit;
     }

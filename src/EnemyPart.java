@@ -1,6 +1,6 @@
-import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.util.Random;
 
 public class EnemyPart extends Part {
 
@@ -77,14 +77,21 @@ public class EnemyPart extends Part {
         return collidesSquare(p);
     }
 
-    public void hit() {
+    public void hit(Bullet b) {
         if (!alive || particles != null) return;
+        
         int w = (int) (this.w / 5);
         int h = (int) (this.h / 5);
+        double xd, yd;
+
         particles = new Particle[w * h];
-        for (int x = 0; x < w; x++)
-            for (int y = 0; y < h; y++)
-                particles[y * w + x] = new Particle(controler, x * 5 + this.x, y * 5 + this.y, 5, 5, color);
+        for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+                xd = this.x + x * 5 - b.getX();
+                yd = this.y + y * 5 - b.getY();
+                particles[y * w + x] = new Particle(controler, color, this.x + x * 5, this.y + y * 5, xd, yd);
+            }
+        }
     }
 
     public void setBounce(boolean b) {

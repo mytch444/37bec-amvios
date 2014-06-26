@@ -4,6 +4,7 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.VolatileImage;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.image.*;
@@ -26,7 +27,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     boolean end;
     HighscoreBox hsbox;
     Random rand;
+
     FontMetrics metrics;
+
+    VolatileImage frame;
 
 	public GameControler(GamePanel p, int w, int h) {
         panel = p;
@@ -35,12 +39,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         metrics = p.getGraphics().getFontMetrics(p.getFont());
         width = w;
         height = h;
-
-        // Listen to mouse and key events on the panel, this is so I can figure out if
-        // the target was clicked by some faggot playing this game.
-        panel.addMouseListener(this);
-        panel.addMouseMotionListener(this);
-        panel.addKeyListener(this);
 
         player = new Player(this);
         others = new ArrayList<Part>();
@@ -54,35 +52,51 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         paused = true;
         end = false;
+
+        // Listen to mouse and key events on the panel, this is so I can figure out if
+        // the target was clicked by some faggot playing this game.
+        panel.addMouseListener(this);
+        panel.addMouseMotionListener(this);
+        panel.addKeyListener(this);
 	}
 
 	public void paint(Graphics g) {
-        panel.requestFocus(); // Fucking listen to me you annoying cunt.
-        
+        renderFrame();
+
+        if (frame == null) {
+            frame = panel.createVolatileImage(width, height);
+        }
+
+        g.drawImage(frame, 0, 0, null);
+    }
+
+    public void renderFrame() {
+        if (frame == null) return;
+        Graphics g = frame.createGraphics();
+        g.setFont(panel.getFont());
+
+        g.setColor(Color.black);
+        g.fillRect(0, 0, width, height);
+
         for (int i = 0; i < bullets.size(); i++)
             bullets.get(i).paint(g);
         player.paint(g);
         for (int i = 0; i < others.size(); i++)
             others.get(i).paint(g);
 
-        // Set the color to white and draw a string showing the user their score and how long they have left.
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 5, 20);
 
-        if (lives < 1) {
-            if (hsbox == null) hsbox = new HighscoreBox(panel, score);
-            hsbox.paint(g);
-            end = true;
-        }
 
         if (paused || end) {
             g.setColor(Color.white);
             String message = "Paused";
             if (end) message = "Game Over";
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
-            return;
+            if (end) hsbox.paint(g);
         }
 
+        g.dispose();
     }
 
     public void update() {
@@ -115,6 +129,11 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
                 Bullet b = bullets.get(j);
                 if (p.collides(b)) b.hitSomething();
             }
+        }
+
+        if (lives < 1) {
+            if (hsbox == null) hsbox = new HighscoreBox(this, score);
+            end = true;
         }
     }
 
@@ -192,6 +211,14 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         }
         
         return e;
+    }
+
+    public Graphics getGraphics() {
+        return frame.createGraphics();
+    }
+
+    public GamePanel getPanel() {
+        return panel;
     }
 
     // Listens to mouse pressed events on the panel.

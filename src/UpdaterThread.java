@@ -28,7 +28,7 @@ public class UpdaterThread extends Thread {
                 try {
                     Thread.sleep(time);
                 } catch (Exception e) {}
-            }
+            } else System.out.println("Update out of time " + time);
 		}
 	}
 

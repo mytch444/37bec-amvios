@@ -6,20 +6,20 @@ public class ExplosiveBulletEnemy extends EnemyPart {
         super(c, new Color(255, 0, 0));
 	}
 
-    public boolean collidesPart(Part p) {
+    public boolean collides(Player p) {
         if (collidesSquare(p)) {
             controler.givePlayerBullet(new ExplosiveBullet(controler));
-            hit();
             return true;
         }
         return false;
     }
 
-    public boolean collides(Player p) {
-        return collidesPart(p);
-    }
-
     public boolean collides(Bullet b) {
-        return collidesPart(b);
+        if (collidesSquare(b)) {
+            controler.givePlayerBullet(new ExplosiveBullet(controler));
+            hit(b);
+            return true;
+        }
+        return false;
     }
 }

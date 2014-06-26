@@ -13,6 +13,7 @@ public class GameMenu {
     ArrayList<GameButton> buttons;
     int width, height, x, y;
     int titleX, titleY;
+    int redraw;
     String title;
     Font font;
     Color bgcolor;
@@ -24,6 +25,8 @@ public class GameMenu {
         this.height = h;
         this.x = x;
         this.y = y;
+
+        redraw = 1;
 
         w = 150;
         h = 30;
@@ -37,10 +40,9 @@ public class GameMenu {
         buttons.add(new GameButton(p, x + (w + 20) * 2, y, w, h, GamePanel.QUIT, "Quit"));
         buttons.add(new GamePauseButton(p, width - w - 50, y, w, h, GamePanel.PAUSE, "Pause"));
 
-        font = p.getFont().deriveFont(20.0f);
-
         title = "37Bec-Amvious";
 
+        font = p.getFont().deriveFont(20.0f);
         FontMetrics metrics = p.getGraphics().getFontMetrics(font);
         int titleW = metrics.stringWidth(title);
         int left = x + (w + 20) * 3 + 20;
@@ -51,21 +53,24 @@ public class GameMenu {
         bgcolor = new Color(40, 0, 110);
 	}
 
-    // Go through the buttons and paint them.
 	public void paint(Graphics g) {
-        g.setColor(bgcolor);
-        g.fillRect(x, y, width, height);
+        if (redraw == 0) {
+            g.setColor(bgcolor);
+            g.fillRect(x, y, width, height);
+ 
+            g.setColor(Color.white);
+            g.setFont(font);
+            g.drawString(title, titleX, titleY);
+            g.setFont(panel.getFont());
+
+            g.drawLine(x, y, x + width, y);
+            g.drawLine(x, y + 1, x + width, y + 1);
+            
+            redraw = 100;
+        } else redraw--;
 
         for (int i = 0; i < buttons.size(); i++)
             buttons.get(i).paint(g);
-
-        g.setColor(Color.white);
-        g.setFont(font);
-        g.drawString(title, titleX, titleY);
-        g.setFont(panel.getFont());
-
-        g.drawLine(x, y, x + width, y);
-        g.drawLine(x, y + 1, x + width, y + 1);
     }
 
     // Stop the buttons from listening to the panel events.
