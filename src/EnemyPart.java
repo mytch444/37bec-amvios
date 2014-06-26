@@ -1,63 +1,90 @@
-/*
- * The target you must click repeatidly to flip some bits that represent your worth.
- */
-
-import java.awt.*;
 import java.util.Random;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Color;
 
-public class EnemyPart {
+public class EnemyPart extends Part {
 
-    Enemy parent;
-    double x, y, w, h;
-    double xv, yv;
-    Color fgcolor, bgcolor;
+    Particle[] particles;
+    boolean bounce;
 
-    public EnemyPart(Enemy p, double w, double h, double x, double y, double xv, double xy, Color fg, Color bg) {
-        parent = p;
+    public EnemyPart(GameControler co, Color c) {
+        super(co);
+        color = c;
+
+        w = 40;
+        h = 40;
+        x = rand.nextInt(controler.getWidth()) - controler.getWidth();
+        y = rand.nextInt(controler.getHeight());
+
+        xv = rand.nextInt(5);
+        yv = rand.nextInt(10) - 5;
+        bounce = true;
+    }
+
+    public EnemyPart(GameControler co, double w, double h, double x, double y, double xv, double xy, Color c) {
+        super(co);
         this.w = w;
         this.h = h;
         this.x = x;
         this.y = y;
         this.xv = xv;
         this.yv = yv;
-        fgcolor = fg;
-        bgcolor = bg;
+        color = c;
+        bounce = false;
     }
 
 	public void paint(Graphics g) {
-        g.setColor(bgcolor);
-        g.fillRect((int) x, (int) y, (int) w, (int) h);
-        g.setColor(fgcolor);
-        g.drawRect((int) x, (int) y, (int) w, (int) h);
+        if (particles != null) {
+            for (int i = 0; i < particles.length; i++) particles[i].paint(g);
+        } else {
+            g.setColor(color);
+            g.fillRect((int) x, (int) y, (int) w, (int) h);
+            g.setColor(Color.black);
+            g.drawRect((int) x, (int) y, (int) w, (int) h);
+        }
 	}
 
     public void update() {
-        // Move the target.
-        x += xv;
-        y += yv;
+        if (particles != null) {
+            boolean remove = true;
+            for (int i = 0; i < particles.length; i++) {
+                particles[i].update();
+                if (!particles[i].shouldRemove()) remove = false;
+            }
+            if (remove) controler.removeOther(this);
+        } else {
+            x += xv;
+            y += yv;
+
+            if (bounce && (y < 0 || y + h > controler.getHeight())) yv = -yv;
+        }
     }
 
-    public boolean collides(Part p) {
-        if (p.getX() > x && p.getX() < x + w) {
-            if (p.getY() > y && p.getY() < y + h) {
-                return true;
-            }
-        }
+    public boolean collides(Bullet b) {
+        if (particles != null) return false;
+        return collidesSquare(b);
+    }
+    
+    public boolean collides(Player p) {
+        if (particles != null) return false;
+        return collidesSquare(p);
+    }
+
+    public void hit() {
+        if (particles != null) return;
+        int w = (int) (this.w / 5);
+        int h = (int) (this.h / 5);
+        particles = new Particle[w * h];
+        for (int x = 0; x < w; x++)
+            for (int y = 0; y < h; y++)
+                particles[y * w + x] = new Particle(controler, x * 5 + this.x, y * 5 + this.y, 5, 5, color);
+    }
+
+    public boolean shouldRemove() {
+        if (particles != null)
+            for (int i = 0; i < particles.length; i++) if (particles[i].shouldRemove()) return true;
         return false;
     }
-
-    public double getX() { return x; }
-    public double getY() { return y; }
-    public double getWidth() { return w; }
-    public double getHeight() { return h; }
-    public double getXV() { return xv; }
-    public double getYV() { return yv; }
-
-    public void setX(double x) { this.x = x; }
-    public void setY(double x) { this.y = x; }
-    public void setWidth(double x) { this.w = x; }
-    public void setHeight(double x) { this.h = x; }
-    public void setXV(double v) { xv = v; }
-    public void setYV(double v) { yv = v; }
 }

@@ -7,20 +7,16 @@ import java.util.Random;
 import java.lang.Math;
 import java.util.ArrayList;
 
-public class ExplosiveBulletEnemy extends Enemy {
+public class ExplosiveBulletEnemy extends EnemyPart {
     
 	public ExplosiveBulletEnemy(GameControler c) {
-        super(c, "*\n", new Color(255, 0, 0));
-	}
-
-	public void paint(Graphics g) {
-        for (int i = 0; i < parts.size(); i++)
-            parts.get(i).paint(g);
+        super(c, new Color(255, 0, 0));
 	}
 
     public boolean collides(Bullet b) {
-        if (super.collides(b)) {
+        if (particles == null && super.collides(b)) {
             controler.givePlayerBullet(new ExplosiveBullet(controler));
+            hit();
             return true;
         }
         return false;

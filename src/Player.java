@@ -21,10 +21,6 @@ public class Player extends Part {
 
 	public Player(GameControler c) {
         super(c);
-        w = 128;
-        h = 128;
-        x = c.getWidth();
-        y = c.getHeight() / 2 - h / 2;
         angle = 0;
         moving = 0;
         shooting = false;
@@ -38,6 +34,12 @@ public class Player extends Part {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        w = image.getWidth();
+        h = image.getHeight();
+        x = c.getWidth();
+        y = c.getHeight() / 2 - h / 2;
+
 	}
 
 	public void paint(Graphics g1) {

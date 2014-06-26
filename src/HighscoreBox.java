@@ -15,6 +15,7 @@ public class HighscoreBox implements KeyListener {
     int cursor;
     int x, y, w, h;
     FontMetrics metrics;
+    boolean highscore;
 
 	public HighscoreBox(GamePanel p, long s) {
         panel = p;
@@ -31,6 +32,8 @@ public class HighscoreBox implements KeyListener {
         w = metrics.stringWidth(" ") * 70;
         x = panel.getWidth() / 2 - w / 2;
         y = panel.getHeight() / 2 - h / 2;
+
+        highscore = true;
  
         /*
          * Check the highscores file to see if this is a highscore.
@@ -63,6 +66,7 @@ public class HighscoreBox implements KeyListener {
             // If it is not a highscore then change to panel mode to view highscores.
             if (!ishighscore) {
                 panel.setMode(GamePanel.HIGH_SCORE_MENU);
+                highscore = false;
                 return;
             }
         } catch (Exception e) {
@@ -76,6 +80,8 @@ public class HighscoreBox implements KeyListener {
 	}
 
 	public void paint(Graphics g) {
+        if (!highscore) return;
+
         g.setColor(Color.black);
         g.fillRect(x, y, w, h);
         g.setColor(Color.white);

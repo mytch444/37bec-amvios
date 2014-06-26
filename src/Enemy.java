@@ -1,11 +1,8 @@
-/*
- * The target you must click repeatidly to flip some bits that represent your worth.
- */
-
-import java.awt.*;
 import java.util.Random;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class Enemy extends Part {
     
@@ -13,7 +10,6 @@ public class Enemy extends Part {
 
     ArrayList<EnemyPart> parts;
     boolean shot;
-    Color color;
 
     public Enemy(GameControler c, String pattern) {
         this(c, pattern, Color.white);
@@ -47,7 +43,7 @@ public class Enemy extends Part {
                 if (lw > w) w = lw;
                 lw = 0;
             } else {
-                parts.add(new EnemyPart(this, pw, ph, px, py, xv, yv, Color.black, color)); 
+                parts.add(new EnemyPart(controler, pw, ph, px, py, xv, yv, color)); 
                 px += pw;
                 lw += pw;
             }
@@ -63,10 +59,6 @@ public class Enemy extends Part {
         if (!shot) {
             x += xv;
             y += yv;
-/*            if (y < 0 || y + h > controler.getHeight()) {
-                yv = -yv;
-                for (int i = 0; i < parts.size(); i++) parts.get(i).setYV(yv);
-            } */
         }
 
         for (int i = 0; i < parts.size(); i++) {
@@ -103,7 +95,8 @@ public class Enemy extends Part {
             EnemyPart e = parts.get(i);
             if (e.collides(b)) {
                 shot = true;
-                parts.remove(e);
+                e.hit();
+            //    parts.remove(e);
                 controler.addScore(controler.SCORE_SHOT);
                 hit = true;
             }

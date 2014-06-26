@@ -24,8 +24,6 @@ public class Friend extends Part {
         y = rand.nextInt(controler.getHeight());
         xv = rand.nextInt(5);
         yv = rand.nextInt(10) - 5;
-        w = 64;
-        h = 64;
         lives = 3;
 
         hit = 0;
@@ -37,6 +35,9 @@ public class Friend extends Part {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        w = image.getWidth();
+        h = image.getHeight();
 	}
 
 	public void paint(Graphics g) {

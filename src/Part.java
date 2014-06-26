@@ -25,6 +25,10 @@ public class Part {
     public void setWidth(double x) { this.w = x; }
     public double getHeight() { return h; }
     public void setHeight(double x) { this.h = x; }
+    public double getXV() { return xv; }
+    public void setXV(double x) { xv = x; }
+    public double getYV() { return yv; }
+    public void setYV(double y) { yv = y; }
     public boolean collides(Player p) { return false; };
     public boolean collides(Bullet b) { return false; };
     public boolean collidesSquare(Part p) {

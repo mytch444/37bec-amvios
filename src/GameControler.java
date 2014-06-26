@@ -26,12 +26,13 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     boolean end;
     HighscoreBox hsbox;
     Random rand;
+    FontMetrics metrics;
 
 	public GameControler(GamePanel p, int w, int h) {
         panel = p;
 
         rand = new Random();
-
+        metrics = p.getGraphics().getFontMetrics(p.getFont());
         width = w;
         height = h;
 
@@ -72,13 +73,14 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (hsbox == null) hsbox = new HighscoreBox(panel, score);
             hsbox.paint(g);
             end = true;
-            return;
         }
 
-        if (end) return;
+        if (end) paused = true;
         if (paused) {
             g.setColor(Color.white);
-            g.drawString("Paused", getWidth() / 2 - 50, getHeight() / 2 - 20);
+            String message = "Paused";
+            if (end) message = "Game Over";
+            g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
             return;
         }
 
@@ -169,8 +171,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         others.add(p);
     }
 
-    public Enemy newEnemy() {
-        Enemy e;
+    public Part newEnemy() {
+        Part e;
         switch (rand.nextInt(10)) {
             case 1: e = new ExplosiveBulletEnemy(this);
                     break;
@@ -187,12 +189,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     // Listens to mouse pressed events on the panel.
     public void mousePressed(MouseEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.mouseReleased(e);
     }
     public void mouseEntered(MouseEvent e) {}
@@ -200,12 +202,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void mouseClicked(MouseEvent e) {}
 
     public void mouseDragged(MouseEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.mouseMoved(e);
     }
 
     public void mouseMoved(MouseEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.mouseMoved(e);
     }
 
@@ -214,11 +216,11 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void keyPressed(KeyEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.keyPressed(e);
     }
     public void keyReleased(KeyEvent e) {
-        if (paused) return;
+        if (paused || end) return;
         player.keyReleased(e);
     }
 }
