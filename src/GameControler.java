@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.image.*;
 import java.util.Random;
+import java.io.*;
 
 public class GameControler implements MouseListener, MouseMotionListener, KeyListener {
 
@@ -19,6 +20,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     Player player;
     ArrayList<Part> others;
     ArrayList<Bullet> bullets;
+    String highscoreHolder;
+    long highscore;
     long score;
     int addChance;
     int lives;
@@ -46,6 +49,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             others.add(newEnemy());
         bullets = new ArrayList<Bullet>();
 
+        readHighscore();
         score = 0;
         lives = 3;
         addChance = 1000;
@@ -72,6 +76,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void renderFrame() {
         if (frame == null) return;
+        String message;
         Graphics g = frame.createGraphics();
         g.setFont(panel.getFont());
 
@@ -85,12 +90,13 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             others.get(i).paint(g);
 
         g.setColor(Color.white);
-        g.drawString("Score: " + score + "       Lives: " + lives, 5, 20);
-
+        g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
+        message = "Try Beat This Shit: " + highscore + " by " + highscoreHolder;
+        g.drawString(message, getWidth() - metrics.stringWidth(message) - 20, 20);
 
         if (paused || end) {
             g.setColor(Color.white);
-            String message = "Paused";
+            message = "Paused";
             if (end) message = "Game Over";
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
             if (end) hsbox.paint(g);
@@ -219,6 +225,29 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public GamePanel getPanel() {
         return panel;
+    }
+
+    public void readHighscore() {
+        highscore = 0;
+        highscoreHolder = "nobody";
+        try {
+
+            File file = new File(Game.HIGHSCORES_FILE());
+            if (!file.exists()) return;
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line = br.readLine();
+            if (line == null) return;
+
+            String[] parts = line.split(":");
+            if (parts.length != 2) return;
+            highscoreHolder = parts[0];
+            highscore = Long.parseLong(parts[1]);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Listens to mouse pressed events on the panel.

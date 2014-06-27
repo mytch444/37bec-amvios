@@ -115,7 +115,9 @@ public class HighscoreBox implements KeyListener {
             BufferedReader br = new BufferedReader(new FileReader(file));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(tmp)));
 
-            String aname = new String(name);
+            int len;
+            for (len = 0; name[len] != '\0'; len++);
+            String aname = new String(name, 0, len);
             String line;
             boolean found = false;
             int num = 0;

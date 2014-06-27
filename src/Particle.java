@@ -43,7 +43,7 @@ public class Particle extends Part  {
         O = O + (rand.nextFloat() * Oerror) - (Oerror / 2);
 
         this.xv = Math.cos(O) * speed;
-        this.yv = Math.sin(O) * speed;
+        this.yv = Math.sin(O) * speed; 
     }
 
     public void paint(Graphics gr) {

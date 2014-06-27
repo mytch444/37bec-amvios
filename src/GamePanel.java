@@ -80,6 +80,8 @@ public class GamePanel extends JPanel {
 
         g.dispose();
         renderTime = System.currentTimeMillis() - start;
+        
+        System.out.println("render took: " + renderTime);
 	}
 
     public void update() {
