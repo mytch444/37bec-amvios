@@ -82,14 +82,11 @@ public class EnemyPart extends Part {
         
         int w = (int) (this.w / 5);
         int h = (int) (this.h / 5);
-        double xd, yd;
 
         particles = new Particle[w * h];
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
-                xd = this.x + x * 5 - b.getX();
-                yd = this.y + y * 5 - b.getY();
-                particles[y * w + x] = new Particle(controler, color, this.x + x * 5, this.y + y * 5, xd, yd);
+                particles[y * w + x] = new Particle(controler, color, this.x + x * 5, this.y + y * 5, b);
             }
         }
     }

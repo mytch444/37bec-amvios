@@ -27,11 +27,7 @@ public class Game {
             
         gs[0].setFullScreenWindow(frame);
        
- //       frame.setResizable(false);
 		frame.setVisible(false);
-//        frame.setAlwaysOnTop(true);
-
-//        frame.setBounds(0, 0, screenSize.width, screenSize.height);
 
         // Create a custom panel.
 		GamePanel panel = new GamePanel(frame.getWidth(), frame.getHeight());
