@@ -13,7 +13,6 @@ public class GameMenu {
     ArrayList<GameButton> buttons;
     int width, height, x, y;
     int titleX, titleY;
-    int redraw;
     String title;
     Font font;
     Color bgcolor;
@@ -25,8 +24,6 @@ public class GameMenu {
         this.height = h;
         this.x = x;
         this.y = y;
-
-        redraw = 1;
 
         w = 150;
         h = 30;
@@ -54,20 +51,16 @@ public class GameMenu {
 	}
 
 	public void paint(Graphics g) {
-        if (redraw == 0) {
-            g.setColor(bgcolor);
-            g.fillRect(x, y, width, height);
- 
-            g.setColor(Color.white);
-            g.setFont(font);
-            g.drawString(title, titleX, titleY);
-            g.setFont(panel.getFont());
+        g.setColor(bgcolor);
+        g.fillRect(x, y, width, height);
 
-            g.drawLine(x, y, x + width, y);
-            g.drawLine(x, y + 1, x + width, y + 1);
-            
-            redraw = 100;
-        } else redraw--;
+        g.setColor(Color.white);
+        g.setFont(font);
+        g.drawString(title, titleX, titleY);
+        g.setFont(panel.getFont());
+
+        g.drawLine(x, y, x + width, y);
+        g.drawLine(x, y + 1, x + width, y + 1);
 
         for (int i = 0; i < buttons.size(); i++)
             buttons.get(i).paint(g);
