@@ -20,16 +20,16 @@ public class Game {
 
         // Create a JFrame (window), set the name, size, visibility and resizable.
 		JFrame frame = new JFrame("Game");
+        frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             
         gs[0].setFullScreenWindow(frame);
        
-//        frame.setResizable(false);
- //       frame.setUndecorated(true);
-//        frame.setAlwaysOnTop(true);
+ //       frame.setResizable(false);
 		frame.setVisible(false);
+//        frame.setAlwaysOnTop(true);
 
 //        frame.setBounds(0, 0, screenSize.width, screenSize.height);
 
