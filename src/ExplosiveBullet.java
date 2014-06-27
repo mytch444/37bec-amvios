@@ -16,7 +16,7 @@ public class ExplosiveBullet extends Bullet {
         this(c, 5);
     }
 
-    public void init(int x, int y, double angle) {
+    public void init(int x, int y, float angle) {
         super.init(x, y, angle);
         System.out.println("inited");
 /*        if (more > 0) {
@@ -36,7 +36,7 @@ public class ExplosiveBullet extends Bullet {
 
     public void hitSomething() {
         super.hitSomething();
-        for (double a = -3.14; a < 3.14; a += 0.5) {
+        for (float a = -3.14f; a < 3.14f; a += 0.5f) {
             controler.addBullet(new Bullet(controler, (int) x, (int) y, a));
         }
     }

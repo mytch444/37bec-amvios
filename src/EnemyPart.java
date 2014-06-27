@@ -21,7 +21,7 @@ public class EnemyPart extends Part {
         bounce = true;
     }
 
-    public EnemyPart(GameControler co, double w, double h, double x, double y, double xv, double xy, Color c) {
+    public EnemyPart(GameControler co, float w, float h, float x, float y, float xv, float xy, Color c) {
         super(co, c);
         this.w = w;
         this.h = h;
@@ -36,7 +36,8 @@ public class EnemyPart extends Part {
         if (!alive) return;
 
         if (particles != null) {
-            for (int i = 0; i < particles.length && particles[i] != null; i++) particles[i].paint(g);
+            for (int i = 0; i < particles.length && particles[i] != null; i++)
+                particles[i].paint(g);
         } else {
             g.setColor(color);
             g.fillRect((int) x, (int) y, (int) w, (int) h);
@@ -83,10 +84,24 @@ public class EnemyPart extends Part {
         int w = (int) (this.w / 5);
         int h = (int) (this.h / 5);
 
+        float bxv = b.getXV();
+        float byv = b.getYV();
+        float speed = (float) Math.sqrt(bxv * bxv + byv * byv) / -8;
+
+        float O;
+        if (b.getXV() == 0) O = 0;
+        else O = (float) Math.atan(byv / bxv);
+
+        int alpha = color.getAlpha();
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
+
         particles = new Particle[w * h];
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
-                particles[y * w + x] = new Particle(controler, color, this.x + x * 5, this.y + y * 5, b);
+                particles[y * w + x] = new Particle(controler, alpha, red, green, blue,
+                        this.x + x * 5, this.y + y * 5, b, speed, O);
             }
         }
     }

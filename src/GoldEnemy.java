@@ -3,7 +3,7 @@ import java.awt.Color;
 
 public class GoldEnemy extends EnemyPart {
 
-    double maxW, maxH, minW, minH;
+    float maxW, maxH, minW, minH;
 
 	public GoldEnemy(GameControler c) {
         super(c, new Color(255, 255, 0));

@@ -27,8 +27,7 @@ public class GamePanel extends JPanel {
     // A thread that will continue to update this panel every so often (60 times a second or so).
     UpdaterThread uloop;
     RenderThread rloop;
-
-    long renderTime;
+    boolean painting;
 
     int mode;
     Font font;
@@ -40,7 +39,7 @@ public class GamePanel extends JPanel {
         // Set the bounds and background.
 		setBounds(0, 0, w, h);
         setBackground(Color.black);
-
+        
         try {
             InputStream is = getClass().getResourceAsStream("/font/UbuntuMono-R.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(16f);
@@ -50,39 +49,36 @@ public class GamePanel extends JPanel {
         }
         
         mode = -1;
-        renderTime = 0;
+        painting = false;
 
         // Create and start the thread.
         uloop = new UpdaterThread(this, TIME);
-        rloop = new RenderThread(this, TIME);
+        rloop = new RenderThread(this);
         uloop.start();
         rloop.start();
     }
 
     public void paintComponent(Graphics g) {
-        long start = System.currentTimeMillis();
+        painting = true;
 
         requestFocus();
-
+        
         if (mode == -1) {
             g.setFont(font);
             menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
             setMode(NEW_GAME);
         }
-
+        
         controler.paint(g);
         menu.paint(g);
-        
+       
         if (hsmenu != null) 
             hsmenu.paint(g); 
         if (gsmenu != null)
             gsmenu.paint(g);
 
-        g.dispose();
-        renderTime = System.currentTimeMillis() - start;
-        
-        System.out.println("render took: " + renderTime);
-	}
+        painting = false;
+	}  
 
     public void update() {
         if (controler == null) return;
@@ -136,7 +132,7 @@ public class GamePanel extends JPanel {
         return font;
     }
 
-    public long renderTime() {
-        return renderTime;
+    public boolean frameDone() {
+        return !painting;
     }
 }

@@ -20,7 +20,7 @@ public class Enemy extends Part {
         yv = rand.nextInt(10) - 5;
         shot = false;
 
-        double px, py, pw, ph;
+        float px, py, pw, ph;
         int len = 0;
         for (int i = 0; i < pattern.length(); i++) if (pattern.charAt(i) == '*') len++;
         parts = new EnemyPart[len];

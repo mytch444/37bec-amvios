@@ -1,23 +1,23 @@
+import java.awt.Graphics;
+
 public class RenderThread extends Thread {
 	GamePanel panel;
     boolean end;
-    long frameTime;
 
-	public RenderThread(GamePanel p, long t) {
+	public RenderThread(GamePanel p) {
 		panel = p;
-        frameTime = t;
 	}
 	
     public void run() {
-        long time;
         end = false;
-		
+	
         while (!end) {
             panel.repaint();
-            
-            try {
-                Thread.sleep(frameTime);
-            } catch (Exception e) {}
+            while (!panel.frameDone()) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {}
+            }
 		}
 	}
 

@@ -3,22 +3,22 @@ import java.awt.*;
 import java.lang.Math;
 
 public class Bullet extends Part {
-    public double SPEED = 30;
+    public float SPEED = 30;
 
     public Bullet(GameControler c) {
         super(c, new Color(255, 0, 255));
     }
 
-	public Bullet(GameControler c, double x, double y, double angle) {
+	public Bullet(GameControler c, float x, float y, float angle) {
         this(c);
         init(x, y, angle);
     }
 
-    public void init(double x, double y, double angle) {
+    public void init(float x, float y, float angle) {
         this.x = x;
         this.y = y;
-        xv = -SPEED * Math.cos(angle);
-        yv = -SPEED * Math.sin(angle);
+        xv = (float) (-SPEED * Math.cos(angle));
+        yv = (float) (-SPEED * Math.sin(angle));
     }
 
 	public void paint(Graphics g) {

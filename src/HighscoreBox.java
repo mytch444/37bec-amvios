@@ -12,6 +12,7 @@ public class HighscoreBox implements KeyListener {
     GameControler controler;
     long score;
     char[] name;
+    int len;
     int cursor;
     int x, y, w, h;
     FontMetrics metrics;
@@ -25,8 +26,9 @@ public class HighscoreBox implements KeyListener {
         for (int i = 0; i < 64; i++)
             name[i] = '\0';
         cursor = 0;
+        len = 0;
       
-        metrics = controler.getGraphics().getFontMetrics(controler.getPanel().getFont());
+        metrics = controler.getPanel().getGraphics().getFontMetrics(controler.getPanel().getFont());
 
         h = metrics.getHeight() * 4;
         w = metrics.stringWidth(" ") * 70;
@@ -87,9 +89,6 @@ public class HighscoreBox implements KeyListener {
 
         String mess = "Highscore! Enter your name below:";
         g.drawString(mess, x + w / 2 - metrics.stringWidth(mess) / 2, y + h / 2 - metrics.getHeight() / 3 * 2);
-
-        int len;
-        for (len = 1; name[len] != '\0'; len++);
 
         int lx = x + w / 2 - metrics.stringWidth(new String(name, 0, len)) / 2;
         int ly = y + h / 2 + metrics.getHeight() / 3 * 2;
@@ -173,6 +172,7 @@ public class HighscoreBox implements KeyListener {
         else if (cursor < 63 && c >= ' ' && c <= '~') {
             for (int i = name.length - 2; i > cursor; i--) name[i] = name[i - 1];
             name[cursor++] = e.getKeyChar();
+            if (len < 63) len++;
         }
     }
    

@@ -7,48 +7,37 @@ public class Particle extends Part  {
    
     int a, r, g, b;
 
-	public Particle(GameControler co, Color c, double x, double y, Bullet b) {
-        super(co, c);
+	public Particle(GameControler co, int alpha, int red, int green, int blue, float x, float y, Bullet b, float maxSpeed, float O) {
+        super(co, null);
         this.x = x;
         this.y = y;
         this.w = 5;
         this.h = 5;
+        this.a = alpha;
+        this.r = red;
+        this.g = green;
+        this.b = blue;
+        color = new Color(this.r, this.g, this.b, this.a);
 
-        this.a = color.getAlpha();
-        this.r = color.getRed();
-        this.g = color.getGreen();
-        this.b = color.getBlue();
-
-        double xd = x - b.getX();
-        double yd = y - b.getY();
-        double d = Math.sqrt(xd * xd + yd * yd);
-
-        double bxv = b.getXV();
-        double byv = b.getYV();
-        double bspeed = Math.sqrt(bxv * bxv + byv * byv);
+        float xd = x - b.getX();
+        float yd = y - b.getY();
+        float d = (float) Math.sqrt(xd * xd + yd * yd);
 
         // Work out a good speed based on how far away the bullet impact was.
-        double maxSpeed = -(bspeed / 8);
-        double speed = -(maxSpeed / 900) * (d - 30) * (d + 30);
-
-        // Work out the direction from the bullet.
-        double O;
-        if (b.getXV() == 0) O = 0;
-        else O = Math.atan(b.getYV() / b.getXV());
+        float speed = -(maxSpeed / 900) * (d - 30) * (d + 30);
 
         // Decide on a good error range for the direction.
-        double Oerror = (2 * Math.PI / 1600) * d * d;
+        float Oerror = (2 * (float) Math.PI / 1600) * d * d;
         
         // Randomize the direction;
         O = O + (rand.nextFloat() * Oerror) - (Oerror / 2);
 
-        this.xv = Math.cos(O) * speed;
-        this.yv = Math.sin(O) * speed; 
+        this.xv = (float) Math.cos(O) * speed;
+        this.yv = (float) Math.sin(O) * speed; 
     }
 
     public void paint(Graphics gr) {
         if (a < 0) return;
-        color = new Color(r, g, b, a);
         gr.setColor(color);
         gr.fillRect((int)x, (int)y, (int)w, (int)h);
     }
@@ -57,9 +46,10 @@ public class Particle extends Part  {
         x += xv;
         y += yv;
         a -= 5;
+        color = new Color(r, g, b, a);
     }
 
     public boolean shouldRemove() {
-        return (color.getAlpha() < 10);
+        return (a < 10);
     }
 }

@@ -64,7 +64,7 @@ public class Friend extends Part {
     public boolean collides(Bullet b) {
         if (collidesSquare(b) && hit == 0) {
             if (lives < 1) {
-                for (double a = -3.14; a < 3.14; a += 0.5) controler.addBullet(new Bullet(controler, x, y, a));
+                for (float a = -3.14f; a < 3.14f; a += 0.5f) controler.addBullet(new Bullet(controler, x, y, a));
                 controler.removeOther(this);
                 controler.addScore(GameControler.SCORE_SHOT * -100);
             } else {

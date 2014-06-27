@@ -33,8 +33,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     FontMetrics metrics;
 
-    VolatileImage frame;
-
 	public GameControler(GamePanel p, int w, int h) {
         panel = p;
 
@@ -65,19 +63,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	}
 
 	public void paint(Graphics g) {
-        renderFrame();
-
-        if (frame == null) {
-            frame = panel.createVolatileImage(width, height);
-        }
-
-        g.drawImage(frame, 0, 0, null);
-    }
-
-    public void renderFrame() {
-        if (frame == null) return;
         String message;
-        Graphics g = frame.createGraphics();
+        
         g.setFont(panel.getFont());
 
         g.setColor(Color.black);
@@ -85,13 +72,15 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         for (int i = 0; i < bullets.size(); i++)
             bullets.get(i).paint(g);
+
         player.paint(g);
+      
         for (int i = 0; i < others.size(); i++)
             others.get(i).paint(g);
 
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
-        message = "Try Beat This Shit: " + highscore + " by " + highscoreHolder;
+        message = "Try Beat " + highscoreHolder + " with " + highscore;
         g.drawString(message, getWidth() - metrics.stringWidth(message) - 20, 20);
 
         if (paused || end) {
@@ -101,8 +90,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
             if (end) hsbox.paint(g);
         }
-
-        g.dispose();
     }
 
     public void update() {
@@ -176,6 +163,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
     
     public void togglepause() {
+        System.out.println("Toggling Pause");
         paused = !paused;
     }
 
@@ -217,10 +205,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         }
         
         return e;
-    }
-
-    public Graphics getGraphics() {
-        return frame.createGraphics();
     }
 
     public GamePanel getPanel() {
