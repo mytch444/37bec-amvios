@@ -26,7 +26,7 @@ public class HighscoreMenu {
     
         metrics = p.getGraphics().getFontMetrics(p.getFont());
         h = 20;
-        w = 200;
+        w = metrics.stringWidth(foot) + 40;
 
         // Read through the file and save the scores to an arraylist.
         try {

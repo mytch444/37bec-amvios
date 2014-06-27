@@ -9,35 +9,36 @@ public class Enemy extends Part {
 
     EnemyPart[] parts;
     boolean shot;
+    short ui, ri;
 
 	public Enemy(GameControler co, String pattern) {
         super(co, Color.white);
         
-        // Give it a random location on the screen and a random velocity.
-        x = rand.nextInt(controler.getWidth()) - controler.getWidth() - 100;
-        y = rand.nextInt(controler.getHeight() - 200) + 100;
-        xv = rand.nextInt(5);
-        yv = rand.nextInt(10) - 5;
+        // Give it a rand()om location on the screen and a rand()om velocity.
+        x = rand().nextInt(controler.getWidth()) - controler.getWidth() - 100;
+        y = rand().nextInt(controler.getHeight() - 200) + 100;
+        xv = rand().nextInt(5);
+        yv = rand().nextInt(10) - 5;
         shot = false;
 
-        float px, py, pw, ph;
-        int len = 0;
+        short px, py, pw, ph;
+        short len = 0;
         for (int i = 0; i < pattern.length(); i++) if (pattern.charAt(i) == '*') len++;
         parts = new EnemyPart[len];
 
-        px = x;
-        py = y;
+        px = (short) x;
+        py = (short) y;
         pw = 40;
         ph = 40;
 
-        int i = 0;
+        short i = 0;
         h = w = 0;
-        for (int c = 0; c < pattern.length(); c++) {
+        for (short c = 0; c < pattern.length(); c++) {
             if (pattern.charAt(c) == '\n') {
                 py += ph; 
                 h += ph;
-                if (px - x > w) w = px - x;
-                px = x;
+                if (px - x > w) w = (short) (px - x);
+                px = (short) x;
                 continue;
             } else if (pattern.charAt(c) == '*') {
                 parts[i++] = new EnemyPart(controler, pw, ph, px, py, xv, yv, color); 
@@ -48,8 +49,8 @@ public class Enemy extends Part {
 	}
 
 	public void paint(Graphics g) {
-        for (int i = 0; i < parts.length; i++)
-            parts[i].paint(g);
+        for (ri = 0; ri < parts.length; ri++)
+            parts[ri].paint(g);
 	}
 
     public void update() {
@@ -59,8 +60,8 @@ public class Enemy extends Part {
         }
 
         alive = false;
-        for (int i = 0; i < parts.length; i++) {
-            EnemyPart p = parts[i];
+        for (ui = 0; ui < parts.length; ui++) {
+            EnemyPart p = parts[ui];
             if (p.isAlive()) alive = true;
             p.update();
         }
@@ -72,9 +73,8 @@ public class Enemy extends Part {
     }
 
     public boolean collides(Player p) {
-        for (int i = 0; i < parts.length; i++) {
-            EnemyPart e = parts[i];
-            if (e.collides(p)) {
+        for (ui = 0; ui < parts.length; ui++) {
+            if (parts[ui].collides(p)) {
                 controler.removeOther(this);
                 return true;
             }
@@ -85,8 +85,8 @@ public class Enemy extends Part {
     public boolean collides(Bullet b) {
         boolean hit = false;
         boolean wasshot = shot;
-        for (int i = 0; i < parts.length; i++) {
-            EnemyPart e = parts[i];
+        for (ui = 0; ui < parts.length; ui++) {
+            EnemyPart e = parts[ui];
             if (e.collides(b)) {
                 shot = true;
                 e.hit(b);
@@ -96,10 +96,10 @@ public class Enemy extends Part {
         }
 
         if (wasshot != shot) {
-            for (int i = 0; i < parts.length; i++) {
-                EnemyPart e = parts[i];
-                e.setXV(rand.nextInt(5));
-                e.setYV(rand.nextInt(10) - 5);
+            for (ui = 0; ui < parts.length; ui++) {
+                EnemyPart e = parts[ui];
+                e.setXV(rand().nextInt(5));
+                e.setYV(rand().nextInt(10) - 5);
                 e.setBounce(true);
             } 
         }

@@ -43,7 +43,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         player = new Player(this);
         others = new ArrayList<Part>();
-        for (int i = 0; i < 10; i++)
+        for (short i = 0; i < 10; i++)
             others.add(newEnemy());
         bullets = new ArrayList<Bullet>();
 
@@ -63,6 +63,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	}
 
 	public void paint(Graphics g) {
+        short i;
         String message;
         
         g.setFont(panel.getFont());
@@ -70,12 +71,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         g.setColor(Color.black);
         g.fillRect(0, 0, width, height);
 
-        for (int i = 0; i < bullets.size(); i++)
+        for (i = 0; i < bullets.size(); i++)
             bullets.get(i).paint(g);
 
         player.paint(g);
       
-        for (int i = 0; i < others.size(); i++)
+        for (i = 0; i < others.size(); i++)
             others.get(i).paint(g);
 
         g.setColor(Color.white);
@@ -93,19 +94,21 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void update() {
+        short i, j;
         if (paused || end) return;
+
         player.update();
-        
+ 
+        for (i = 0; i < bullets.size(); i++)
+            bullets.get(i).update();
+               
         if (rand.nextInt(1000) == 0) others.add(new Friend(this));
         if (rand.nextInt(addChance--) == 0) {
             others.add(newEnemy());
             if (addChance < 50) addChance = 50;
         }
 
-        for (int i = 0; i < bullets.size(); i++)
-            bullets.get(i).update();
-        
-        for (int i = 0; i < others.size(); i++) {
+        for (i = 0; i < others.size(); i++) {
             Part p = others.get(i);
             if (!p.isAlive()) {
                 removeOther(p);
@@ -118,7 +121,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
                 score += SCORE_SHOT * 10;
             }
 
-            for (int j = 0; j < bullets.size(); j++) {
+            for (j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
                 if (p.collides(b)) b.hitSomething();
             }
@@ -232,6 +235,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Random getRandom() {
+        return rand;
     }
 
     // Listens to mouse pressed events on the panel.

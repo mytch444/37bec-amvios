@@ -7,18 +7,18 @@ import javax.imageio.ImageIO;
 public class Friend extends Part {
     
     BufferedImage image, imageHit;
-    int lives;
-    int hit;
+    short lives;
+    short hit;
     boolean showHit;
 
 	public Friend(GameControler c) {
         super(c, null);
         
-        // Give it a random location on the screen and a random velocity.
-        x = rand.nextInt(controler.getWidth()) - controler.getWidth();
-        y = rand.nextInt(controler.getHeight());
-        xv = rand.nextInt(5);
-        yv = rand.nextInt(10) - 5;
+        // Give it a rand()om location on the screen and a rand()om velocity.
+        x = rand().nextInt(controler.getWidth()) - controler.getWidth();
+        y = rand().nextInt(controler.getHeight());
+        xv = rand().nextInt(5);
+        yv = rand().nextInt(10) - 5;
         lives = 3;
 
         hit = 0;
@@ -31,8 +31,8 @@ public class Friend extends Part {
             e.printStackTrace();
         }
 
-        w = image.getWidth();
-        h = image.getHeight();
+        w = (short) image.getWidth();
+        h = (short) image.getHeight();
 	}
 
 	public void paint(Graphics g) {

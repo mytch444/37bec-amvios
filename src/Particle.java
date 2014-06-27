@@ -30,7 +30,7 @@ public class Particle extends Part  {
         float Oerror = (2 * (float) Math.PI / 1600) * d * d;
         
         // Randomize the direction;
-        O = O + (rand.nextFloat() * Oerror) - (Oerror / 2);
+        O = O + (rand().nextFloat() * Oerror) - (Oerror / 2);
 
         this.xv = (float) Math.cos(O) * speed;
         this.yv = (float) Math.sin(O) * speed; 

@@ -6,15 +6,15 @@ import java.awt.image.*;
 import javax.imageio.*;
 
 public class Player extends Part {
-    private int SHOOTING_DELAY = 5;
+    private short SHOOTING_DELAY = 5;
 
     Bullet nextBullet;
     float angle;
-    int hit;
+    short hit;
     boolean showHit;
 
     boolean shooting;
-    int shooting_delay;
+    short shooting_delay;
 
     BufferedImage image, imageHit; 
 
@@ -34,8 +34,8 @@ public class Player extends Part {
             e.printStackTrace();
         }
 
-        w = image.getWidth();
-        h = image.getHeight();
+        w = (short) image.getWidth();
+        h = (short) image.getHeight();
         x = c.getWidth();
         y = c.getHeight() / 2 - h / 2;
 

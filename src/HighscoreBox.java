@@ -180,6 +180,7 @@ public class HighscoreBox implements KeyListener {
         int c = e.getKeyCode();
         if (c == KeyEvent.VK_BACK_SPACE && cursor > 0) {
             for (int i = --cursor; name[i] != '\0'; i++) name[i] = name[i + 1];
+            if (len > 0) len--;
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT && cursor > 0) {
             cursor--;

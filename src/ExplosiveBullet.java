@@ -16,16 +16,6 @@ public class ExplosiveBullet extends Bullet {
         this(c, 5);
     }
 
-    public void init(int x, int y, float angle) {
-        super.init(x, y, angle);
-        System.out.println("inited");
-/*        if (more > 0) {
-            System.out.println("Gave another");
-        }
-        more = 0;
-*/
-    }
-
     public void update() {
         super.update();
 
