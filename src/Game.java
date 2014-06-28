@@ -23,15 +23,13 @@ public class Game {
         frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
         
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            
         gs[0].setFullScreenWindow(frame);
        
 		frame.setVisible(false);
 
         // Create a custom panel.
 		GamePanel panel = new GamePanel(frame.getWidth(), frame.getHeight());
-        panel.setPreferredSize(screenSize);
+        panel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
         // Add it to the window and reorganise it.
 		frame.add(panel);
         frame.pack();
