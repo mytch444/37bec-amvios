@@ -18,7 +18,7 @@ public class Player extends Part {
 
     BufferedImage image, imageHit; 
 
-	public Player(GameControler c) {
+    public Player(GameControler c) {
         super(c, null);
         angle = 0;
         shooting = false;
@@ -38,17 +38,19 @@ public class Player extends Part {
         h = (short) image.getHeight();
         x = c.getWidth();
         y = c.getHeight() / 2 - h / 2;
+	
+    }
 
-	}
-
-	public void paint(Graphics g1) {
+    public void paint(Graphics g1) {
         Graphics2D g = (Graphics2D) g1;
-
-        g.rotate(angle, (int) x, (int) y);
-        if (showHit) g.drawImage(imageHit, (int) (x - w / 2), (int) (y - h / 2), null);
-        else g.drawImage(image, (int) (x - w / 2), (int) (y - h / 2), null);
-        g.rotate(-angle, (int) x, (int) y);
-	}
+	float a = angle;
+	short x = (short) this.x;
+	short y = (short) this.y;
+	g.rotate(a, x, y);
+        if (showHit) g.drawImage(imageHit, x - w / 2, y - h / 2, null);
+        else g.drawImage(image, x - w / 2, y - h / 2, null);
+        g.rotate(-a, x, y);
+    }
 
     public void update() {
         if (hit > 0) {

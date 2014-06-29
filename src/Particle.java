@@ -5,9 +5,9 @@ import java.awt.Graphics;
 
 public class Particle extends Part  {
    
-    int a, r, g, b;
+    short a, r, g, b;
 
-	public Particle(GameControler co, int alpha, int red, int green, int blue, float x, float y, Bullet b, float maxSpeed, float O) {
+	public Particle(GameControler co, short alpha, short red, short green, short blue, float x, float y, Bullet b, float maxSpeed, float O) {
         super(co, null);
         this.x = x;
         this.y = y;

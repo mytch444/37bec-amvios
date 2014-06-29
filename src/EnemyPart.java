@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Color;
-import java.util.Random;
 
 public class EnemyPart extends Part {
 
@@ -89,14 +88,13 @@ public class EnemyPart extends Part {
         float byv = b.getYV();
         float speed = (float) Math.sqrt(bxv * bxv + byv * byv) / -8;
 
-        float O;
-        if (b.getXV() == 0) O = 0;
-        else O = (float) Math.atan(byv / bxv);
+        float O = 0;
+        if (bxv != 0) O = (float) Math.atan(byv / bxv);
 
-        int alpha = color.getAlpha();
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
+        short alpha = (short) color.getAlpha();
+        short red = (short) color.getRed();
+        short green = (short) color.getGreen();
+        short blue = (short) color.getBlue();
 
         particles = new Particle[w * h];
         for (short x = 0; x < w; x++) {
