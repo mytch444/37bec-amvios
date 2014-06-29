@@ -266,6 +266,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void keyTyped(KeyEvent e) {
+        if (end) return;
         if (e.getKeyChar() == ' ') panel.setMode(GamePanel.PAUSE);
     }
 

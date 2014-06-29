@@ -17,6 +17,7 @@ public class HighscoreBox implements KeyListener {
     int x, y, w, h;
     FontMetrics metrics;
     boolean highscore;
+    String error;
 
 	public HighscoreBox(GameControler c, long s) {
         controler = c;
@@ -30,7 +31,7 @@ public class HighscoreBox implements KeyListener {
       
         metrics = controler.getPanel().getGraphics().getFontMetrics(controler.getPanel().getFont());
 
-        h = metrics.getHeight() * 4;
+        h = (int) (metrics.getHeight() * 5.5);
         w = metrics.stringWidth(" ") * 70;
         x = controler.getWidth() / 2 - w / 2;
         y = controler.getHeight() / 2 - h / 2;
@@ -94,6 +95,10 @@ public class HighscoreBox implements KeyListener {
         int ly = y + h / 2 + metrics.getHeight() / 3 * 2;
         g.drawString(new String(name), lx, ly);
         g.drawString("_", lx + metrics.stringWidth(new String(name, 0, cursor)), ly);
+
+        if (error != null) {
+            g.drawString(error, x + w / 2 - metrics.stringWidth(error) / 2, y + h - metrics.getHeight());
+        }
     }
 
     /*
@@ -102,6 +107,10 @@ public class HighscoreBox implements KeyListener {
     public void save() {
         if (score == -1)
             return;
+        if (len == 0) {
+            error = "Enter a name for crists sake";
+            return;
+        }
         try {
             // Open the file and a temp of it.
             File tmp = new File(Game.HIGHSCORES_FILE() + "tmp");
@@ -114,8 +123,6 @@ public class HighscoreBox implements KeyListener {
             BufferedReader br = new BufferedReader(new FileReader(file));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(tmp)));
 
-            int len;
-            for (len = 0; name[len] != '\0'; len++);
             String aname = new String(name, 0, len);
             String line;
             boolean found = false;
