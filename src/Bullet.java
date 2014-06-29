@@ -3,13 +3,20 @@ import java.awt.*;
 import java.lang.Math;
 
 public class Bullet extends Part {
-    public float SPEED = 30;
+    public static float SPEED = 30;
 
-    public Bullet(GameControler c) {
+    float speed;
+
+    public Bullet(GameControler c, float s) {
         super(c, new Color(255, 0, 255));
+        speed = s;
     }
 
-	public Bullet(GameControler c, float x, float y, float angle) {
+    public Bullet(GameControler c) {
+        this(c, Bullet.SPEED);
+    }
+
+    public Bullet(GameControler c, float x, float y, float angle) {
         this(c);
         init(x, y, angle);
     }
@@ -17,8 +24,8 @@ public class Bullet extends Part {
     public void init(float x, float y, float angle) {
         this.x = x;
         this.y = y;
-        xv = (float) (-SPEED * Math.cos(angle));
-        yv = (float) (-SPEED * Math.sin(angle));
+        xv = (float) (-speed * Math.cos(angle));
+        yv = (float) (-speed * Math.sin(angle));
     }
 
 	public void paint(Graphics g) {
@@ -38,5 +45,9 @@ public class Bullet extends Part {
 
     public void hitSomething() {
         controler.removeBullet(this);
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 }

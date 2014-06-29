@@ -84,12 +84,11 @@ public class EnemyPart extends Part {
         short w = (short) (this.w / 5);
         short h = (short) (this.h / 5);
 
-        float bxv = b.getXV();
-        float byv = b.getYV();
-        float speed = (float) Math.sqrt(bxv * bxv + byv * byv) / -8;
+        float speed = b.getSpeed() / -8;
 
-        float O = 0;
-        if (bxv != 0) O = (float) Math.atan(byv / bxv);
+        float O;
+        if (b.getXV() == 0) O = 0;
+        else O = (float) Math.atan(b.getYV() / b.getXV());
 
         short alpha = (short) color.getAlpha();
         short red = (short) color.getRed();
