@@ -20,6 +20,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     Player player;
     ArrayList<Part> others;
     ArrayList<Bullet> bullets;
+    Star[] stars;
     String highscoreHolder;
     long highscore;
     long score;
@@ -31,10 +32,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     HighscoreBox hsbox;
     Random rand;
 
-    Cursor blank, normal;
-    Robot robot; // For moving the mouse to a good place.
     int cx, cy;
-
+    
     FontMetrics metrics;
 
     public GameControler(GamePanel p, int w, int h) {
@@ -45,6 +44,9 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         width = w;
         height = h;
 
+	stars = new Star[rand.nextInt(100)];
+	for (short i = 0; i < stars.length; i++) stars[i] = new Star(this);
+	
         player = new Player(this);
         others = new ArrayList<Part>();
         for (short i = 0; i < 10; i++)
@@ -59,18 +61,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         paused = true;
         end = false;
 
-	try {
-	    robot = new Robot();
-	} catch (Exception e) { System.out.println("Could not create robot"); }
-	cx = 100;
-	cy = 100;
-	
-	BufferedImage cursorImg = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
-	blank = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
-	normal = panel.getCursor();
-	
-	panel.setCursor(blank);
-	
         // Listen to mouse and key events on the panel, this is so I can figure out if
         // the target was clicked by some faggot playing this game.
         panel.addMouseListener(this);
@@ -84,8 +74,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         
         g.setFont(panel.getFont());
 
-        g.setColor(Color.black);
-        g.fillRect(0, 0, width, height);
+	background(g);
 
         for (i = 0; i < bullets.size(); i++)
             bullets.get(i).paint(g);
@@ -106,10 +95,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (end) message = "Game Over";
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
             if (end) hsbox.paint(g);
-	    panel.setCursor(normal);
         }
     }
 
+    public void background(Graphics g) {
+	g.setColor(Color.black);
+	g.fillRect(0, 0, getWidth(), getHeight());
+
+	for (short i = 0; i < stars.length; i++) stars[i].paint(g);
+    }
+    
     public void update() {
         short i, j;
         if (paused || end) return;
@@ -180,7 +175,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void resume() {
         paused = false;
-	panel.setCursor(blank);
     }
     
     public void togglepause() {
@@ -278,8 +272,9 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void mouseMoved(MouseEvent e) {
         if (paused || end) return;
-        player.mouseMoved(getWidth() - cx, e.getY() - cy);
-	robot.mouseMove(cx, cy);
+	cx = e.getX();
+	cy = e.getY();
+        player.mouseMoved(cx, cy);
     }
 
     public void keyTyped(KeyEvent e) {
@@ -290,9 +285,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void keyPressed(KeyEvent e) {
         if (paused || end) return;
         player.keyPressed(e);
+	player.mouseMoved(cx, cy);
     }
+    
     public void keyReleased(KeyEvent e) {
         if (paused || end) return;
         player.keyReleased(e);
+	player.mouseMoved(cx, cy);
     }
 }

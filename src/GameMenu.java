@@ -37,7 +37,7 @@ public class GameMenu {
         buttons.add(new GameButton(p, x + (w + 20) * 2, y, w, h, GamePanel.QUIT, "Quit"));
         buttons.add(new GamePauseButton(p, width - w - 50, y, w, h, GamePanel.PAUSE, "Pause"));
 
-        title = "37Bec-Amvious";
+        title = "37Bec-Amvios";
 
         font = p.getFont().deriveFont(20.0f);
         FontMetrics metrics = p.getGraphics().getFontMetrics(font);

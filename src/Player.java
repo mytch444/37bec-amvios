@@ -9,7 +9,7 @@ public class Player extends Part {
     private short SHOOTING_DELAY = 5;
 
     Bullet nextBullet;
-    double angle;
+    float angle;
     short hit;
     boolean showHit;
 
@@ -38,7 +38,6 @@ public class Player extends Part {
         h = (short) image.getHeight();
         x = c.getWidth();
         y = c.getHeight() / 2 - h / 2;
-	
     }
 
     public void paint(Graphics g1) {
@@ -47,8 +46,6 @@ public class Player extends Part {
 	short x = (short) this.x;
 	short y = (short) this.y;
 	g.rotate(a, x, y);
-	g.setColor(Color.blue);
-	g.drawLine(x, y, x - controler.getWidth() * 2, y);
         if (showHit) g.drawImage(imageHit, x - w / 2, y - h / 2, null);
         else g.drawImage(image, x - w / 2, y - h / 2, null);
         g.rotate(-a, x, y);
@@ -67,9 +64,9 @@ public class Player extends Part {
         
         if (shooting && shooting_delay == 0) {
             if (nextBullet == null) 
-                nextBullet = new Bullet(controler, x, y, (float)angle);
+                nextBullet = new Bullet(controler, x, y, angle);
             else 
-                nextBullet.init(x, y, (float)angle);
+                nextBullet.init(x, y, angle);
 
             controler.addBullet(nextBullet);
             nextBullet = null;
@@ -103,8 +100,11 @@ public class Player extends Part {
         shooting = false;
     }
    
-    public void mouseMoved(float dx, float dy) {
+    public void mouseMoved(int cx, int cy) {
         if (hit > 0) return;
-	angle -= Math.atan(dy / dx);
+	float dx = x - cx;
+	float dy = y - cy;
+	if (dx == 0) angle = 0;
+	else angle = (float)Math.atan(dy / dx);
     }
 }
