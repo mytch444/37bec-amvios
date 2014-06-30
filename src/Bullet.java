@@ -3,7 +3,7 @@ import java.awt.*;
 import java.lang.Math;
 
 public class Bullet extends Part {
-    public static float SPEED = 30;
+    public static float SPEED = 40;
 
     float speed;
 

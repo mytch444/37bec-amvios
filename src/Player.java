@@ -9,7 +9,7 @@ public class Player extends Part {
     private short SHOOTING_DELAY = 5;
 
     Bullet nextBullet;
-    float angle;
+    double angle;
     short hit;
     boolean showHit;
 
@@ -43,10 +43,12 @@ public class Player extends Part {
 
     public void paint(Graphics g1) {
         Graphics2D g = (Graphics2D) g1;
-	float a = angle;
+	double a = angle;
 	short x = (short) this.x;
 	short y = (short) this.y;
 	g.rotate(a, x, y);
+	g.setColor(Color.blue);
+	g.drawLine(x, y, x - controler.getWidth() * 2, y);
         if (showHit) g.drawImage(imageHit, x - w / 2, y - h / 2, null);
         else g.drawImage(image, x - w / 2, y - h / 2, null);
         g.rotate(-a, x, y);
@@ -65,9 +67,9 @@ public class Player extends Part {
         
         if (shooting && shooting_delay == 0) {
             if (nextBullet == null) 
-                nextBullet = new Bullet(controler, x, y, angle);
+                nextBullet = new Bullet(controler, x, y, (float)angle);
             else 
-                nextBullet.init(x, y, angle);
+                nextBullet.init(x, y, (float)angle);
 
             controler.addBullet(nextBullet);
             nextBullet = null;
@@ -93,22 +95,16 @@ public class Player extends Part {
         if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) yv = 0;
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed() {
         shooting = true;
     }
 
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased() {
         shooting = false;
     }
    
-    public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(float dx, float dy) {
         if (hit > 0) return;
-        float dy = y - e.getY();
-        float dx = x - e.getX();
-
-        if (dx <= 0) return;
-
-        if (dy == 0) angle = 0;
-        else angle = (float) Math.atan(dy / dx);
+	angle -= Math.atan(dy / dx);
     }
 }

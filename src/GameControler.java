@@ -31,9 +31,13 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     HighscoreBox hsbox;
     Random rand;
 
+    Cursor blank, normal;
+    Robot robot; // For moving the mouse to a good place.
+    int cx, cy;
+
     FontMetrics metrics;
 
-	public GameControler(GamePanel p, int w, int h) {
+    public GameControler(GamePanel p, int w, int h) {
         panel = p;
 
         rand = new Random();
@@ -55,14 +59,26 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         paused = true;
         end = false;
 
+	try {
+	    robot = new Robot();
+	} catch (Exception e) { System.out.println("Could not create robot"); }
+	cx = 100;
+	cy = 100;
+	
+	BufferedImage cursorImg = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+	blank = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+	normal = panel.getCursor();
+	
+	panel.setCursor(blank);
+	
         // Listen to mouse and key events on the panel, this is so I can figure out if
         // the target was clicked by some faggot playing this game.
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
         panel.addKeyListener(this);
-	}
+    }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         short i;
         String message;
         
@@ -90,6 +106,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (end) message = "Game Over";
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
             if (end) hsbox.paint(g);
+	    panel.setCursor(normal);
         }
     }
 
@@ -163,11 +180,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void resume() {
         paused = false;
+	panel.setCursor(blank);
     }
     
     public void togglepause() {
-        System.out.println("Toggling Pause");
-        paused = !paused;
+	if (paused) resume();
+	else pause();
     }
 
     public boolean isPaused() {
@@ -241,28 +259,27 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         return rand;
     }
 
-    // Listens to mouse pressed events on the panel.
     public void mousePressed(MouseEvent e) {
         if (paused || end) return;
-        player.mousePressed(e);
+        player.mousePressed();
     }
 
     public void mouseReleased(MouseEvent e) {
         if (paused || end) return;
-        player.mouseReleased(e);
+        player.mouseReleased();
     }
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {}
 
     public void mouseDragged(MouseEvent e) {
-        if (paused || end) return;
-        player.mouseMoved(e);
+        mouseMoved(e);
     }
 
     public void mouseMoved(MouseEvent e) {
         if (paused || end) return;
-        player.mouseMoved(e);
+        player.mouseMoved(getWidth() - cx, e.getY() - cy);
+	robot.mouseMove(cx, cy);
     }
 
     public void keyTyped(KeyEvent e) {
