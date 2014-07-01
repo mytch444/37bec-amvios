@@ -8,11 +8,11 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Enemy extends Part {
-    
+
     public static String[] PATTERNS = {
 	"***\n*\n*\n***\n",
 	"*\n*\n*\n*\n",
-	"***\n***\n***\n",
+	"***\n*$*\n***\n",
 	"*\n",
 	"***\n",
 	"*\n**\n***\n**\n*\n",
@@ -23,7 +23,7 @@ public class Enemy extends Part {
     short ri, ui; // variables to use for loop iterations (r for render, u for update). This is probably one of the
     // more stupid idea's I've had lately.
 
-    // The pattern is the pattern that the enemy will take, *'s are where blocks will be,
+    // The pattern is the pattern that the enemy will take, *'s are where blocks will be, $ are exploding blocks,
     // space where a space will be and \n (newline)'s move the remaining blocks down a level.
     public Enemy(GameControler co, String pattern) {
         super(co, Color.white);
@@ -38,7 +38,7 @@ public class Enemy extends Part {
 
 	// Work out the length and create the array with said length.
 	short len = 0;
-        for (int i = 0; i < pattern.length(); i++) if (pattern.charAt(i) == '*') len++;
+        for (int i = 0; i < pattern.length(); i++) if (pattern.charAt(i) != ' ' && pattern.charAt(i) != '\n') len++;
         parts = new EnemyPart[len];
 
 	short px, py, pw, ph;
@@ -64,8 +64,9 @@ public class Enemy extends Part {
                 continue;
             } else if (pattern.charAt(c) == '*') { // Add a part.
                 parts[i++] = new EnemyPart(controler, pw, ph, px, py, xv, yv, color); 
-            }
-
+            } else if (pattern.charAt(c) == '$') {
+		parts[i++] = new ExplosiveBulletEnemy(controler, pw, ph, px, py, xv, yv, color); 
+	    } else if (pattern.charAt(c) != ' ') System.out.println("WHAT THE FUCK BRO. I DON'T KNOW HOW TO HANDLE THIS SYMBOL '" + pattern.charAt(c) + "' TAKE IT OUT NOW OR I WILL CRASH!!!!!!");
 
             px += pw;
         }
@@ -81,6 +82,11 @@ public class Enemy extends Part {
         if (!shot) {
             x += xv;
             y += yv;
+
+	    if ((y + h > controler.getHeight() && yv > 0) || (y < 0 && yv < 0)) {
+		yv = -yv;
+		for (ui = 0; ui < parts.length; ui++) parts[ui].setYV(yv);
+	    }
         }
 
 	// Go though, update and check if it's still alive.

@@ -27,7 +27,7 @@ public class EnemyPart extends Part {
     }
 
     // For those who are into having complete control over things.
-    public EnemyPart(GameControler co, short w, short h, float x, float y, float xv, float xy, Color c) {
+    public EnemyPart(GameControler co, short w, short h, float x, float y, float xv, float yv, Color c) {
         super(co, c);
         this.w = w;
         this.h = h;

@@ -14,8 +14,8 @@ import java.io.*;
 public class GameControler implements MouseListener, MouseMotionListener, KeyListener {
 
     public static int SCORE_SHOT = 500;
-
-    GamePanel panel; 
+    
+    GamePanel panel;
 
     // Stuff that gets updated and draw.
     Player player;
@@ -26,6 +26,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     // Stuff for the current highscore, must feed the competition.
     String highscoreHolder;
     long highscore;
+    String cimessage;
 
     long score;
     int lives;
@@ -100,8 +101,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
-        message = "Try beat '" + highscoreHolder + "' with " + highscore;
-        g.drawString(message, getWidth() - metrics.stringWidth(message) - 20, 20);
+        g.drawString(cimessage, getWidth() - metrics.stringWidth(cimessage) - 20, 20);
 
 	// If paused or the game has ended show such.
         if (paused || end) {
@@ -159,6 +159,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (hsbox == null) hsbox = new HighscoreBox(this, score);
             end = true;
         }
+
+	if (score > highscore) {
+	    cimessage = "Who da man? You da man!";
+	}
     }
 
     public int getWidth() {
@@ -225,17 +229,18 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     // Returns a new enemy of random sort.
     public Part newEnemy() {
         Part e;
-        switch (rand.nextInt(10)) {
-            case 1: e = new ExplosiveBulletEnemy(this);
-                    break;
-            case 2: e = new ExplosiveBulletEnemy(this);
-                    break;
-            case 3: e = new GoldEnemy(this);
-                    break;
-            default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
-                     break;
-        }
-        
+
+	switch (rand.nextInt(10)) {
+	case 1: e = new ExplosiveBulletEnemy(this);
+	    break;
+	case 2: e = new ExplosiveBulletEnemy(this);
+	    break;
+	case 3: e = new GoldEnemy(this);
+	    break;
+	default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
+	    break;
+	}
+
         return e;
     }
 
@@ -247,10 +252,11 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void readHighscore() {
         highscore = 0;
         highscoreHolder = "nobody";
+	cimessage = "Try beat '" + highscoreHolder + "' with " + highscore;
         try {
 
             File file = new File(Game.HIGHSCORES_FILE());
-            if (!file.exists()) return;
+            if (!file.exists()) file.createNewFile();
 
             BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -259,12 +265,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
             String[] parts = line.split(":");
             if (parts.length != 2) return;
-            highscoreHolder = parts[0];
-            highscore = Long.parseLong(parts[1]);
-
+	    highscoreHolder = parts[0];
+	    highscore = Long.parseLong(parts[1]);
+	    cimessage = "Try beat '" + highscoreHolder + "' with " + highscore;
         } catch (Exception e) {
             e.printStackTrace();
-        }
+	}
     }
 
     public Random getRandom() {
