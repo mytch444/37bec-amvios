@@ -16,7 +16,7 @@ public class HighscoreMenu {
     String head, foot;
     FontMetrics metrics;
 
-	public HighscoreMenu(GamePanel p) {
+    public HighscoreMenu(GamePanel p) {
         panel = p;
 
         board = new ArrayList<String[]>(); // The highscores.
@@ -50,9 +50,9 @@ public class HighscoreMenu {
 
         x = panel.getWidth() / 2 - w / 2;
         y = panel.getHeight() / 2 - h / 2;
-	}
-
-	public void paint(Graphics g) {
+    }
+    
+    public void paint(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(x, y - metrics.getHeight() * 3, w, h + metrics.getHeight() * 3);
         g.setColor(Color.white);

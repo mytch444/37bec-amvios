@@ -1,3 +1,7 @@
+/*
+ * A building block for enemy and for extending to create stand alone enemies.
+ */
+
 import java.awt.Graphics;
 import java.awt.Color;
 
@@ -7,6 +11,7 @@ public class EnemyPart extends Part {
     boolean bounce;
     short ui, ri;
 
+    // For those who don't have a sociopathic side.
     public EnemyPart(GameControler co, Color c) {
         super(co, c);
         color = c;
@@ -21,6 +26,7 @@ public class EnemyPart extends Part {
         bounce = true;
     }
 
+    // For those who are into having complete control over things.
     public EnemyPart(GameControler co, short w, short h, float x, float y, float xv, float xy, Color c) {
         super(co, c);
         this.w = w;
@@ -32,7 +38,7 @@ public class EnemyPart extends Part {
         bounce = false;
     }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         if (!alive) return;
 
         if (particles != null) {
@@ -44,8 +50,11 @@ public class EnemyPart extends Part {
             g.setColor(Color.black);
             g.drawRect((int) x, (int) y, w, h);
         }
-	}
+    }
 
+    /*
+     * If dead do nothing, if dying drag out the death for cinematic effect, else do boring stuff.
+     */
     public void update() {
         if (!alive) return;
 
@@ -59,7 +68,9 @@ public class EnemyPart extends Part {
             x += xv;
             y += yv;
 
+	    // If I'm alowed to bounce (not part of a larger controling part) then bounce of the vertical edges.
             if (bounce && ((y < 0 && yv < 0) || (y + h > controler.getHeight() && yv > 0))) yv = -yv;
+	    // If past the right edge then do shit to make the player feel sad.
             if (x > controler.getWidth()) {
                 controler.lowerLives();
                 controler.removeOther(this);
@@ -68,6 +79,7 @@ public class EnemyPart extends Part {
         }
     }
 
+    // For both player and bullet collisions check if it collides with the square covered by the x,y,w,h shit.
     public boolean collides(Bullet b) {
         if (!alive || particles != null) return false;
         return collidesSquare(b);
@@ -78,6 +90,9 @@ public class EnemyPart extends Part {
         return collidesSquare(p);
     }
 
+    /*
+     * Set up stuff for a dramatic exit from the show. It's fairly self explanatory.
+     */
     public void hit(Bullet b) {
         if (!alive || particles != null) return;
         
@@ -86,10 +101,12 @@ public class EnemyPart extends Part {
 
         float speed = b.getSpeed() / -8;
 
+	// Some general direction stuff.
         float O;
         if (b.getXV() == 0) O = 0;
         else O = (float) Math.atan(b.getYV() / b.getXV());
 
+	// Some color stuff.
         short alpha = (short) color.getAlpha();
         short red = (short) color.getRed();
         short green = (short) color.getGreen();
@@ -102,6 +119,10 @@ public class EnemyPart extends Part {
                         this.x + x * 5, this.y + y * 5, b, speed, O);
             }
         }
+    }
+
+    public void hit() {
+	alive = false;
     }
 
     public void setBounce(boolean b) {

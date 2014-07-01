@@ -15,25 +15,40 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public static int SCORE_SHOT = 500;
 
-    // Some variables such as how long there is left in the game, the target and the score.
     GamePanel panel; 
+
+    // Stuff that gets updated and draw.
     Player player;
     ArrayList<Part> others;
     ArrayList<Bullet> bullets;
-    Star[] stars;
+    Star[] stars; // It's full of stars!!!
+
+    // Stuff for the current highscore, must feed the competition.
     String highscoreHolder;
     long highscore;
+
     long score;
-    int addChance;
     int lives;
+    
+    // Chance of another part being added.
+    int addChance;
+
+    // Width and height of the game area.
     int width, height;
+
     boolean paused;
     boolean end;
     HighscoreBox hsbox;
+
+    // Object for generating random numbers, this is used by all parts also. Probably
+    // has some efficiancy benifits with that but I don't actually know. I wouldn't recomend
+    // doing that sort of thing.
     Random rand;
 
+    // Cursor location, so it gets reset when the player moves so it always points towards the cursor.
     int cx, cy;
-    
+
+    // Stuff for the font, to work out string widths and so on.
     FontMetrics metrics;
 
     public GameControler(GamePanel p, int w, int h) {
@@ -44,6 +59,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         width = w;
         height = h;
 
+	// Full it with stars.
 	stars = new Star[rand.nextInt(100)];
 	for (short i = 0; i < stars.length; i++) stars[i] = new Star(this);
 	
@@ -53,7 +69,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             others.add(newEnemy());
         bullets = new ArrayList<Bullet>();
 
-        readHighscore();
+        readHighscore(); // Set highscore stuff for initialisng players macostic side.
+	
         score = 0;
         lives = 3;
         addChance = 1000;
@@ -61,8 +78,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         paused = true;
         end = false;
 
-        // Listen to mouse and key events on the panel, this is so I can figure out if
-        // the target was clicked by some faggot playing this game.
+        // Listen to mouse and key events on the panel.
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
         panel.addKeyListener(this);
@@ -71,8 +87,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void paint(Graphics g) {
         short i;
         String message;
-        
-        g.setFont(panel.getFont());
 
 	background(g);
 
@@ -86,14 +100,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
-        message = "Try Beat " + highscoreHolder + " with " + highscore;
+        message = "Try beat '" + highscoreHolder + "' with " + highscore;
         g.drawString(message, getWidth() - metrics.stringWidth(message) - 20, 20);
 
+	// If paused or the game has ended show such.
         if (paused || end) {
             g.setColor(Color.white);
             message = "Paused";
             if (end) message = "Game Over";
             g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+	    // If it's ended paint the highscores box.
             if (end) hsbox.paint(g);
         }
     }
@@ -206,6 +222,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         others.add(p);
     }
 
+    // Returns a new enemy of random sort.
     public Part newEnemy() {
         Part e;
         switch (rand.nextInt(10)) {
@@ -226,6 +243,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         return panel;
     }
 
+    // Reads the highscores file to get the name and score of the best.
     public void readHighscore() {
         highscore = 0;
         highscoreHolder = "nobody";

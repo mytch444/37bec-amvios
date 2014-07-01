@@ -1,10 +1,14 @@
+/*
+ * An enemy that gives the player an explosive bullet when hit.
+ */
+
 import java.awt.Color;
 
 public class ExplosiveBulletEnemy extends EnemyPart {
     
-	public ExplosiveBulletEnemy(GameControler c) {
+    public ExplosiveBulletEnemy(GameControler c) {
         super(c, new Color(255, 0, 0));
-	}
+    }
 
     public boolean collides(Player p) {
         if (collidesSquare(p)) {

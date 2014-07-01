@@ -26,20 +26,24 @@ public class GamePanel extends JPanel {
   
     // A thread that will continue to update this panel every so often (60 times a second or so).
     UpdaterThread uloop;
+    // A thread that will repaint the panel as soon as it has finished painting the panel.
     RenderThread rloop;
     boolean painting;
 
     int mode;
+
+    // THE font.
     Font font;
 
     // Contructor for the class, this gets called when a new instance of this class is made.
-	public GamePanel(int w, int h) {
-		super(null, true);
+    public GamePanel(int w, int h) {
+	super(null, true);
 
         // Set the bounds and background.
-		setBounds(0, 0, w, h);
+	setBounds(0, 0, w, h);
         setBackground(Color.black);
-        
+
+	// Get THE font.
         try {
             InputStream is = getClass().getResourceAsStream("/font/UbuntuMono-R.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(16f);
@@ -51,7 +55,7 @@ public class GamePanel extends JPanel {
         mode = -1;
         painting = false;
 
-        // Create and start the thread.
+        // Create and start the threads.
         uloop = new UpdaterThread(this, TIME);
         rloop = new RenderThread(this);
         uloop.start();
@@ -78,7 +82,7 @@ public class GamePanel extends JPanel {
             gsmenu.paint(g);
 
         painting = false;
-	}  
+    }  
 
     public void update() {
         if (controler == null) return;
@@ -98,7 +102,7 @@ public class GamePanel extends JPanel {
         hsmenu = null;
         gsmenu = new GameStartMenu(this);
         controler = new GameControler(this, getWidth(), getHeight() - menu.getHeight());
-	}
+    }
 
     public void startGame() {
         gsmenu = null;

@@ -1,23 +1,28 @@
+/*
+ * The basic building block of all the parts that are displayed on the game. Player, bullets, friends and enemy
+ * all extend this. It however does nothing.
+ */
+
 import java.lang.Math;
 import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Color;
 
 public class Part {
-	GameControler controler;
+    GameControler controler;
     float x, y, xv, yv;
     short w, h;
     Color color;
     boolean alive;
 
-	public Part(GameControler co, Color c) { 
+    public Part(GameControler co, Color c) { 
         controler = co;
         color = c;
         alive = true; 
     }
 
     public Random rand() { return controler.getRandom(); }
-	public void paint(Graphics g) {}
+    public void paint(Graphics g) {}
     public void update() {}
 
     public float getX() { return x; }

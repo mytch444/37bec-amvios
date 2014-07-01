@@ -1,9 +1,17 @@
-import java.awt.event.*;
-import java.awt.*;
+/*
+ * The player. A triangle that they control. It's very evil, it allows them to kill things.
+ * Clearly that is this things fault, not the fault of the person using it. And definatally
+ * not the fault of the game that put them in a situation where they should kill things.
+ * Silly logic, always getting in the way.
+ */
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.lang.Math;
-import java.io.*;
-import java.awt.image.*;
-import javax.imageio.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class Player extends Part {
     private short SHOOTING_DELAY = 5;

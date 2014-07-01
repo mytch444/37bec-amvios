@@ -19,7 +19,7 @@ public class HighscoreBox implements KeyListener {
     boolean highscore;
     String error;
 
-	public HighscoreBox(GameControler c, long s) {
+    public HighscoreBox(GameControler c, long s) {
         controler = c;
 
         score = s;
@@ -78,9 +78,9 @@ public class HighscoreBox implements KeyListener {
     
         // I am listening to EVERY KEY YOU PRESS!!!!!
         controler.getPanel().addKeyListener(this);
-	}
+    }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         if (!highscore) return;
 
         g.setColor(Color.black);

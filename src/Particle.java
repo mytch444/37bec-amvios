@@ -1,3 +1,11 @@
+/*
+ * A particles, it fades as it moves.
+ * Looks pretty, does very little else.
+ * Oh, I forgot, it does something very important.
+ * It adds lag. Lots AND LOTS OF LAG.
+ * It's pretty though.
+ */
+
 import java.lang.Math;
 import java.util.Random;
 import java.awt.Color;
@@ -7,7 +15,7 @@ public class Particle extends Part  {
    
     short a, r, g, b;
 
-	public Particle(GameControler co, short alpha, short red, short green, short blue, float x, float y, Bullet b, float maxSpeed, float O) {
+    public Particle(GameControler co, short alpha, short red, short green, short blue, float x, float y, Bullet b, float maxSpeed, float O) {
         super(co, null);
         this.x = x;
         this.y = y;

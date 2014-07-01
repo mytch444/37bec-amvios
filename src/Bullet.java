@@ -1,3 +1,7 @@
+/*
+ * This is violence now, don't get me wrong.
+ */
+
 import java.awt.event.*;
 import java.awt.*;
 import java.lang.Math;
@@ -21,6 +25,9 @@ public class Bullet extends Part {
         init(x, y, angle);
     }
 
+    /*
+     * Set the coordanates and compute the velocity.
+     */
     public void init(float x, float y, float angle) {
         this.x = x;
         this.y = y;
@@ -28,11 +35,14 @@ public class Bullet extends Part {
         yv = (float) (-speed * Math.sin(angle));
     }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         g.setColor(color);
         g.drawLine((int) x, (int) y, (int) (x - xv), (int) (y - yv));
-	}
+    }
 
+    /*
+     * Move it along and possibly remove it if it is outside the contoler.
+     */
     public void update() {
         x += xv;
         y += yv;

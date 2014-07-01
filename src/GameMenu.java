@@ -1,5 +1,5 @@
 /*
- * The main menu, a class that holds a list of buttons and paints them.
+ * The menu the sits on the bottom of the panel.
  */
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class GameMenu {
     Font font;
     Color bgcolor;
 
-	public GameMenu(GamePanel p, int w, int h, int x, int y) {
+    public GameMenu(GamePanel p, int w, int h, int x, int y) {
         panel = p;
 
         this.width = w;
@@ -48,9 +48,9 @@ public class GameMenu {
         titleY = y + h / 2 + metrics.getHeight() / 2;
 
         bgcolor = new Color(40, 0, 110);
-	}
+    }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         g.setColor(bgcolor);
         g.fillRect(x, y, width, height);
 

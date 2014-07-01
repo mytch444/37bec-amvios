@@ -1,5 +1,5 @@
 /*
- * A class to show a list of highscores.
+ * Shows some instructions, rather bad ones but that's half the point.
  */
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ public class GameStartMenu implements KeyListener {
     FontMetrics metrics;
     String[] message;
 
-	public GameStartMenu(GamePanel p) {
+    public GameStartMenu(GamePanel p) {
         panel = p;
         p.addKeyListener(this);
 
@@ -59,9 +59,9 @@ public class GameStartMenu implements KeyListener {
 
         x = panel.getWidth() / 2 - w / 2;
         y = panel.getHeight() / 2 - h / 2;
-	}
+    }
 
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(x, y, w, h);
         g.setColor(Color.white);

@@ -1,12 +1,16 @@
+/*
+ * Just keep on evolving.
+ */
+
 public class UpdaterThread extends Thread {
-	GamePanel panel;
+    GamePanel panel;
     boolean end;
     long frameTime; 
 
-	public UpdaterThread(GamePanel p, long t) {
-		panel = p;
+    public UpdaterThread(GamePanel p, long t) {
+	panel = p;
         frameTime = t;
-	}
+    }
 	
     public void run() {
         long start, time;
@@ -15,7 +19,7 @@ public class UpdaterThread extends Thread {
         /*
          * Repeat this until end becomes true. So until something calls the end method.
          */
-		while (!end) {
+	while (!end) {
             start = System.currentTimeMillis();
 
             // Repaint the panel.
@@ -29,8 +33,8 @@ public class UpdaterThread extends Thread {
                     Thread.sleep(time);
                 } catch (Exception e) {}
             } else System.out.println("Update out of time " + time);
-		}
 	}
+    }
 
     public void end() {
         end = true;

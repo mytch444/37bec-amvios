@@ -1,3 +1,8 @@
+/*
+ * An enemy that shrinks as it is hit then explodes.
+ * VERY FUCKING HARD. Makes the game a lot better.
+ */
+
 import java.awt.Graphics;
 import java.awt.Color;
 
@@ -5,7 +10,7 @@ public class GoldEnemy extends EnemyPart {
 
     short maxW, maxH, minW, minH;
 
-	public GoldEnemy(GameControler c) {
+    public GoldEnemy(GameControler c) {
         super(c, new Color(255, 255, 0));
 
         maxW = (short) (w * 2);
@@ -15,7 +20,7 @@ public class GoldEnemy extends EnemyPart {
 
         w = maxW;
         h = maxW;
-	}
+    }
 
     public boolean collides(Player p) {
         if (collidesSquare(p)) {
