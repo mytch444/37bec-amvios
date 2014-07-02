@@ -10,9 +10,10 @@ public class EnemyPart extends Part {
     Particle[] particles;
     boolean bounce;
     short ui, ri;
+    int sound;
 
     // For those who don't have a sociopathic side.
-    public EnemyPart(GameControler co, Color c) {
+    public EnemyPart(GameControler co, Color c, int s) {
         super(co, c);
         color = c;
 
@@ -24,10 +25,12 @@ public class EnemyPart extends Part {
         yv = rand().nextInt(10) - 5;
         
         bounce = true;
+
+	sound = s;
     }
 
     // For those who are into having complete control over things.
-    public EnemyPart(GameControler co, short w, short h, float x, float y, float xv, float yv, Color c) {
+    public EnemyPart(GameControler co, short w, short h, float x, float y, float xv, float yv, Color c, int s) {
         super(co, c);
         this.w = w;
         this.h = h;
@@ -36,6 +39,7 @@ public class EnemyPart extends Part {
         this.xv = xv;
         this.yv = yv;
         bounce = false;
+	sound = s;
     }
 
     public void paint(Graphics g) {
@@ -119,6 +123,8 @@ public class EnemyPart extends Part {
                         this.x + x * 5, this.y + y * 5, b, speed, O);
             }
         }
+
+	controler.playSound(sound);
     }
 
     public void hit() {

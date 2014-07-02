@@ -46,11 +46,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     // doing that sort of thing.
     Random rand;
 
-    // This will handle all sounds. Having one will hopefully help a lot rather than having lag with
-    // just bullet sounds. And that's the normal bullets. I don't even want to know how the lasers would
-    // work.
-    GameSound sound;
-
     // Cursor location, so it gets reset when the player moves so it always points towards the cursor.
     int cx, cy;
 
@@ -65,7 +60,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         height = h;
 
         metrics = p.getGraphics().getFontMetrics(p.getFont());
-	sound = new GameSound();
 
 	// Full it with stars.
 	stars = new Star[rand.nextInt(100)];
@@ -250,8 +244,6 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	    break;
 	case 6: e = new GoldEnemy(this);
 	    break;
-	case 7: e = new LaserBulletEnemy(this);
-	    break;
 	default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
 	    break;
 	}
@@ -293,7 +285,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void playSound(int s) {
-	sound.play(s);
+	panel.playSound(s);
     }
 
     public void mousePressed(MouseEvent e) {

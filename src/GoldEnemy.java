@@ -11,7 +11,7 @@ public class GoldEnemy extends EnemyPart {
     short maxW, maxH, minW, minH;
 
     public GoldEnemy(GameControler c) {
-        super(c, new Color(255, 255, 0));
+        super(c, new Color(255, 255, 0), GameSound.GOLD_ENEMY_HIT);
 
         maxW = (short) (w * 2);
         maxH = (short) (h * 2);

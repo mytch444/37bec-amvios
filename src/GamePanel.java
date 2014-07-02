@@ -23,13 +23,18 @@ public class GamePanel extends JPanel {
     HighscoreMenu hsmenu;
     GameStartMenu gsmenu;
     GameMenu menu;
-  
+
+    // This will handle all sounds. Having one will hopefully help a lot rather than having lag with
+    // just bullet sounds. And that's the normal bullets. I don't even want to know how the lasers would
+    // work.
+    GameSound sound;
+    
     // A thread that will continue to update this panel every so often (60 times a second or so).
     UpdaterThread uloop;
     // A thread that will repaint the panel as soon as it has finished painting the panel.
     RenderThread rloop;
     boolean painting;
-
+    
     int mode;
 
     // THE font.
@@ -51,6 +56,8 @@ public class GamePanel extends JPanel {
             System.out.println("Using default monospace font.");
             font = new Font("monospaced", Font.PLAIN, 16);
         }
+
+	sound = new GameSound();
         
         mode = -1;
         painting = false;
@@ -65,8 +72,6 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         painting = true;
 
-	//        requestFocus();
-        
         if (mode == -1) {
             g.setFont(font);
             menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
@@ -110,7 +115,7 @@ public class GamePanel extends JPanel {
     }
 
     private void showHighScores() {
-        controler.pause();
+	controler.pause();
         hsmenu = new HighscoreMenu(this);
         gsmenu = null;
     }
@@ -127,7 +132,7 @@ public class GamePanel extends JPanel {
 
     // Call this to close the frame and exit the program.
     public void quit() {
-        rloop.end();
+	rloop.end();
         uloop.end();
         ((JFrame) SwingUtilities.getRoot(this)).dispose();
     }
@@ -138,5 +143,9 @@ public class GamePanel extends JPanel {
 
     public boolean frameDone() {
         return !painting;
+    }
+
+    public void playSound(int s) {
+	sound.play(s);
     }
 }

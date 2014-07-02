@@ -16,29 +16,28 @@ public class Game {
     public static void main(String[] args) {
        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice[] gs = ge.getScreenDevices();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+
+	int width = gd.getDisplayMode().getWidth();
+	int height = gd.getDisplayMode().getHeight();
 
         // Create a JFrame (window), set the name, size, visibility and resizable.
 	JFrame frame = new JFrame("37Bec-Amvios");
-        frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
-        
-        gs[0].setFullScreenWindow(frame);
-
-	// Set the visibility to false, dam macs.
+        frame.setUndecorated(true);
+	frame.setAlwaysOnTop(true);
 	frame.setVisible(false);
-
+	
 	// Create a custom panel.
-	GamePanel panel = new GamePanel(frame.getWidth(), frame.getHeight());
-        panel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+	GamePanel panel = new GamePanel(width, height);
+        panel.setPreferredSize(new Dimension(width, height));
         // Add it to the window and reorganise it.
 	frame.add(panel);
-        frame.pack();
 
-	// Set the visibility to true, this needed to be toggles because macs don't like fullscreen.
-	// And there I was thinking they were simple minded and don't like multitasking.
+
 	frame.setVisible(true);
-
+	gd.setFullScreenWindow(frame);
+	
         panel.requestFocus();
     }
 }
