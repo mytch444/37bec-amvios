@@ -34,8 +34,8 @@ public class Game {
         // Add it to the window and reorganise it.
 	frame.add(panel);
 
-
 	frame.setVisible(true);
+
 	gd.setFullScreenWindow(frame);
 	
         panel.requestFocus();

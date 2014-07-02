@@ -72,6 +72,8 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         painting = true;
 
+	requestFocus();
+
         if (mode == -1) {
             g.setFont(font);
             menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);

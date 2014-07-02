@@ -19,7 +19,6 @@ public class GameSound {
     public static int GOLD_ENEMY_HIT = 7;
     public static int EXPLOSIVE_ENEMY_HIT = 8;
     public static int KTS_SHOT = 9;
-    
 
     Clip[][] clips;
         
