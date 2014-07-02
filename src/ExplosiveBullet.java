@@ -21,21 +21,28 @@ public class ExplosiveBullet extends Bullet {
         this(c, 5);
     }
 
-    public void update() {
-        super.update();
-
-	// Give the player some more of me.
-        if (more > 0)
-            controler.givePlayerBullet(new ExplosiveBullet(controler, more - 1));
-	// But no more after this.
-        more = 0;
+    public void init(float x, float y, float angle) {
+	super.init(x, y, angle, false);
+	controler.playSound(GameSound.EXPLOSIVE_SHOT);
     }
-
+    
     // Give a whole heap of bullets going everywhere and just generally being annoying.
     public void hitSomething() {
         super.hitSomething();
         for (float a = -3.14f; a < 3.14f; a += 0.5f) {
-            controler.addBullet(new Bullet(controler, (int) x, (int) y, a));
+	    Bullet b = new Bullet(controler);
+	    b.init(x, y, a, false);
+            controler.addBullet(b);
         }
+	controler.playSound(GameSound.EXPLOSIVE_EXPLODE);
+    }
+
+    public short getDelay() {
+	return (short) (SHOOTING_DELAY * 2);
+    }
+
+    public Bullet nextBullet() {
+	if (more > 0) return new ExplosiveBullet(controler, more - 1);
+	return null;
     }
 }

@@ -40,11 +40,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     boolean paused;
     boolean end;
     HighscoreBox hsbox;
-
+    
     // Object for generating random numbers, this is used by all parts also. Probably
     // has some efficiancy benifits with that but I don't actually know. I wouldn't recomend
     // doing that sort of thing.
     Random rand;
+
+    // This will handle all sounds. Having one will hopefully help a lot rather than having lag with
+    // just bullet sounds. And that's the normal bullets. I don't even want to know how the lasers would
+    // work.
+    GameSound sound;
 
     // Cursor location, so it gets reset when the player moves so it always points towards the cursor.
     int cx, cy;
@@ -56,9 +61,11 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         panel = p;
 
         rand = new Random();
-        metrics = p.getGraphics().getFontMetrics(p.getFont());
         width = w;
         height = h;
+
+        metrics = p.getGraphics().getFontMetrics(p.getFont());
+	sound = new GameSound();
 
 	// Full it with stars.
 	stars = new Star[rand.nextInt(100)];
@@ -230,12 +237,20 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public Part newEnemy() {
         Part e;
 
-	switch (rand.nextInt(10)) {
+	switch (rand.nextInt(20)) {
 	case 1: e = new ExplosiveBulletEnemy(this);
 	    break;
 	case 2: e = new ExplosiveBulletEnemy(this);
 	    break;
-	case 3: e = new GoldEnemy(this);
+	case 3: e = new ExplosiveBulletEnemy(this);
+	    break;
+	case 4: e = new ExplosiveBulletEnemy(this);
+	    break;
+	case 5: e = new GoldEnemy(this);
+	    break;
+	case 6: e = new GoldEnemy(this);
+	    break;
+	case 7: e = new LaserBulletEnemy(this);
 	    break;
 	default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
 	    break;
@@ -275,6 +290,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public Random getRandom() {
         return rand;
+    }
+
+    public void playSound(int s) {
+	sound.play(s);
     }
 
     public void mousePressed(MouseEvent e) {

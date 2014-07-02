@@ -8,16 +8,13 @@ import java.lang.Math;
 
 public class Bullet extends Part {
     public static float SPEED = 40;
+    public static short SHOOTING_DELAY = 5;
 
     float speed;
 
-    public Bullet(GameControler c, float s) {
-        super(c, new Color(255, 0, 255));
-        speed = s;
-    }
-
     public Bullet(GameControler c) {
-        this(c, Bullet.SPEED);
+        super(c, new Color(255, 0, 255));
+        speed = SPEED;
     }
 
     public Bullet(GameControler c, float x, float y, float angle) {
@@ -28,11 +25,18 @@ public class Bullet extends Part {
     /*
      * Set the coordanates and compute the velocity.
      */
-    public void init(float x, float y, float angle) {
+    public void init(float x, float y, float angle, boolean sound) {
         this.x = x;
         this.y = y;
         xv = (float) (-speed * Math.cos(angle));
         yv = (float) (-speed * Math.sin(angle));
+
+	if (sound)
+	    controler.playSound(GameSound.BULLET);
+    }
+
+    public void init(float x, float y, float angle) {
+	init(x, y, angle, true);
     }
 
     public void paint(Graphics g) {
@@ -59,5 +63,18 @@ public class Bullet extends Part {
 
     public float getSpeed() {
         return speed;
+    }
+
+    /*
+     * The following is stuff for dealing with the way that the player shoots.
+     * This is where stuff that gives the player a cannon or a laser would go.
+     */
+    
+    public short getDelay() {
+	return SHOOTING_DELAY;
+    }
+
+    public Bullet nextBullet() {
+	return null;
     }
 }

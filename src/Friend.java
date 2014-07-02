@@ -81,6 +81,7 @@ public class Friend extends Part {
                 for (float a = -3.14f; a < 3.14f; a += 0.5f) controler.addBullet(new Bullet(controler, x, y, a));
                 controler.removeOther(this);
                 controler.addScore(GameControler.SCORE_SHOT * -100);
+		controler.playSound(GameSound.FRIEND_HIT);
             } else {
                 showHit = true;
                 hit = 50;

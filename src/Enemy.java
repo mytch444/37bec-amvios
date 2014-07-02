@@ -16,7 +16,8 @@ public class Enemy extends Part {
 	"*\n",
 	"***\n",
 	"*\n**\n***\n**\n*\n",
-	"* * *\n * * \n* * *\n"};
+	"* *\n * \n* *\n",
+    };
 
     EnemyPart[] parts;
     boolean shot;
@@ -65,7 +66,9 @@ public class Enemy extends Part {
             } else if (pattern.charAt(c) == '*') { // Add a part.
                 parts[i++] = new EnemyPart(controler, pw, ph, px, py, xv, yv, color); 
             } else if (pattern.charAt(c) == '$') {
-		parts[i++] = new ExplosiveBulletEnemy(controler, pw, ph, px, py, xv, yv, color); 
+		parts[i++] = new ExplosiveBulletEnemy(controler, pw, ph, px, py, xv, yv, color);
+	    } else if (pattern.charAt(c) == '-') {
+		parts[i++] = new LaserBulletEnemy(controler, pw, ph, px, py, xv, yv, color); 
 	    } else if (pattern.charAt(c) != ' ') System.out.println("WHAT THE FUCK BRO. I DON'T KNOW HOW TO HANDLE THIS SYMBOL '" + pattern.charAt(c) + "' TAKE IT OUT NOW OR I WILL CRASH!!!!!!");
 
             px += pw;

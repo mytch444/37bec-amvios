@@ -14,15 +14,13 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Player extends Part {
-    private short SHOOTING_DELAY = 5;
-
     Bullet nextBullet;
     float angle;
     short hit;
     boolean showHit;
 
     boolean shooting;
-    short shooting_delay;
+    short shootingDelay;
 
     BufferedImage image, imageHit; 
 
@@ -30,7 +28,8 @@ public class Player extends Part {
         super(c, null);
         angle = 0;
         shooting = false;
-        shooting_delay = SHOOTING_DELAY;
+	shootingDelay = 0;
+	nextBullet = new Bullet(c);
         hit = 0;
         showHit = false;
         yv = 0;
@@ -70,27 +69,28 @@ public class Player extends Part {
         if (y < 0 && yv < 0) y = 0;
         if (y > controler.getHeight() && yv > 0) y = controler.getHeight(); 
         
-        if (shooting && shooting_delay == 0) {
-            if (nextBullet == null) 
-                nextBullet = new Bullet(controler, x, y, angle);
-            else 
-                nextBullet.init(x, y, angle);
+        if (shooting && shootingDelay == 0) {
+	    if (nextBullet == null)
+		nextBullet = new Bullet(controler);
+	    
+	    nextBullet.init(x, y, angle);
+	    shootingDelay = nextBullet.getDelay();
+	    controler.addBullet(nextBullet);
 
-            controler.addBullet(nextBullet);
-            nextBullet = null;
-            shooting_delay = SHOOTING_DELAY;
-        }
-        if (shooting_delay > 0) shooting_delay--;
+	    nextBullet = nextBullet.nextBullet();
+	}
+        if (shootingDelay > 0) shootingDelay--;
     }
 
     public void hit() { 
         hit = 50;
+	controler.playSound(GameSound.PLAYER_HIT);
     }
 
     public void giveBullet(Bullet b) {
-        nextBullet = b;
+	nextBullet = b;
     }
-
+    
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_S) yv = 5;
         if (e.getKeyCode() == KeyEvent.VK_W) yv = -5;
