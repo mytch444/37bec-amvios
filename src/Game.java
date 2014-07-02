@@ -14,19 +14,18 @@ public class Game {
 
     // Main method, this is called by java when the class is run. Fuck java forcing everything into a class.
     public static void main(String[] args) {
-       
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
+	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
 
-	int width = gd.getDisplayMode().getWidth();
-	int height = gd.getDisplayMode().getHeight();
+	int width = gs[0].getDisplayMode().getWidth();
+	int height = gs[0].getDisplayMode().getHeight();
 
         // Create a JFrame (window), set the name, size, visibility and resizable.
 	JFrame frame = new JFrame("37Bec-Amvios");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
-        frame.setUndecorated(true);
+	//	frame.setUndecorated(true);
 
-	gd.setFullScreenWindow(frame);
+	gs[0].setFullScreenWindow(frame);
 	frame.setVisible(false);
 	
 	// Create a custom panel.
@@ -34,8 +33,9 @@ public class Game {
         panel.setPreferredSize(new Dimension(width, height));
         // Add it to the window and reorganise it.
 	frame.add(panel);
-
+	frame.pack();
 	
 	frame.setVisible(true);
+	panel.requestFocus();
     }
 }
