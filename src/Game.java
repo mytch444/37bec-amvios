@@ -25,8 +25,6 @@ public class Game {
 	JFrame frame = new JFrame("37Bec-Amvios");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
         frame.setUndecorated(true);
-	frame.setAlwaysOnTop(true);
-	frame.setVisible(false);
 	
 	// Create a custom panel.
 	GamePanel panel = new GamePanel(width, height);
@@ -34,10 +32,9 @@ public class Game {
         // Add it to the window and reorganise it.
 	frame.add(panel);
 
+	frame.setVisible(false);
 	frame.setVisible(true);
 
 	gd.setFullScreenWindow(frame);
-	
-        panel.requestFocus();
     }
 }
