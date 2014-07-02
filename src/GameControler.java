@@ -244,6 +244,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	    break;
 	case 6: e = new GoldEnemy(this);
 	    break;
+	case 7: e = new ScatterBulletEnemy(this);
+	    break;
+	case 8: e = new KTSBulletEnemy(this);
+	    break;
 	default: e = new Enemy(this, Enemy.PATTERNS[rand.nextInt(Enemy.PATTERNS.length)]);
 	    break;
 	}

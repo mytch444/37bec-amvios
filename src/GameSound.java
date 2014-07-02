@@ -6,7 +6,7 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class GameSound {
-    public static int STREAMS = 9;
+    public static int STREAMS = 10;
     public static int DUPLICATES = 10;
     
     public static int BACKGROUND = 0;
@@ -18,6 +18,7 @@ public class GameSound {
     public static int ENEMY_HIT = 6;
     public static int GOLD_ENEMY_HIT = 7;
     public static int EXPLOSIVE_ENEMY_HIT = 8;
+    public static int KTS_SHOT = 9;
     
 
     Clip[][] clips;
@@ -66,6 +67,11 @@ public class GameSound {
 		clips[EXPLOSIVE_ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/explosive_enemy_hit.wav")));
+
+		clips[KTS_SHOT][i] = AudioSystem.getClip();
+		clips[KTS_SHOT][i].open(
+		      AudioSystem.getAudioInputStream(
+				  getClass().getResourceAsStream("/sounds/kts_shot.wav")));
 
 		
 	    } catch (Exception e) {

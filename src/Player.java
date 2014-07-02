@@ -12,9 +12,11 @@ import java.awt.event.KeyEvent;
 import java.lang.Math;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.util.LinkedList;
 
 public class Player extends Part {
-    Bullet nextBullet;
+    LinkedList<Bullet> nextBullet;
+
     float angle;
     short hit;
     boolean showHit;
@@ -29,7 +31,7 @@ public class Player extends Part {
         angle = 0;
         shooting = false;
 	shootingDelay = 0;
-	nextBullet = new Bullet(c);
+	nextBullet = new LinkedList<Bullet>();
         hit = 0;
         showHit = false;
         yv = 0;
@@ -70,14 +72,18 @@ public class Player extends Part {
         if (y > controler.getHeight() && yv > 0) y = controler.getHeight(); 
         
         if (shooting && shootingDelay == 0) {
-	    if (nextBullet == null)
-		nextBullet = new Bullet(controler);
+	    Bullet b;
+	    if (nextBullet.peekFirst() == null)
+		b = new Bullet(controler);
+	    else
+		b = nextBullet.remove();
 	    
-	    nextBullet.init(x, y, angle);
-	    shootingDelay = nextBullet.getDelay();
-	    controler.addBullet(nextBullet);
+	    b.init(x, y, angle);
+	    shootingDelay = b.getDelay();
+	    controler.addBullet(b);
 
-	    nextBullet = nextBullet.nextBullet();
+	    if (b.nextBullet() != null)
+		nextBullet.push(b.nextBullet());
 	}
         if (shootingDelay > 0) shootingDelay--;
     }
@@ -88,7 +94,7 @@ public class Player extends Part {
     }
 
     public void giveBullet(Bullet b) {
-	nextBullet = b;
+	nextBullet.addLast(b);
     }
     
     public void keyPressed(KeyEvent e) {
