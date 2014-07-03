@@ -7,11 +7,11 @@ import java.awt.Color;
 public class KTSBulletEnemy extends EnemyPart {
 
     public KTSBulletEnemy(GameControler co, short w, short h, float x, float y, float xv, float yv, Color c) {
-	super(co, w, h, x, y, xv, yv, new Color(50, 50, 50), GameSound.EXPLOSIVE_ENEMY_HIT);
+	super(co, w, h, x, y, xv, yv, new Color(150, 150, 150), GameSound.EXPLOSIVE_ENEMY_HIT);
     }
     
     public KTSBulletEnemy(GameControler c) {
-        super(c, new Color(50, 50, 50), GameSound.EXPLOSIVE_ENEMY_HIT);
+        super(c, new Color(150, 150, 150), GameSound.EXPLOSIVE_ENEMY_HIT);
     }
 
     public boolean collides(Bullet b) {

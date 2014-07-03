@@ -13,8 +13,8 @@ public class KTSBullet extends Bullet {
 
     public KTSBullet(GameControler c, int m) {
         super(c);
-	speed = 10;
-        color = new Color(50, 50, 50);
+	speed = 20;
+        color = new Color(150, 150, 150);
         more = m;
     }
 
@@ -24,13 +24,11 @@ public class KTSBullet extends Bullet {
 
     public void init(float x, float y, float angle) {
 	super.init(x, y, angle, false);
-
-	if (more % 10 == 0)
-	    controler.playSound(GameSound.KTS_SHOT);
+	controler.playSound(GameSound.KTS_SHOT);
     }
     
     public short getDelay() {
-	return (short) (1);
+	return (short) (3);
     }
 
     public Bullet nextBullet() {

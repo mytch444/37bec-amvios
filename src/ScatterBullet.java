@@ -28,13 +28,13 @@ public class ScatterBullet extends Bullet {
     public void init(float x, float y, float angle) {
 	super.init(x, y, angle, false);
 
-	for (float a = angle - 0.15f; a < angle + 0.15f; a += 0.05f) {
+	for (float a = -0.1f; a < 0.1f; a += 0.025f) {
 	    ScatterBullet b = new ScatterBullet(controler, 0);
-	    b.initNoMore(x, y, a);
+	    b.initNoMore(x, y, angle + a);
 	    controler.addBullet(b);
 	}
 
-	controler.playSound(GameSound.EXPLOSIVE_SHOT);
+	controler.playSound(GameSound.SCATTER_SHOT);
     }
     
     public short getDelay() {
