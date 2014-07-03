@@ -24,6 +24,10 @@ public class Enemy extends Part {
     short ri, ui; // variables to use for loop iterations (r for render, u for update). This is probably one of the
     // more stupid idea's I've had lately.
 
+    public Enemy(GameControler c) {
+	this(c, PATTERNS[c.getRandom().nextInt(PATTERNS.length)]);
+    }
+    
     // The pattern is the pattern that the enemy will take, *'s are where blocks will be, $ are exploding blocks,
     // space where a space will be and \n (newline)'s move the remaining blocks down a level.
     public Enemy(GameControler co, String pattern) {
