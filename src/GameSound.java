@@ -21,7 +21,7 @@ public class GameSound {
     public static int KTS_SHOT = 9;
 
     Clip[][] clips;
-        
+
     public GameSound() {
 	clips = new Clip[STREAMS][DUPLICATES];
 
@@ -31,50 +31,90 @@ public class GameSound {
 		clips[BULLET][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/bullet.wav")));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[BULLET][i] = null;
+	    }
 
+	    try {
 		clips[EXPLOSIVE_SHOT][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_SHOT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/explosive_shot.wav")));
-		
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[EXPLOSIVE_SHOT][i] = null;
+	    }
+
+	    try {
 		clips[EXPLOSIVE_EXPLODE][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_EXPLODE][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/explosive_explode.wav")));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[EXPLOSIVE_EXPLODE][i] = null;
+	    }
 
+	    try {
 		clips[PLAYER_HIT][i] = AudioSystem.getClip();
 		clips[PLAYER_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/player_hit.wav")));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[PLAYER_HIT][i] = null;
+	    }
 
+	    try {
 		clips[FRIEND_HIT][i] = AudioSystem.getClip();
 		clips[FRIEND_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/friend_hit.wav")));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[FRIEND_HIT][i] = null;
+	    }
 
+	    try {
 		clips[ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/enemy_hit.wav")));
-		
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[ENEMY_HIT][i] = null;
+	    }
+
+	    try {
 		clips[GOLD_ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[GOLD_ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/gold_enemy_hit.wav")));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[GOLD_ENEMY_HIT][i] = null;
+	    }
 
+	    try {
 		clips[EXPLOSIVE_ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/explosive_enemy_hit.wav")));
 
+	    } catch (Exception e) {
+		e.printStackTrace();
+		clips[EXPLOSIVE_ENEMY_HIT][i] = null;
+	    }
+
+	    try {
 		clips[KTS_SHOT][i] = AudioSystem.getClip();
 		clips[KTS_SHOT][i].open(
 		      AudioSystem.getAudioInputStream(
 				  getClass().getResourceAsStream("/sounds/kts_shot.wav")));
-
-		
 	    } catch (Exception e) {
 		e.printStackTrace();
+		clips[KTS_SHOT][i] = null;
 	    }
 	}
 
@@ -82,6 +122,7 @@ public class GameSound {
 
     public void play(int s) {
 	for (int i = 0; i < DUPLICATES; i++) {
+	    if (clips[s][i] == null) continue;
 	    if (!clips[s][i].isRunning()) {
 		clips[s][i].setFramePosition(0);
 		clips[s][i].start();

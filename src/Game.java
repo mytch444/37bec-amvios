@@ -23,7 +23,7 @@ public class Game {
         // Create a JFrame (window), set the name, size, visibility and resizable.
 	JFrame frame = new JFrame("37Bec-Amvios");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
-	//	frame.setUndecorated(true);
+	frame.setUndecorated(true);
 
 	gs[0].setFullScreenWindow(frame);
 	frame.setVisible(false);
