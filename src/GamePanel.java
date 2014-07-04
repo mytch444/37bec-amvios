@@ -66,7 +66,7 @@ public class GamePanel extends JPanel {
 
         // Create and start the threads.
         uloop = new UpdaterThread(this, TIME);
-        rloop = new RenderThread(this, TIME);
+        rloop = new RenderThread(this, TIME * 2);
         rloop.start();
     }
 

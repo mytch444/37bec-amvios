@@ -288,6 +288,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	competitionMessage = "Try beat '" + highscoreHolder + "' with " + highscore;
 	winningMessage = "Who da man? You da man!";
 	isHighscore = false;
+	highscoreMessage = competitionMessage;
+	
         try {
 
             File file = Game.HIGHSCORES_FILE();
@@ -302,11 +304,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	    highscoreHolder = parts[0];
 	    highscore = Long.parseLong(parts[1]);
 	    competitionMessage = "Try beat '" + highscoreHolder + "' with " + highscore;
+	    highscoreMessage = competitionMessage;
         } catch (Exception e) {
             e.printStackTrace();
 	}
-
-	highscoreMessage = competitionMessage;
     }
 
     public Random getRandom() {

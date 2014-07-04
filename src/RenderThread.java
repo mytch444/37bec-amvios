@@ -31,6 +31,8 @@ public class RenderThread extends Thread {
                 } catch (Exception e) {}
             }
 
+	    // Now wait until the frame is up. Other wise it just screws up if it runs
+	    // flat out. Uses too many resources and starts lagging.
 	    time = frameTime - (System.currentTimeMillis() - start);
 	    if (time > 0) {
                 try {
