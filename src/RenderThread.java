@@ -5,26 +5,38 @@
 import java.awt.Graphics;
 
 public class RenderThread extends Thread {
-	GamePanel panel;
+    GamePanel panel;
     boolean end;
-
-	public RenderThread(GamePanel p) {
-		panel = p;
-	}
+    long frameTime;
+    
+    public RenderThread(GamePanel p, long f) {
+	panel = p;
+	frameTime = f;
+    }
 	
     public void run() {
+	long start, time;
         end = false;
 	
         while (!end) {
+	    start = System.currentTimeMillis();
+	    
             panel.repaint();
 
 	    // But wait until I've finished drawing before you tell me to draw again.
 	    // Else I'll never finish anything.
             while (!panel.frameDone()) {
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(5);
                 } catch (Exception e) {}
             }
+
+	    time = frameTime - (System.currentTimeMillis() - start);
+	    if (time > 0) {
+                try {
+                    Thread.sleep(time);
+                } catch (Exception e) {}
+	    } else System.out.println("Render out of time " + time);
 	}
     }
 

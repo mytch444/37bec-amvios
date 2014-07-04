@@ -118,7 +118,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2);
 	    }
 	    // If it's ended paint the highscores box.
-            if (end) hsbox.paint(g);
+            if (end && hsbox != null) hsbox.paint(g);
         }
     }
 
