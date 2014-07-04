@@ -19,7 +19,7 @@ public class Star {
     public Star(GameControler co) {
 	controler = co;
 	setPlace();
-        a = (short)controler.getRandom().nextInt(MAX_BRIGHTNESS);
+        a = (short) controler.getRandom().nextInt(MAX_BRIGHTNESS);
     }
 
     /*
@@ -49,10 +49,16 @@ public class Star {
 	// that of stars.
 	
 	a = 0;
-        r = (short) controler.getRandom().nextInt(255);
         g = 255;
-	if (r < 50) b = 255;
-        else b = (short) controler.getRandom().nextInt(255);
+
+	if (controler.getRandom().nextInt(2) == 1) {
+	    r = (short) controler.getRandom().nextInt(100);
+	    b = 255;
+	} else {
+	    r = 255;
+	    b = (short) controler.getRandom().nextInt(100);
+	}
+
 	brighter = true;
     }
 }

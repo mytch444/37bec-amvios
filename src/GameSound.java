@@ -32,7 +32,7 @@ public class GameSound {
 		clips[BULLET][i] = AudioSystem.getClip();
 		clips[BULLET][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/bullet.wav")));
+				  getClass().getResource("/sounds/bullet.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading bullet sound");
 		e.printStackTrace();
@@ -43,7 +43,7 @@ public class GameSound {
 		clips[EXPLOSIVE_SHOT][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_SHOT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/explosive_shot.wav")));
+				  getClass().getResource("/sounds/explosive_shot.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading explosive shot sound");
 		e.printStackTrace();
@@ -54,7 +54,7 @@ public class GameSound {
 		clips[EXPLOSIVE_EXPLODE][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_EXPLODE][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/explosive_explode.wav")));
+				  getClass().getResource("/sounds/explosive_explode.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading explosive explode sound");
 		e.printStackTrace();
@@ -65,7 +65,7 @@ public class GameSound {
 		clips[PLAYER_HIT][i] = AudioSystem.getClip();
 		clips[PLAYER_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/player_hit.wav")));
+				  getClass().getResource("/sounds/player_hit.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading player hit sound");
 		e.printStackTrace();
@@ -76,7 +76,7 @@ public class GameSound {
 		clips[FRIEND_HIT][i] = AudioSystem.getClip();
 		clips[FRIEND_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/friend_hit.wav")));
+				  getClass().getResource("/sounds/friend_hit.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading friend hit sound");
 		e.printStackTrace();
@@ -87,7 +87,7 @@ public class GameSound {
 		clips[ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/enemy_hit.wav")));
+				  getClass().getResource("/sounds/enemy_hit.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading enemy hit sound");
 		e.printStackTrace();
@@ -98,7 +98,7 @@ public class GameSound {
 		clips[GOLD_ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[GOLD_ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/gold_enemy_hit.wav")));
+				  getClass().getResource("/sounds/gold_enemy_hit.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading gold enemy hit sound");
 		e.printStackTrace();
@@ -109,7 +109,7 @@ public class GameSound {
 		clips[EXPLOSIVE_ENEMY_HIT][i] = AudioSystem.getClip();
 		clips[EXPLOSIVE_ENEMY_HIT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/explosive_enemy_hit.wav")));
+				  getClass().getResource("/sounds/explosive_enemy_hit.wav")));
 
 	    } catch (Exception e) {
 		System.out.println("Error loading explosive enemy sound");
@@ -121,7 +121,7 @@ public class GameSound {
 		clips[KTS_SHOT][i] = AudioSystem.getClip();
 		clips[KTS_SHOT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/kts_shot.wav")));
+				  getClass().getResource("/sounds/kts_shot.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading kts shot sound");
 		e.printStackTrace();
@@ -132,7 +132,7 @@ public class GameSound {
 		clips[SCATTER_SHOT][i] = AudioSystem.getClip();
 		clips[SCATTER_SHOT][i].open(
 		      AudioSystem.getAudioInputStream(
-				  getClass().getResourceAsStream("/sounds/scatter_shot.wav")));
+				  getClass().getResource("/sounds/scatter_shot.wav")));
 	    } catch (Exception e) {
 		System.out.println("Error loading scatter shot sound");
 		e.printStackTrace();

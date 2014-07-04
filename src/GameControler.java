@@ -26,7 +26,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     // Stuff for the current highscore, must feed the competition.
     String highscoreHolder;
     long highscore;
-    String cimessage;
+    String winningMessage, competitionMessage, highscoreMessage;
+    boolean isHighscore;
 
     long score;
     int lives;
@@ -102,14 +103,20 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
-        g.drawString(cimessage, getWidth() - metrics.stringWidth(cimessage) - 20, 20);
-
+	g.drawString(highscoreMessage, getWidth() - metrics.stringWidth(highscoreMessage) - 20, 20);
+	
 	// If paused or the game has ended show such.
-        if (paused || end) {
+        if (paused) {
             g.setColor(Color.white);
-            message = "Paused";
-            if (end) message = "Game Over";
-            g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+            if (end) {
+		message = "Game Over";
+		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+	    } else {
+		message = "Paused";
+		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+		message = "Press 'q' to resume.";
+		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2);
+	    }
 	    // If it's ended paint the highscores box.
             if (end) hsbox.paint(g);
         }
@@ -123,8 +130,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
     
     public void update() {
-        short i, j;
-        if (paused || end) return;
+        if (paused) return;
+	short i, j;
 
         player.update();
  
@@ -134,7 +141,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         if (rand.nextInt(1000) == 0) others.add(new Friend(this));
         if (rand.nextInt(addChance--) == 0) {
             others.add(newEnemy());
-            if (addChance < 50) addChance = 50;
+            if (addChance < 30) addChance = 30;
         }
 
         for (i = 0; i < others.size(); i++) {
@@ -155,15 +162,25 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
                 if (p.collides(b)) b.hitSomething();
             }
         }
-
-        if (lives < 1) {
-            if (hsbox == null) hsbox = new HighscoreBox(this, score);
-            end = true;
-        }
-
-	if (score > highscore) {
-	    cimessage = "Who da man? You da man!";
+	
+	if (!isHighscore && score > highscore) {
+	    isHighscore = true;
+	    highscoreMessage = winningMessage;
+	} else if (isHighscore && score < highscore) {
+	    isHighscore = false;
+	    highscoreMessage = competitionMessage;
 	}
+
+	if (lives < 1) {
+            if (hsbox == null) {
+		if (HighscoreBox.isHighscore(score))
+		    hsbox = new HighscoreBox(this, score);
+		else
+		    panel.setMode(GamePanel.HIGHSCORE_MENU);
+	    }
+            end = true;
+	    paused = true;
+        }
     }
 
     public int getWidth() {
@@ -195,6 +212,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void resume() {
+	if (end) return;
         paused = false;
     }
     
@@ -267,11 +285,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void readHighscore() {
         highscore = 0;
         highscoreHolder = "nobody";
-	cimessage = "Try beat '" + highscoreHolder + "' with " + highscore;
+	competitionMessage = "Try beat '" + highscoreHolder + "' with " + highscore;
+	winningMessage = "Who da man? You da man!";
+	isHighscore = false;
         try {
 
-            File file = new File(Game.HIGHSCORES_FILE());
-            if (!file.exists()) file.createNewFile();
+            File file = Game.HIGHSCORES_FILE();
 
             BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -282,10 +301,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (parts.length != 2) return;
 	    highscoreHolder = parts[0];
 	    highscore = Long.parseLong(parts[1]);
-	    cimessage = "Try beat '" + highscoreHolder + "' with " + highscore;
+	    competitionMessage = "Try beat '" + highscoreHolder + "' with " + highscore;
         } catch (Exception e) {
             e.printStackTrace();
 	}
+
+	highscoreMessage = competitionMessage;
     }
 
     public Random getRandom() {
@@ -314,7 +335,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void mouseMoved(MouseEvent e) {
-        if (paused || end) return;
+        if (paused) return;
 	cx = e.getX();
 	cy = e.getY();
         player.mouseMoved(cx, cy);
@@ -322,17 +343,17 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void keyTyped(KeyEvent e) {
         if (end) return;
-        if (e.getKeyChar() == ' ') panel.setMode(GamePanel.PAUSE);
+        if (e.getKeyChar() == 'q') panel.setMode(GamePanel.PAUSE);
     }
 
     public void keyPressed(KeyEvent e) {
-        if (paused || end) return;
+        if (paused) return;
         player.keyPressed(e);
 	player.mouseMoved(cx, cy);
     }
     
     public void keyReleased(KeyEvent e) {
-        if (paused || end) return;
+        if (paused) return;
         player.keyReleased(e);
 	player.mouseMoved(cx, cy);
     }

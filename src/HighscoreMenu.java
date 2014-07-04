@@ -25,13 +25,18 @@ public class HighscoreMenu {
         foot = "Click <New Game> for the obvious result.";
     
         metrics = p.getGraphics().getFontMetrics(p.getFont());
-        h = 20;
+
+	readScores();
+    }
+
+    public void readScores() {
+	h = 20;
         w = metrics.stringWidth(foot) + 40;
 
         // Read through the file and save the scores to an arraylist.
         try {
-            File file = new File(Game.HIGHSCORES_FILE());
-            if (!file.exists()) file.createNewFile();
+            File file = Game.HIGHSCORES_FILE();
+  
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String line;

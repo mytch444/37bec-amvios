@@ -16,7 +16,7 @@ public class GameButton implements MouseListener {
     FontMetrics metrics;
 
     // The panel, location and size in x, y, w, h, the state to be changed to when clicked and the message.
-	public GameButton(GamePanel p, int x, int y, int w, int h, int m, String n) {
+    public GameButton(GamePanel p, int x, int y, int w, int h, int m, String n) {
         panel = p;
 
         this.x = x;
@@ -27,9 +27,9 @@ public class GameButton implements MouseListener {
         this.name = n;
 
         panel.addMouseListener(this);
-	}
+    }
 	
-	public void paint(Graphics g) {
+    public void paint(Graphics g) {
         metrics = g.getFontMetrics();
         
         g.setColor(Color.white);

@@ -25,6 +25,9 @@ public class Part {
     public void paint(Graphics g) {}
     public void update() {}
 
+    public Color getColor() { return color; }
+    public void setColor(Color c) { color = c; }
+
     public float getX() { return x; }
     public void setX(float x) { this.x = x; }
     

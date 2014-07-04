@@ -16,7 +16,6 @@ public class HighscoreBox implements KeyListener {
     int cursor;
     int x, y, w, h;
     FontMetrics metrics;
-    boolean highscore;
     String error;
 
     public HighscoreBox(GameControler c, long s) {
@@ -36,15 +35,65 @@ public class HighscoreBox implements KeyListener {
         x = controler.getWidth() / 2 - w / 2;
         y = controler.getHeight() / 2 - h / 2;
 
-        highscore = true;
- 
-        /*
+        controler.getPanel().addKeyListener(this);
+    }
+
+    public void paint(Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(x, y, w, h);
+        g.setColor(Color.white);
+        g.drawRect(x, y, w, h);
+
+        String mess = "Highscore! Enter your name below:";
+        g.drawString(mess, x + w / 2 - metrics.stringWidth(mess) / 2, y + h / 2 - metrics.getHeight() / 3 * 2);
+
+        int lx = x + w / 2 - metrics.stringWidth(new String(name, 0, len)) / 2;
+        int ly = y + h / 2 + metrics.getHeight() / 3 * 2;
+        g.drawString(new String(name), lx, ly);
+        g.drawString("_", lx + metrics.stringWidth(new String(name, 0, cursor)), ly);
+
+        if (error != null) {
+            g.drawString(error, x + w / 2 - metrics.stringWidth(error) / 2, y + h - metrics.getHeight());
+        }
+    }
+
+    public void keyTyped(KeyEvent e) {
+        int c = e.getKeyChar();
+
+        if (c == '\n') save();
+        else if (cursor < 63 && c >= ' ' && c <= '~') {
+            for (int i = name.length - 2; i > cursor; i--) name[i] = name[i - 1];
+            name[cursor++] = e.getKeyChar();
+            if (len < 63) len++;
+        }
+    }
+   
+    public void keyPressed(KeyEvent e) {
+        int c = e.getKeyCode();
+        if (c == KeyEvent.VK_BACK_SPACE && cursor > 0) {
+            for (int i = --cursor; name[i] != '\0'; i++) name[i] = name[i + 1];
+            if (len > 0) len--;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT && cursor > 0) {
+            cursor--;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && name[cursor] != '\0') {
+            cursor++;
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {}
+
+    /*
+     * Check if the score is a highscore, return true if it is, false otherwise.
+     */
+    public static boolean isHighscore(long score) {
+	/*
          * Check the highscores file to see if this is a highscore.
          */
         try {
             // Create a file object from the filename.
-            File file = new File(Game.HIGHSCORES_FILE());
-            if (!file.exists()) file.createNewFile();
+            File file = Game.HIGHSCORES_FILE();
 
             // Create a buffered reader.
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -66,39 +115,14 @@ public class HighscoreBox implements KeyListener {
             }
             // If there are less than ten scores then it is by default a highscore.
             if (num < 10) ishighscore = true;
-            // If it is not a highscore then change to panel mode to view highscores.
-            if (!ishighscore) {
-                controler.getPanel().setMode(GamePanel.HIGH_SCORE_MENU);
-                highscore = false;
-                return;
-            }
+
+	    if (!ishighscore)
+		return false;
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
-        // I am listening to EVERY KEY YOU PRESS!!!!!
-        controler.getPanel().addKeyListener(this);
-    }
-
-    public void paint(Graphics g) {
-        if (!highscore) return;
-
-        g.setColor(Color.black);
-        g.fillRect(x, y, w, h);
-        g.setColor(Color.white);
-        g.drawRect(x, y, w, h);
-
-        String mess = "Highscore! Enter your name below:";
-        g.drawString(mess, x + w / 2 - metrics.stringWidth(mess) / 2, y + h / 2 - metrics.getHeight() / 3 * 2);
-
-        int lx = x + w / 2 - metrics.stringWidth(new String(name, 0, len)) / 2;
-        int ly = y + h / 2 + metrics.getHeight() / 3 * 2;
-        g.drawString(new String(name), lx, ly);
-        g.drawString("_", lx + metrics.stringWidth(new String(name, 0, cursor)), ly);
-
-        if (error != null) {
-            g.drawString(error, x + w / 2 - metrics.stringWidth(error) / 2, y + h - metrics.getHeight());
-        }
+	
+	return true;
     }
 
     /*
@@ -113,12 +137,8 @@ public class HighscoreBox implements KeyListener {
         }
         try {
             // Open the file and a temp of it.
-            File tmp = new File(Game.HIGHSCORES_FILE() + "tmp");
-            File file = new File(Game.HIGHSCORES_FILE());
-
-            // If they don't exist then create them.
-            if (!tmp.exists()) tmp.createNewFile();
-            if (!file.exists()) file.createNewFile();
+            File file = Game.HIGHSCORES_FILE();
+	    File tmp = File.createTempFile("37bec-amvios", ".highscore");
 
             BufferedReader br = new BufferedReader(new FileReader(file));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(tmp)));
@@ -164,38 +184,10 @@ public class HighscoreBox implements KeyListener {
             controler.getPanel().removeKeyListener(this);
 
             // Change the mode to view the highscores
-            controler.getPanel().setMode(GamePanel.HIGH_SCORE_MENU);
-            highscore = false; // Stops it from showing the box.
+            controler.getPanel().setMode(GamePanel.HIGHSCORE_MENU);
         } catch (Exception e) {
             System.out.println("An error occured when trying to save your score");
             e.printStackTrace();
         }
     }
-
-    public void keyTyped(KeyEvent e) {
-        int c = e.getKeyChar();
-
-        if (c == '\n') save();
-        else if (cursor < 63 && c >= ' ' && c <= '~') {
-            for (int i = name.length - 2; i > cursor; i--) name[i] = name[i - 1];
-            name[cursor++] = e.getKeyChar();
-            if (len < 63) len++;
-        }
-    }
-   
-    public void keyPressed(KeyEvent e) {
-        int c = e.getKeyCode();
-        if (c == KeyEvent.VK_BACK_SPACE && cursor > 0) {
-            for (int i = --cursor; name[i] != '\0'; i++) name[i] = name[i + 1];
-            if (len > 0) len--;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT && cursor > 0) {
-            cursor--;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && name[cursor] != '\0') {
-            cursor++;
-        }
-    }
-
-    public void keyReleased(KeyEvent e) {}
 }

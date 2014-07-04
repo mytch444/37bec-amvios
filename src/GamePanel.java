@@ -1,4 +1,4 @@
-/*
+ /*
  * A custom panel that handles the game and menus.
  */
 
@@ -14,15 +14,15 @@ public class GamePanel extends JPanel {
 
     // Panel event codes would be a good name I suppose.
     public static int NEW_GAME = 0;
-    public static int HIGH_SCORE_MENU = 1;
+    public static int HIGHSCORE_MENU = 1;
     public static int QUIT = 2;
     public static int PAUSE = 3;
 
     // Things that get shown depending on their state.
+    GameMenu menu;
     GameControler controler;
     HighscoreMenu hsmenu;
     GameStartMenu gsmenu;
-    GameMenu menu;
 
     // This will handle all sounds. Having one will hopefully help a lot rather than having lag with
     // just bullet sounds. And that's the normal bullets. I don't even want to know how the lasers would
@@ -58,6 +58,8 @@ public class GamePanel extends JPanel {
         }
 
 	sound = new GameSound();
+
+	gsmenu = new GameStartMenu(this);
         
         mode = -1;
         painting = false;
@@ -65,66 +67,66 @@ public class GamePanel extends JPanel {
         // Create and start the threads.
         uloop = new UpdaterThread(this, TIME);
         rloop = new RenderThread(this);
-        uloop.start();
         rloop.start();
     }
 
     public void paintComponent(Graphics g) {
         painting = true;
 
-	requestFocus();
+	// requestFocus(); // I don't like this being here. I souldn't have to demand attention constantly.
 
-        if (mode == -1) {
-            g.setFont(font);
-            menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
-            setMode(NEW_GAME);
-        }
+        if (mode == -1) init(g);
         
         controler.paint(g);
         menu.paint(g);
-       
-        if (hsmenu != null) 
-            hsmenu.paint(g); 
-        if (gsmenu != null)
-            gsmenu.paint(g);
+
+	if (hsmenu != null)
+	    hsmenu.paint(g); 
+	gsmenu.paint(g);
 
         painting = false;
     }  
 
     public void update() {
-        if (controler == null) return;
         controler.update();
+    }
+
+    public void init(Graphics g) {
+	g.setFont(font);
+	menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
+	setMode(NEW_GAME);
+	uloop.start();
     }
 
     public void setMode(int m) {
         mode = m;
 
         if (m == NEW_GAME) newMenuGame();
-        else if (m == HIGH_SCORE_MENU) showHighScores();
+        else if (m == HIGHSCORE_MENU) showHighScores();
         else if (m == QUIT) quit();
         else if (m == PAUSE) pause();
     }
 
     private void newMenuGame() {
         hsmenu = null;
-        gsmenu = new GameStartMenu(this);
-        controler = new GameControler(this, getWidth(), getHeight() - menu.getHeight());
+        gsmenu.show();
+        controler = new GameControler(this, getWidth(), getHeight() - 50);
     }
 
     public void startGame() {
-        gsmenu = null;
+	gsmenu.hide();
         controler.resume();
     }
 
     private void showHighScores() {
 	controler.pause();
         hsmenu = new HighscoreMenu(this);
-        gsmenu = null;
+        gsmenu.hide();
     }
 
     public void pause() {
         hsmenu = null;
-        gsmenu = null;
+        gsmenu.hide();
         controler.togglepause();
     }
 

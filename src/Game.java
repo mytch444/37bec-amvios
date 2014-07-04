@@ -8,24 +8,28 @@ import java.io.*;
 
 public class Game {
     // Function to return the name and path of the highscores file.
-    public static String HIGHSCORES_FILE() {
-        return System.getProperty("user.home") + "/.37bec-amvios";
+    public static File HIGHSCORES_FILE() throws IOException {
+        File file = new File(System.getProperty("user.home") + "/.37bec-amvios");
+	if (!file.exists()) file.createNewFile();
+
+	return file;
     }
 
     // Main method, this is called by java when the class is run. Fuck java forcing everything into a class.
     public static void main(String[] args) {
 	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice[] gs = ge.getScreenDevices();
+	//        GraphicsDevice gs = ge.getScreenDevices();
+	GraphicsDevice gd = ge.getDefaultScreenDevice(); 
 
-	int width = gs[0].getDisplayMode().getWidth();
-	int height = gs[0].getDisplayMode().getHeight();
+	int width = gd.getDisplayMode().getWidth();
+	int height = gd.getDisplayMode().getHeight();
 
         // Create a JFrame (window), set the name, size, visibility and resizable.
 	JFrame frame = new JFrame("37Bec-Amvios");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cause the program to stop when the window is closed.
 	frame.setUndecorated(true);
 
-	gs[0].setFullScreenWindow(frame);
+	gd.setFullScreenWindow(frame);
 	frame.setVisible(false);
 	
 	// Create a custom panel.

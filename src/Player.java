@@ -51,7 +51,7 @@ public class Player extends Part {
 
     public void paint(Graphics g1) {
         Graphics2D g = (Graphics2D) g1;
-	double a = angle;
+	float a = angle;
 	short x = (short) this.x;
 	short y = (short) this.y;
 	g.rotate(a, x, y);
@@ -119,6 +119,6 @@ public class Player extends Part {
 	float dx = x - cx;
 	float dy = y - cy;
 	if (dx == 0) angle = 0;
-	else angle = (float)Math.atan(dy / dx);
+	else angle = (float) Math.atan(dy / dx);
     }
 }

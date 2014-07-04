@@ -2,52 +2,50 @@
  * Shows some instructions, rather bad ones but that's half the point.
  */
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.*;
 
 public class GameStartMenu implements KeyListener {
 
+    static String[] message = new String[] {
+	"37Bec-Amvios",
+	"",
+	"This is by general consensus of the population of me considered",
+	"the best game ever created by a mortal.",
+	"",
+	"Don't let any SQUARES get past you or they will do horrible things",
+	"behind you. For those of you who have problems with logic, that means",
+	"leave the triangles alone.",
+	"",
+	"Move up and down with <w> and <s>. Aim and shoot with that annoyingly",
+	"useless thing called a mouse. <q> to toggle pause.",
+	"",
+	"You can also stop them by placing yourself between them and the end,",
+	"this will gain you 10 times as many points as if you shot them but will", 
+	"immobilise you for a short time.",
+	"",
+	"DON'T DIE.",
+	"",
+	"And if you manage to, then good job, because I havn't added any way",
+	"for you to.",
+	"",
+	"Now press a key to start."
+    };
+
     GamePanel panel;
     int x, y, w, h;
-    String head;
     FontMetrics metrics;
-    String[] message;
+    boolean show;
 
     public GameStartMenu(GamePanel p) {
         panel = p;
-        p.addKeyListener(this);
+	show = false;
+    }
 
-        metrics = p.getGraphics().getFontMetrics(p.getFont());
-        
-        message = new String[] {
-            "37Bec-Amvios",
-	    "",
-	    "This is by general consensus of the population of me considered",
-	    "the best game ever created by a mortal.",
-	    "",
-	    "Don't let any SQUARES get past you or they will do horrible things",
-	    "behind you. For those of you who have problems with logic, that means",
-	    "leave the triangles alone.",
-	    "",
-	    "Move up and down with <w> and <s>. Aim and shoot with that annoyingly",
-	    "useless thing called a mouse. Space to pause.",
-	    "",
-	    "You can also stop them by placing yourself between them and the end,",
-	    "this will gain you 10 times as many points as if you shot them but will", 
-	    "immobilise you for a short time.",
-	    "",
-	    "DON'T DIE.",
-	    "",
-	    "And if you manage to, then good job, because I havn't added any way",
-	    "for you to.",
-	    "",
-	    "Now press a key to start."
-        };
-
-        h = 20;
+    public void position() {
+	metrics = panel.getGraphics().getFontMetrics(panel.getFont());
+	
+	h = 20;
         w = 20;
 
         for (int i = 0; i < message.length; i++) {
@@ -62,6 +60,8 @@ public class GameStartMenu implements KeyListener {
     }
 
     public void paint(Graphics g) {
+	if (!show) return;
+	
         g.setColor(Color.black);
         g.fillRect(x, y, w, h);
         g.setColor(Color.white);
@@ -74,9 +74,19 @@ public class GameStartMenu implements KeyListener {
         }
     }
 
+    public void show() {
+	show = true;
+	position();
+        panel.addKeyListener(this);
+    }
+    
+    public void hide() {
+	show = false;
+	panel.removeKeyListener(this);
+    }
+    
     public void keyReleased(KeyEvent e) {
-        panel.removeKeyListener(this);
-        panel.startGame();
+	panel.startGame();
     }
 
     public void keyTyped(KeyEvent e) {}
