@@ -13,12 +13,9 @@ public class UpdaterThread extends Thread {
     }
 	
     public void run() {
-        long start, time;
+	long start, time;
 
         end = false;
-        /*
-         * Repeat this until end becomes true. So until something calls the end method.
-         */
 	while (!end) {
             start = System.currentTimeMillis();
 

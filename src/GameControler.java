@@ -88,8 +88,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void paint(Graphics g) {
-        short i;
         String message;
+	short i;
 
 	background(g);
 
@@ -145,7 +145,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         }
 
         for (i = 0; i < others.size(); i++) {
-            Part p = others.get(i);
+	    Part p = others.get(i);
             if (!p.isAlive()) {
                 removeOther(p);
                 continue;
@@ -158,10 +158,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             }
 
             for (j = 0; j < bullets.size(); j++) {
-                Bullet b = bullets.get(j);
+		Bullet b = bullets.get(j);
                 if (p.collides(b)) b.hitSomething();
-            }
-        }
+	    }
+	}
 	
 	if (!isHighscore && score > highscore) {
 	    isHighscore = true;
@@ -229,6 +229,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         player.giveBullet(b);
     }
 
+    public void givePlayerSpecialBullet(Bullet b) {
+	player.giveSpecialBullet(b);
+    }
+
     public void addBullet(Bullet b) {
         bullets.add(b);
     }
@@ -268,6 +272,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 	    case 7: e = new ScatterBulletEnemy(this);
 		break;
 	    case 8: e = new KTSBulletEnemy(this);
+		break;
+	    case 9: e = new WallLaserBulletEnemy(this);
 		break;
 	    default: e = new Enemy(this);
 		break;

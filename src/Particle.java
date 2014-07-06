@@ -15,8 +15,12 @@ public class Particle extends Part  {
    
     short a, r, g, b;
 
-    public Particle(GameControler co, short alpha, short red, short green, short blue, float x, float y, Bullet b, float maxSpeed, float O) {
-        super(co, null);
+    public Particle(GameControler co,
+		    short alpha, short red, short green, short blue,
+		    float x, float y,
+		    float d,
+		    float maxSpeed, float O) {
+        super(co, new Color(red, green, blue, alpha));
         this.x = x;
         this.y = y;
         this.w = 5;
@@ -25,11 +29,6 @@ public class Particle extends Part  {
         this.r = red;
         this.g = green;
         this.b = blue;
-        color = new Color(this.r, this.g, this.b, this.a);
-
-        float xd = x - b.getX();
-        float yd = y - b.getY();
-        float d = (float) Math.sqrt(xd * xd + yd * yd);
 
         // Work out a good speed based on how far away the bullet impact was.
         float speed = -(maxSpeed / 900) * (d - 30) * (d + 30);

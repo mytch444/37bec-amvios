@@ -104,12 +104,14 @@ public class EnemyPart extends Part {
         short h = (short) (this.h / 5);
 
         float speed = b.getSpeed() / -8;
+	// If the bullet is going increadibly fucking fast then it can pretty much just pass through.
+	if (speed < -10) speed = 0.25f;
 
 	// Some general direction stuff.
         float O;
         if (b.getXV() == 0) O = 0;
         else O = (float) Math.atan(b.getYV() / b.getXV());
-
+	
 	// Some color stuff.
         short alpha = (short) color.getAlpha();
         short red = (short) color.getRed();
@@ -119,8 +121,16 @@ public class EnemyPart extends Part {
         particles = new Particle[w * h];
         for (short x = 0; x < w; x++) {
             for (short y = 0; y < h; y++) {
+		float px = this.x + x * 5;
+		float py = this.y + y * 5;
+
+		float xd = px - b.getX();
+		float yd = py - b.getY();
+		if (yd > this.h || yd < 0) yd = 0;
+		float d = (float) Math.sqrt(xd * xd + yd * yd);
+
                 particles[y * w + x] = new Particle(controler, alpha, red, green, blue,
-                        this.x + x * 5, this.y + y * 5, b, speed, O);
+						    px, py, d, speed, O);
             }
         }
 

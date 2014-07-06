@@ -51,10 +51,10 @@ public class Bullet extends Part {
         x += xv;
         y += yv;
 
-        if (x < -SPEED) controler.removeBullet(this);
-        if (x > controler.getWidth() + SPEED) controler.removeBullet(this);
-        if (y < -SPEED) controler.removeBullet(this);
-        if (y > controler.getHeight() + SPEED) controler.removeBullet(this);
+        if (x < -SPEED ||
+	    x > controler.getWidth() + SPEED ||
+	    y < -SPEED ||
+	    y > controler.getHeight() + SPEED) controler.removeBullet(this);
     }
 
     public void hitSomething() {

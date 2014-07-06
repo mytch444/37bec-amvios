@@ -96,6 +96,11 @@ public class Player extends Part {
     public void giveBullet(Bullet b) {
 	nextBullet.addLast(b);
     }
+
+    public void giveSpecialBullet(Bullet b) {
+	b.init(x, y, angle);
+	controler.addBullet(b);
+    }
     
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_S) yv = 5;
