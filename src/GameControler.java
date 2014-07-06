@@ -97,14 +97,14 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             bullets.get(i).paint(g);
 
         player.paint(g);
-      
+
         for (i = 0; i < others.size(); i++)
             others.get(i).paint(g);
-
+	
         g.setColor(Color.white);
         g.drawString("Score: " + score + "       Lives: " + lives, 20, 20);
 	g.drawString(highscoreMessage, getWidth() - metrics.stringWidth(highscoreMessage) - 20, 20);
-	
+		
 	// If paused or the game has ended show such.
         if (paused) {
             g.setColor(Color.white);
@@ -123,8 +123,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     }
 
     public void background(Graphics g) {
-	g.setColor(Color.black);
-	g.fillRect(0, 0, getWidth(), getHeight());
+	//	g.setColor(Color.black);
+	//	g.fillRect(0, 0, getWidth(), getHeight());
 
 	for (short i = 0; i < stars.length; i++) stars[i].paint(g);
     }

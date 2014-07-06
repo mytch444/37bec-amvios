@@ -32,7 +32,7 @@ public class GamePanel extends JPanel {
     // A thread that will continue to update this panel every so often (60 times a second or so).
     UpdaterThread uloop;
     // A thread that will repaint the panel as soon as it has finished painting the panel.
-    RenderThread rloop;
+    RenderTimer rtimer;
     boolean painting;
     
     int mode;
@@ -66,18 +66,20 @@ public class GamePanel extends JPanel {
 
         // Create and start the threads.
         uloop = new UpdaterThread(this, TIME);
-        rloop = new RenderThread(this, TIME * 2);
-        rloop.start();
+        rtimer = new RenderTimer(this, TIME * 2);
+	rtimer.start();
     }
 
     public void paintComponent(Graphics g) {
-        painting = true;
+	painting = true;
 
-	// requestFocus(); // I don't like this being here. I souldn't have to demand attention constantly.
+	super.paintComponent(g);
+
+	//	requestFocus(); // I don't like this being here. I souldn't have to demand attention constantly.
 
         if (mode == -1) init(g);
-        
-        controler.paint(g);
+
+	controler.paint(g);
         menu.paint(g);
 
 	if (hsmenu != null)
@@ -116,6 +118,7 @@ public class GamePanel extends JPanel {
     public void startGame() {
 	gsmenu.hide();
         controler.resume();
+	requestFocus();
     }
 
     private void showHighScores() {
@@ -136,7 +139,7 @@ public class GamePanel extends JPanel {
 
     // Call this to close the frame and exit the program.
     public void quit() {
-	rloop.end();
+	rtimer.end();
         uloop.end();
         ((JFrame) SwingUtilities.getRoot(this)).dispose();
     }
