@@ -6,7 +6,7 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class GameSound {
-    public static int STREAMS = 11;
+    public static int STREAMS = 12;
     public static int DUPLICATES = 10;
     
     public static int BACKGROUND = 0;
@@ -20,6 +20,7 @@ public class GameSound {
     public static int EXPLOSIVE_ENEMY_HIT = 8;
     public static int KTS_SHOT = 9;
     public static int SCATTER_SHOT = 10;
+    public static int WALL_LASER_SETUP = 11;
 
     Clip[][] clips;
 
@@ -139,18 +140,34 @@ public class GameSound {
 		clips[SCATTER_SHOT][i] = null;
 	    }
 
+	    try {
+		clips[WALL_LASER_SETUP][i] = AudioSystem.getClip();
+		clips[WALL_LASER_SETUP][i].open(
+		      AudioSystem.getAudioInputStream(
+				  getClass().getResource("/sounds/wall_laser_setup.wav")));
+	    } catch (Exception e) {
+		System.out.println("Error loading wall laser setup sound");
+		e.printStackTrace();
+		clips[WALL_LASER_SETUP][i] = null;
+	    }
+
 	}
 
     }
 
-    public void play(int s) {
+    public int play(int s) {
 	for (int i = 0; i < DUPLICATES; i++) {
 	    if (clips[s][i] == null) continue;
 	    if (!clips[s][i].isRunning()) {
 		clips[s][i].setFramePosition(0);
 		clips[s][i].start();
-		return;
+		return i;
 	    }
 	}
+	return -1;
+    }
+
+    public void stop(int s, int i) {
+	clips[s][i].stop();
     }
 }

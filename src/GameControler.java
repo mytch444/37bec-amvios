@@ -320,8 +320,12 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         return rand;
     }
 
-    public void playSound(int s) {
-	panel.playSound(s);
+    public int playSound(int s) {
+	return panel.playSound(s);
+    }
+
+    public void stopSound(int s, int i) {
+	panel.stopSound(s, i);
     }
 
     public void mousePressed(MouseEvent e) {

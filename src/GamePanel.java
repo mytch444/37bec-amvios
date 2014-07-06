@@ -149,7 +149,11 @@ public class GamePanel extends JPanel {
         return !painting;
     }
 
-    public void playSound(int s) {
-	sound.play(s);
+    public int playSound(int s) {
+	return sound.play(s);
+    }
+
+    public void stopSound(int s, int i) {
+	sound.stop(s, i);
     }
 }

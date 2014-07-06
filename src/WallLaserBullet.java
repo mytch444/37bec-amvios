@@ -9,6 +9,7 @@ import java.lang.Math;
 public class WallLaserBullet extends Bullet {
 
     int time;
+    int sound;
     
     public WallLaserBullet(GameControler c, int t) {
         super(c);
@@ -25,12 +26,22 @@ public class WallLaserBullet extends Bullet {
 	this.y = controler.getHeight();
 	this.xv = 0;
 	this.yv = controler.getHeight();
-	//	controler.playSound(GameSound.EXPLOSIVE_SHOT);
+	sound = controler.playSound(GameSound.WALL_LASER_SETUP);
     }
 
     public void update() {
 	time--;
-	if (time < 0) controler.removeBullet(this);
+	if (time < 0) {
+	    controler.stopSound(GameSound.WALL_LASER_SETUP, sound);
+	    controler.removeBullet(this);
+	}
+    }
+
+    public void paint(Graphics g) {
+	g.setColor(color);
+	g.drawLine((int) x, (int) y, (int) x, (int) (y - yv));
+	g.drawLine((int) x - 1, (int) y, (int) x - 1, (int) (y - yv));
+	g.drawLine((int) x - 2, (int) y, (int) x - 2, (int) (y - yv));
     }
 
     public void hitSomething() {}
