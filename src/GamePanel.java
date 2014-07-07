@@ -66,7 +66,7 @@ public class GamePanel extends JPanel {
 
         // Create and start the threads.
         uloop = new UpdaterThread(this, TIME);
-        rtimer = new RenderTimer(this, TIME * 2);
+        rtimer = new RenderTimer(this, TIME);
 	rtimer.start();
     }
 
@@ -113,6 +113,7 @@ public class GamePanel extends JPanel {
         hsmenu = null;
         gsmenu.show();
         controler = new GameControler(this, getWidth(), getHeight() - 50);
+	requestFocus();
     }
 
     public void startGame() {
@@ -131,6 +132,7 @@ public class GamePanel extends JPanel {
         hsmenu = null;
         gsmenu.hide();
         controler.togglepause();
+	requestFocus();
     }
 
     public boolean isPaused() {

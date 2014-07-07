@@ -25,18 +25,18 @@ public class Bullet extends Part {
     /*
      * Set the coordanates and compute the velocity.
      */
-    public void init(float x, float y, float angle, boolean sound) {
+    public void init(float x, float y, float angle, int sound) {
         this.x = x;
         this.y = y;
         xv = (float) (-speed * Math.cos(angle));
         yv = (float) (-speed * Math.sin(angle));
 
-	if (sound)
-	    controler.playSound(GameSound.BULLET);
+	if (sound >= 0)
+	    controler.playSound(sound);
     }
 
     public void init(float x, float y, float angle) {
-	init(x, y, angle, true);
+	init(x, y, angle, GameSound.BULLET);
     }
 
     public void paint(Graphics g) {

@@ -70,18 +70,19 @@ public class Player extends Part {
         y += yv;
         if (y < 0 && yv < 0) y = 0;
         if (y > controler.getHeight() && yv > 0) y = controler.getHeight(); 
-        
+
         if (shooting && shootingDelay == 0) {
 	    Bullet b;
 	    if (nextBullet.peekFirst() == null)
 		b = new Bullet(controler);
 	    else
 		b = nextBullet.remove();
-	    
+
 	    b.init(x, y, angle);
+
 	    shootingDelay = b.getDelay();
 	    controler.addBullet(b);
-
+	    
 	    if (b.nextBullet() != null)
 		nextBullet.push(b.nextBullet());
 	}

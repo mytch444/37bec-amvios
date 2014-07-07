@@ -23,8 +23,7 @@ public class KTSBullet extends Bullet {
     }
 
     public void init(float x, float y, float angle) {
-	super.init(x, y, angle, false);
-	controler.playSound(GameSound.KTS_SHOT);
+	super.init(x, y, angle, GameSound.KTS_SHOT);
     }
     
     public short getDelay() {

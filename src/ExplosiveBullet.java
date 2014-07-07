@@ -22,8 +22,7 @@ public class ExplosiveBullet extends Bullet {
     }
 
     public void init(float x, float y, float angle) {
-	super.init(x, y, angle, false);
-	controler.playSound(GameSound.EXPLOSIVE_SHOT);
+	super.init(x, y, angle, GameSound.EXPLOSIVE_SHOT);
     }
     
     // Give a whole heap of bullets going everywhere and just generally being annoying.
@@ -31,7 +30,7 @@ public class ExplosiveBullet extends Bullet {
         super.hitSomething();
         for (float a = -3.14f; a < 3.14f; a += 0.5f) {
 	    Bullet b = new Bullet(controler);
-	    b.init(x, y, a, false);
+	    b.init(x, y, a);
             controler.addBullet(b);
         }
 	controler.playSound(GameSound.EXPLOSIVE_EXPLODE);

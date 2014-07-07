@@ -7,7 +7,7 @@ import javax.sound.sampled.*;
 
 public class GameSound {
     public static int STREAMS = 12;
-    public static int DUPLICATES = 10;
+    public static int DUPLICATES = 20;
     
     public static int BACKGROUND = 0;
     public static int BULLET = 1;
@@ -150,9 +150,7 @@ public class GameSound {
 		e.printStackTrace();
 		clips[WALL_LASER_SETUP][i] = null;
 	    }
-
 	}
-
     }
 
     public int play(int s) {
@@ -161,9 +159,11 @@ public class GameSound {
 	    if (!clips[s][i].isRunning()) {
 		clips[s][i].setFramePosition(0);
 		clips[s][i].start();
+
 		return i;
 	    }
 	}
+	
 	return -1;
     }
 

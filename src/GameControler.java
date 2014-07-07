@@ -91,7 +91,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         String message;
 	short i;
 
-	background(g);
+	for (i = 0; i < stars.length; i++)
+	    stars[i].paint(g);
 
         for (i = 0; i < bullets.size(); i++)
             bullets.get(i).paint(g);
@@ -121,23 +122,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             if (end && hsbox != null) hsbox.paint(g);
         }
     }
-
-    public void background(Graphics g) {
-	//	g.setColor(Color.black);
-	//	g.fillRect(0, 0, getWidth(), getHeight());
-
-	for (short i = 0; i < stars.length; i++) stars[i].paint(g);
-    }
     
     public void update() {
         if (paused) return;
 	short i, j;
 
         player.update();
- 
+	
         for (i = 0; i < bullets.size(); i++)
             bullets.get(i).update();
-               
+	
         if (rand.nextInt(1000) == 0) others.add(new Friend(this));
         if (rand.nextInt(addChance--) == 0) {
             others.add(newEnemy());
