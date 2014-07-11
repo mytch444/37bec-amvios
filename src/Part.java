@@ -57,14 +57,13 @@ public class Part {
         }
         return false;
     }
+    
     public boolean collidesSquare(Bullet b) {
 	return collidesLine(b);
     }
     
     public boolean collidesLine(Part p) {
 	if (x < 0) return false;
-	
-	float xi, yi;
 
 	float px1 = p.getX();
 	float py1 = p.getY();
@@ -94,25 +93,25 @@ public class Part {
 	
 	// Intersect with top side.
 	if (py1 < top && top < py2) {
-	    xi = (top - c) / a;
+	    float xi = (top - c) / a;
 	    if (left < xi && xi < right) return true;
 	}
 
 	// Intersect with bottom side.
 	if (py1 < bottom && bottom < py2) {
-	    xi = (bottom - c) / a;
+	    float xi = (bottom - c) / a;
 	    if (left < xi && xi < right) return true;
 	}
 	
 	// Intersect with left side.
 	if (px1 < left && left < px2) {
-	    yi = a * left + c;
+	    float yi = a * left + c;
 	    if (top < yi && yi < bottom) return true;
 	}
 
 	// Intersect with right side.
 	if (px1 < right && right < px2) {
-	    yi = a * right + c;
+	    float yi = a * right + c;
 	    if (top < yi && yi < bottom) return true;
 	}
 

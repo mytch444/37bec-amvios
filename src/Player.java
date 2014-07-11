@@ -16,6 +16,7 @@ import java.util.LinkedList;
 
 public class Player extends Part {
     LinkedList<Bullet> nextBullet;
+    LinkedList<Bullet> nextPowerup;
 
     float angle;
     short hit;
@@ -23,6 +24,7 @@ public class Player extends Part {
 
     boolean shooting;
     short shootingDelay;
+    short powerupTime;
 
     BufferedImage image, imageHit; 
 
@@ -32,6 +34,8 @@ public class Player extends Part {
         shooting = false;
 	shootingDelay = 0;
 	nextBullet = new LinkedList<Bullet>();
+	nextPowerup = new LinkedList<Bullet>();
+	powerupTime = 0;
         hit = 0;
         showHit = false;
         yv = 0;
@@ -87,6 +91,15 @@ public class Player extends Part {
 		nextBullet.push(b.nextBullet());
 	}
         if (shootingDelay > 0) shootingDelay--;
+
+	// If there is a powerup the initialise it when the last one is done.
+	if (powerupTime > 0) powerupTime--;
+	else if (powerupTime == 0 && nextPowerup.peekFirst() != null) {
+	    Bullet b = nextPowerup.remove();
+	    b.init(x, y, angle);
+	    controler.addBullet(b);
+	    powerupTime = b.getDelay();
+	}
     }
 
     public void hit() { 
@@ -98,9 +111,8 @@ public class Player extends Part {
 	nextBullet.addLast(b);
     }
 
-    public void giveSpecialBullet(Bullet b) {
-	b.init(x, y, angle);
-	controler.addBullet(b);
+    public void givePowerup(Bullet b) {
+	nextPowerup.addLast(b);
     }
     
     public void keyPressed(KeyEvent e) {

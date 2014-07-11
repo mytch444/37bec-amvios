@@ -76,6 +76,7 @@ public class Friend extends Part {
     // fuck shit up and then take all their points. Else just yell at them. If they're rather nice then
     // don't do anything.
     public boolean collides(Bullet b) {
+	if (b.getClass() == WallLaserBullet.class) return false;
         if (collidesSquare(b) && hit == 0) {
             if (lives < 1) {
                 for (float a = -3.14f; a < 3.14f; a += 0.5f) controler.addBullet(new Bullet(controler, x, y, a));

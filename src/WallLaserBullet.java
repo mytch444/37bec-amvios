@@ -8,13 +8,13 @@ import java.lang.Math;
 
 public class WallLaserBullet extends Bullet {
 
-    int time;
+    short time;
     int sound;
     
     public WallLaserBullet(GameControler c, int t) {
         super(c);
         color = new Color(50, 150, 255);
-	time = t;
+	time = (short)t;
     }
 
     public WallLaserBullet(GameControler c) {
@@ -35,6 +35,10 @@ public class WallLaserBullet extends Bullet {
 	    controler.stopSound(GameSound.WALL_LASER_SETUP, sound);
 	    controler.removeBullet(this);
 	}
+    }
+
+    public short getDelay() {
+	return time;
     }
 
     public void paint(Graphics g) {

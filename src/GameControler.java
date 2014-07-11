@@ -223,8 +223,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         player.giveBullet(b);
     }
 
-    public void givePlayerSpecialBullet(Bullet b) {
-	player.giveSpecialBullet(b);
+    public void givePlayerPowerup(Bullet b) {
+	player.givePowerup(b);
     }
 
     public void addBullet(Bullet b) {
@@ -348,7 +348,10 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 
     public void keyTyped(KeyEvent e) {
         if (end) return;
-        if (e.getKeyChar() == 'q') panel.setMode(GamePanel.PAUSE);
+        if (e.getKeyChar() == 'q') {
+	    System.out.println("pause");
+	    panel.setMode(GamePanel.PAUSE);
+	}
     }
 
     public void keyPressed(KeyEvent e) {

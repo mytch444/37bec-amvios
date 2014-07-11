@@ -17,7 +17,7 @@ public class WallLaserBulletEnemy extends EnemyPart {
     public boolean collides(Bullet b) {
 	if (!alive || particles != null) return false;
         if (collidesSquare(b)) {
-            controler.givePlayerSpecialBullet(new WallLaserBullet(controler));
+            controler.givePlayerPowerup(new WallLaserBullet(controler));
             hit(b);
             return true;
         }

@@ -75,7 +75,7 @@ public class GamePanel extends JPanel {
 
 	super.paintComponent(g);
 
-	//	requestFocus(); // I don't like this being here. I souldn't have to demand attention constantly.
+	//	requestFocus(); // I don't like this being here. I shouldn't have to demand attention constantly.
 
         if (mode == -1) init(g);
 
@@ -98,6 +98,8 @@ public class GamePanel extends JPanel {
 	menu = new GameMenu(this, getWidth(), 50, 0, getHeight() - 50);
 	setMode(NEW_GAME);
 	uloop.start();
+
+	sound.loop(GameSound.BACKGROUND);
     }
 
     public void setMode(int m) {

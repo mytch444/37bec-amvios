@@ -34,9 +34,9 @@ public class Enemy extends Part {
         super(co, Color.white);
         
         // Give it a random location on the screen and a random velocity.
-        x = rand().nextInt(controler.getWidth()) - controler.getWidth() - 100;
+        x = rand().nextInt(controler.getWidth()) - controler.getWidth() - 200;
         y = rand().nextInt(controler.getHeight() - 200) + 100;
-        xv = rand().nextInt(5);
+        xv = rand().nextInt(5) + 1;
         yv = rand().nextInt(10) - 5;
 
         shot = false;

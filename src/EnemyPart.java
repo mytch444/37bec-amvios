@@ -19,9 +19,9 @@ public class EnemyPart extends Part {
 
         w = 40;
         h = 40;
-        x = rand().nextInt(controler.getWidth()) - controler.getWidth();
+        x = rand().nextInt(controler.getWidth() - w) - controler.getWidth();
         y = rand().nextInt(controler.getHeight());
-        xv = rand().nextInt(5);
+        xv = rand().nextInt(5) + 1;
         yv = rand().nextInt(10) - 5;
         
         bounce = true;
