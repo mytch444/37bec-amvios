@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.awt.image.*;
 import java.io.*;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements MouseListener {
     public static int TIME = 1000 / 50;
 
     // Panel event codes would be a good name I suppose.
@@ -47,6 +47,7 @@ public class GamePanel extends JPanel {
         // Set the bounds and background.
 	setBounds(0, 0, w, h);
         setBackground(Color.black);
+	addMouseListener(this);
 
 	// Get THE font.
         try {
@@ -74,8 +75,6 @@ public class GamePanel extends JPanel {
 	painting = true;
 
 	super.paintComponent(g);
-
-	//	requestFocus(); // I don't like this being here. I shouldn't have to demand attention constantly.
 
         if (mode == -1) init(g);
 
@@ -163,4 +162,13 @@ public class GamePanel extends JPanel {
     public void stopSound(int s, int i) {
 	sound.stop(s, i);
     }
+
+    public void mousePressed(MouseEvent e) {
+	requestFocus(); // Incase they lost focus they can just click to get it back.
+    }
+
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
 }

@@ -6,8 +6,7 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class GameSound {
-    public static int DUPLICATES = 30;
-    
+
     public static int BACKGROUND = 0;
     public static int BULLET = 1;
     public static int EXPLOSIVE_SHOT = 2;
@@ -20,6 +19,8 @@ public class GameSound {
     public static int KTS_SHOT = 9;
     public static int SCATTER_SHOT = 10;
     public static int WALL_LASER_SETUP = 11;
+
+    public static int DUPLICATES = 20 ;
 
     public static String[] soundfiles = {
 	"background.wav",
@@ -41,15 +42,14 @@ public class GameSound {
     public GameSound() {
 	clips = new Clip[soundfiles.length][DUPLICATES];
 
-	for (int s = 0; s < soundfiles.length; s++) {
-	    for (int i = 0; i < DUPLICATES; i++) {
+	for (int i = 0; i < DUPLICATES; i++) {
+	    for (int s = 0; s < soundfiles.length; s++) {
 		try {
 		    clips[s][i] = AudioSystem.getClip();
-		    clips[s][i].open(
-				     AudioSystem.getAudioInputStream(
-						 getClass().getResource("/sounds/" + soundfiles[s])));
+		    clips[s][i].open(AudioSystem.getAudioInputStream(
+							       getClass().getResource("/sounds/" + soundfiles[s])));
 		} catch (Exception e) {
-		    System.out.println("Error loading " + soundfiles[s] + " sound");
+		    System.err.println("Error opening clip for " + soundfiles[s] + " sound");
 		    e.printStackTrace();
 		    clips[s][i] = null;
 		}

@@ -147,7 +147,7 @@ public class Enemy extends Part {
         if (wasshot != shot) {
             for (ui = 0; ui < parts.length; ui++) {
                 EnemyPart e = parts[ui];
-                e.setXV(rand().nextInt(5));
+                e.setXV(rand().nextInt(5) + 1);
                 e.setYV(rand().nextInt(10) - 5);
                 e.setBounce(true);
             } 

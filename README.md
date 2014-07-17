@@ -6,3 +6,5 @@ Comes with a plan for you to learn very little from. Use as you wish.
 
 Don't ask where the name came from. It has no meaning.
 
+You may have to compile it yourself depending on what type of java you have.
+
