@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A class to show a list of highscores.
  */
 
@@ -57,7 +74,7 @@ public class HighscoreMenu {
         y = panel.getHeight() / 2 - h / 2;
     }
     
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         g.setColor(Color.black);
         g.fillRect(x, y - metrics.getHeight() * 3, w, h + metrics.getHeight() * 3);
         g.setColor(Color.white);

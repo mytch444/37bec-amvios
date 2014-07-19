@@ -1,9 +1,26 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * This is violence now, don't get me wrong.
  */
 
-import java.awt.event.*;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.lang.Math;
 
 public class Bullet extends Part {
@@ -31,7 +48,7 @@ public class Bullet extends Part {
         xv = (float) (-speed * Math.cos(angle));
         yv = (float) (-speed * Math.sin(angle));
 
-	if (sound >= 0)
+	if (sound > 0)
 	    controler.playSound(sound);
     }
 
@@ -39,7 +56,7 @@ public class Bullet extends Part {
 	init(x, y, angle, GameSound.BULLET);
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         g.setColor(color);
         g.drawLine((int) x, (int) y, (int) (x - xv), (int) (y - yv));
     }

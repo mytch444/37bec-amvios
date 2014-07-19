@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * The player. A triangle that they control. It's very evil, it allows them to kill things.
  * Clearly that is this things fault, not the fault of the person using it. And definatally
  * not the fault of the game that put them in a situation where they should kill things.
@@ -6,7 +23,6 @@
  */
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.lang.Math;
@@ -53,8 +69,7 @@ public class Player extends Part {
         y = c.getHeight() / 2 - h / 2;
     }
 
-    public void paint(Graphics g1) {
-        Graphics2D g = (Graphics2D) g1;
+    public void paint(Graphics2D g) {
 	float a = angle;
 	short x = (short) this.x;
 	short y = (short) this.y;

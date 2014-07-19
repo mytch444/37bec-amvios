@@ -1,10 +1,25 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A shotgun to the head.
  */
 
-import java.awt.event.*;
-import java.awt.*;
-import java.lang.Math;
+import java.awt.Color;
 
 public class ScatterBullet extends Bullet {
 
@@ -15,6 +30,7 @@ public class ScatterBullet extends Bullet {
         super(c);
         color = new Color(255, 0, 255);
         more = m;
+	speed = speed * 0.7f;
     }
 
     public ScatterBullet(GameControler c) {
@@ -26,13 +42,14 @@ public class ScatterBullet extends Bullet {
     }
     
     public void init(float x, float y, float angle) {
-	super.init(x, y, angle, GameSound.SCATTER_SHOT);
-
 	for (float a = -0.1f; a < 0.1f; a += 0.025f) {
 	    ScatterBullet b = new ScatterBullet(controler, 0);
 	    b.initNoMore(x, y, angle + a);
 	    controler.addBullet(b);
 	}
+
+	controler.removeBullet(this);
+	controler.playSound(GameSound.SCATTER_SHOT);
     }
     
     public short getDelay() {

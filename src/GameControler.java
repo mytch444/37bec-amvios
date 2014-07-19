@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * Class to control a game.
  */
 
@@ -63,8 +80,9 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         metrics = p.getGraphics().getFontMetrics(p.getFont());
 
 	// Full it with stars.
-	stars = new Star[rand.nextInt(100)];
-	for (short i = 0; i < stars.length; i++) stars[i] = new Star(this);
+	int sl = w / 5 * h / 5 / 500;
+	stars = new Star[sl];
+	for (short i = 0; i < sl; i++) stars[i] = new Star(this);
 	
         player = new Player(this);
         others = new ArrayList<Part>();
@@ -87,7 +105,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
         panel.addKeyListener(this);
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         String message;
 	short i;
 
@@ -111,12 +129,18 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
             g.setColor(Color.white);
             if (end) {
 		message = "Game Over";
-		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+		g.drawString(message,
+			     getWidth() / 2 - metrics.stringWidth(message) / 2,
+			     getHeight() / 2 - metrics.getHeight());
 	    } else {
 		message = "Paused";
-		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2 - metrics.getHeight());
+		g.drawString(message,
+			     getWidth() / 2 - metrics.stringWidth(message) / 2,
+			     getHeight() / 2 - metrics.getHeight());
 		message = "Press 'q' to resume.";
-		g.drawString(message, getWidth() / 2 - metrics.stringWidth(message) / 2, getHeight() / 2);
+		g.drawString(message,
+			     getWidth() / 2 - metrics.stringWidth(message) / 2,
+			     getHeight() / 2);
 	    }
 	    // If it's ended paint the highscores box.
             if (end && hsbox != null) hsbox.paint(g);
@@ -126,12 +150,13 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
     public void update() {
         if (paused) return;
 	short i, j;
+	long start, time;
 
         player.update();
-	
+
         for (i = 0; i < bullets.size(); i++)
             bullets.get(i).update();
-	
+
         if (rand.nextInt(1000) == 0) others.add(new Friend(this));
         if (rand.nextInt(addChance--) == 0) {
             others.add(newEnemy());
@@ -144,6 +169,7 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
                 removeOther(p);
                 continue;
             }
+
             p.update();
 
             if (p.collides(player)) {
@@ -151,10 +177,16 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
                 score += SCORE_SHOT * 10;
             }
 
+	    start = System.currentTimeMillis();
             for (j = 0; j < bullets.size(); j++) {
 		Bullet b = bullets.get(j);
-                if (p.collides(b)) b.hitSomething();
+                if (p.collides(b)) {
+		    b.hitSomething();
+		    if (!p.isAlive()) break;
+		}
 	    }
+	    time = System.currentTimeMillis() - start;
+	    if (time > 5) System.out.println("bullet collision: " + time);	
 	}
 	
 	if (!isHighscore && score > highscore) {

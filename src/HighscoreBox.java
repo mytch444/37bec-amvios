@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A box that lets the user input a name and saves that with the score to a file.
  */
 
@@ -38,7 +55,7 @@ public class HighscoreBox implements KeyListener {
         controler.getPanel().addKeyListener(this);
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         g.setColor(Color.black);
         g.fillRect(x, y, w, h);
         g.setColor(Color.white);

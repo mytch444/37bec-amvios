@@ -1,4 +1,21 @@
- /*
+/*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A custom panel that handles the game and menus.
  */
 
@@ -71,7 +88,9 @@ public class GamePanel extends JPanel implements MouseListener {
 	rtimer.start();
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g1) {
+	Graphics2D g = (Graphics2D) g1;
+	
 	painting = true;
 
 	super.paintComponent(g);

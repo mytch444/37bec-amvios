@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * Shows some instructions, rather bad ones but that's half the point.
  */
 
@@ -59,7 +76,7 @@ public class GameStartMenu implements KeyListener {
         y = panel.getHeight() / 2 - h / 2;
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
 	if (!show) return;
 	
         g.setColor(Color.black);

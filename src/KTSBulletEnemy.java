@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * An enemy that gives the player an kts bullet.
  */
 
@@ -15,7 +32,7 @@ public class KTSBulletEnemy extends EnemyPart {
     }
 
     public boolean collides(Bullet b) {
-	if (!alive || particles != null) return false;
+	if (particles != null) return false;
         if (collidesSquare(b)) {
             controler.givePlayerBullet(new KTSBullet(controler));
             hit(b);

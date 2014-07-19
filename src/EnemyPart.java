@@ -1,8 +1,25 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A building block for enemy and for extending to create stand alone enemies.
  */
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class EnemyPart extends Part {
@@ -42,7 +59,7 @@ public class EnemyPart extends Part {
 	sound = s;
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         if (!alive) return;
 
         if (particles != null) {
@@ -85,12 +102,12 @@ public class EnemyPart extends Part {
 
     // For both player and bullet collisions check if it collides with the square covered by the x,y,w,h shit.
     public boolean collides(Bullet b) {
-        if (!alive || particles != null) return false;
+        if (particles != null) return false;
         return collidesSquare(b);
     }
     
     public boolean collides(Player p) {
-        if (!alive || particles != null) return false;
+        if (particles != null) return false;
         return collidesSquare(p);
     }
 

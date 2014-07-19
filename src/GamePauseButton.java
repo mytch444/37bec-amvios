@@ -1,11 +1,25 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * A button that sets it's content depending on the state of the panel, when gamecontroler really.
  */
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Graphics2D;
 
 public class GamePauseButton extends GameButton {
 
@@ -18,7 +32,7 @@ public class GamePauseButton extends GameButton {
         resume = "Resume";
     }
     
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         if (panel.isPaused()) name = resume;
         else name = pause;
 

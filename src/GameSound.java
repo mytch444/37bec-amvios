@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * Class to handle all game sounds.
  */
 
@@ -20,8 +37,6 @@ public class GameSound {
     public static int SCATTER_SHOT = 10;
     public static int WALL_LASER_SETUP = 11;
 
-    public static int DUPLICATES = 20 ;
-
     public static String[] soundfiles = {
 	"background.wav",
 	"bullet.wav",
@@ -37,13 +52,32 @@ public class GameSound {
 	"wall_laser_setup.wav",
     };
 
+    public static int[] duplicates = {
+	1,
+	7,
+	5,
+	10,
+	1,
+	2,
+	10,
+	5,
+	5,
+	8,
+	5,
+	1,
+    };
+
     Clip[][] clips;
 
     public GameSound() {
-	clips = new Clip[soundfiles.length][DUPLICATES];
+	int max = 0;
+	for (int j = 0; j < duplicates.length; j++) if (duplicates[j] > max) max = duplicates[j];
+	clips = new Clip[soundfiles.length][max];
 
-	for (int i = 0; i < DUPLICATES; i++) {
+	for (int i = 0; i < max; i++) {
 	    for (int s = 0; s < soundfiles.length; s++) {
+		if (i > duplicates[s]) continue;
+		
 		try {
 		    clips[s][i] = AudioSystem.getClip();
 		    clips[s][i].open(AudioSystem.getAudioInputStream(
@@ -58,7 +92,7 @@ public class GameSound {
     }
 
     public int play(int s) {
-	for (int i = 0; i < DUPLICATES; i++) {
+	for (int i = 0; i < clips[s].length; i++) {
 	    if (clips[s][i] == null) continue;
 	    if (!clips[s][i].isRunning()) {
 		clips[s][i].setFramePosition(0);
@@ -72,7 +106,7 @@ public class GameSound {
     }
 
     public int loop(int s) {
-	for (int i = 0; i < DUPLICATES; i++) {
+	for (int i = 0; i < clips[s].length; i++) {
 	    if (clips[s][i] == null) continue;
 	    if (!clips[s][i].isRunning()) {
 		clips[s][i].setFramePosition(0);

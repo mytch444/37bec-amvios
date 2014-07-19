@@ -1,11 +1,28 @@
 /*
- * The basic building block of all the parts that are displayed on the game. Player, bullets, friends and enemy
- * all extend this. It however does nothing.
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
+ * The basic building block of all the parts that are displayed on the
+ * game. Player, bullets, friends and enemy all extend this. It however
+ * does nothing.
  */
 
-import java.lang.Math;
 import java.util.Random;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class Part {
@@ -22,7 +39,7 @@ public class Part {
     }
 
     public Random rand() { return controler.getRandom(); }
-    public void paint(Graphics g) {}
+    public void paint(Graphics2D g) {}
     public void update() {}
 
     public Color getColor() { return color; }
@@ -63,7 +80,7 @@ public class Part {
     }
     
     public boolean collidesLine(Part p) {
-	if (x < 0) return false;
+	if (x < 0 || !alive) return false;
 
 	float px1 = p.getX();
 	float py1 = p.getY();

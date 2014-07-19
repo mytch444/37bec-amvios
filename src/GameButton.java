@@ -1,4 +1,21 @@
 /*
+ *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *                    Version 2, December 2004
+ *
+ * Copyright (C) 2014 Mytchel Hammond
+ *
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this file, and changing it is allowed as long
+ * as the name is changed.
+ *
+ *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *
+ *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
+ * -----------------------------------------------------------------
+ *
+ *
  * My own custom button to be used in menus. You could use an actuall one but this is simpler.
  */
 
@@ -29,7 +46,7 @@ public class GameButton implements MouseListener {
         panel.addMouseListener(this);
     }
 	
-    public void paint(Graphics g) {
+    public void paint(Graphics2D g) {
         metrics = g.getFontMetrics();
         
         g.setColor(Color.white);
