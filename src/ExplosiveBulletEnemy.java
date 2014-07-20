@@ -40,4 +40,13 @@ public class ExplosiveBulletEnemy extends EnemyPart {
         }
         return false;
     }
+
+    public boolean collides(Player b) {
+	if (particles != null) return false;
+        if (collidesSquare(b)) {
+            controler.givePlayerBullet(new ExplosiveBullet(controler));
+            return true;
+        }
+        return false;
+    }
 }

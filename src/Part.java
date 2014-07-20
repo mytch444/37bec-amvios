@@ -64,8 +64,10 @@ public class Part {
     public void setYV(float y) { yv = y; }
    
     public boolean isAlive() { return alive; }
+
     public boolean collides(Player p) { return false; };
     public boolean collides(Bullet b) { return false; };
+
     public boolean collidesSquare(Player p) {
 	if (p.getX() > x && p.getX() < x + w) {
             if (p.getY() > y && p.getY() < y + h) {

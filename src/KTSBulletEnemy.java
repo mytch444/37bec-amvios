@@ -35,7 +35,16 @@ public class KTSBulletEnemy extends EnemyPart {
 	if (particles != null) return false;
         if (collidesSquare(b)) {
             controler.givePlayerBullet(new KTSBullet(controler));
-            hit(b);
+	    hit(b);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean collides(Player p) {
+	if (particles != null) return false;
+        if (collidesSquare(p)) {
+            controler.givePlayerBullet(new KTSBullet(controler));
             return true;
         }
         return false;

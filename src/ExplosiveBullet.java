@@ -47,9 +47,8 @@ public class ExplosiveBullet extends Bullet {
         super.hitSomething();
         for (float a = -3.14f; a < 3.14f; a += 0.5f) {
 	    Bullet b = new Bullet(controler);
-	    b.init(x, y, a);
-	    b.update();
-            controler.addBullet(b);
+	    b.init(x, y, a, -1);
+ 	    controler.addBullet(b);
         }
 	controler.playSound(GameSound.EXPLOSIVE_EXPLODE);
     }

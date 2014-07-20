@@ -182,7 +182,8 @@ public class GameControler implements MouseListener, MouseMotionListener, KeyLis
 		Bullet b = bullets.get(j);
                 if (p.collides(b)) {
 		    b.hitSomething();
-		    if (!p.isAlive()) break;
+		    if (!p.isAlive())
+			break;
 		}
 	    }
 	    time = System.currentTimeMillis() - start;

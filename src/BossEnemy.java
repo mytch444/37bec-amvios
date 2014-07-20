@@ -38,7 +38,7 @@ public class BossEnemy extends Enemy {
     public BossEnemy(GameControler co, String pattern) {
         super(co, pattern);
         
-	lives = parts.length / 2;
+	lives = parts.length;
     }
 
     // They will have a hard time stopping me like this.

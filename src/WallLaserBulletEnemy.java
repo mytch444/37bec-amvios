@@ -40,4 +40,13 @@ public class WallLaserBulletEnemy extends EnemyPart {
         }
         return false;
     }
+
+    public boolean collides(Player p) {
+	if (particles != null) return false;
+        if (collidesSquare(p)) {
+            controler.givePlayerPowerup(new WallLaserBullet(controler));
+            return true;
+        }
+        return false;
+    }
 }
