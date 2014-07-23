@@ -1,22 +1,23 @@
 /*
- *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
  *
- * Copyright (C) 2014 Mytchel Hammond
+ * Copyright: 2014 Mytchel Hammond <mytchel.hammond@gmail.com>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this file, and changing it is allowed as long
- * as the name is changed.
+ * 37bec-amvios is free software: you can redistribute it and/or modify
+ * it under the term of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the Licence, or
+ * (at your option) any later version.
+ * 
+ * 37bec-amvios is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with 37bec-amvios. If not, see <http://www.gnu.org/licenses/>
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * --------------------------------------------------------------------
  *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- *
- * -----------------------------------------------------------------
- *
- *
- * I will rape you.
+ * I will be mean to you.
  */
 
 import java.util.Random;
@@ -25,6 +26,7 @@ import java.awt.Color;
 
 public class Enemy extends Part {
 
+    // Patterns that for the enemy, look at the constucter.
     public static String[] PATTERNS = {
 	"***\n*\n*\n***\n",
 	"*\n*\n*\n*\n",
@@ -37,8 +39,9 @@ public class Enemy extends Part {
 
     EnemyPart[] parts;
     boolean shot;
-    short ri, ui; // variables to use for loop iterations (r for render, u for update). This is probably one of the
+    // variables to use for loop iterations (r for render, u for update). This is probably one of the
     // more stupid idea's I've had lately.
+    short ri, ui;
 
     public Enemy(GameControler c) {
 	this(c, PATTERNS[c.getRandom().nextInt(PATTERNS.length)]);
@@ -87,7 +90,7 @@ public class Enemy extends Part {
                 parts[i++] = new EnemyPart(controler, pw, ph, px, py, xv, yv, color, GameSound.ENEMY_HIT); 
             } else if (pattern.charAt(c) == '$') {
 		parts[i++] = new ExplosiveBulletEnemy(controler, pw, ph, px, py, xv, yv, color);
-	    } else if (pattern.charAt(c) != ' ') System.out.println("WHAT THE FUCK BRO. I DON'T KNOW HOW TO HANDLE THIS SYMBOL '" + pattern.charAt(c) + "' TAKE IT OUT NOW OR I WILL CRASH!!!!!!");
+	    } else if (pattern.charAt(c) != ' ') System.out.println("I DON'T KNOW HOW TO HANDLE THIS SYMBOL '" + pattern.charAt(c) + "' TAKE IT OUT NOW OR I WILL CRASH!!!!!!");
 
             px += pw;
         }

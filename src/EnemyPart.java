@@ -1,20 +1,21 @@
 /*
- *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
  *
- * Copyright (C) 2014 Mytchel Hammond
+ * Copyright: 2014 Mytchel Hammond <mytchel.hammond@gmail.com>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this file, and changing it is allowed as long
- * as the name is changed.
+ * 37bec-amvios is free software: you can redistribute it and/or modify
+ * it under the term of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the Licence, or
+ * (at your option) any later version.
+ * 
+ * 37bec-amvios is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with 37bec-amvios. If not, see <http://www.gnu.org/licenses/>
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- *
- * -----------------------------------------------------------------
- *
+ * --------------------------------------------------------------------
  *
  * A building block for enemy and for extending to create stand alone enemies.
  */
@@ -59,6 +60,9 @@ public class EnemyPart extends Part {
 	sound = s;
     }
 
+    /*
+     * If it's dead then paint the particles. Else paint a square.
+     */
     public void paint(Graphics2D g) {
         if (!alive) return;
 
@@ -91,7 +95,7 @@ public class EnemyPart extends Part {
 
 	    // If I'm alowed to bounce (not part of a larger controling part) then bounce of the vertical edges.
             if (bounce && ((y < 0 && yv < 0) || (y + h > controler.getHeight() && yv > 0))) yv = -yv;
-	    // If past the right edge then do shit to make the player feel sad.
+	    // If past the right edge then make the player feel sad.
             if (x > controler.getWidth()) {
                 controler.lowerLives();
                 controler.removeOther(this);
@@ -100,7 +104,7 @@ public class EnemyPart extends Part {
         }
     }
 
-    // For both player and bullet collisions check if it collides with the square covered by the x,y,w,h shit.
+    // For both player and bullet collisions check if it collides.
     public boolean collides(Bullet b) {
         if (particles != null) return false;
         return collidesSquare(b);
@@ -121,7 +125,7 @@ public class EnemyPart extends Part {
         short h = (short) (this.h / 5);
 
         float speed = b.getSpeed() / -8;
-	// If the bullet is going increadibly fucking fast then it can pretty much just pass through.
+	// If the bullet is going increadibly fast then it can pretty much just pass through.
 	if (speed < -10) speed = 0.25f;
 
 	// Some general direction stuff.

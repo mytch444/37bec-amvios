@@ -1,20 +1,21 @@
 /*
- *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
  *
- * Copyright (C) 2014 Mytchel Hammond
+ * Copyright: 2014 Mytchel Hammond <mytchel.hammond@gmail.com>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this file, and changing it is allowed as long
- * as the name is changed.
+ * 37bec-amvios is free software: you can redistribute it and/or modify
+ * it under the term of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the Licence, or
+ * (at your option) any later version.
+ * 
+ * 37bec-amvios is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with 37bec-amvios. If not, see <http://www.gnu.org/licenses/>
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- *
- * -----------------------------------------------------------------
- *
+ * --------------------------------------------------------------------
  *
  * Class to handle all game sounds.
  */
@@ -70,10 +71,14 @@ public class GameSound {
     Clip[][] clips;
 
     public GameSound() {
+
+	// Find the largest amound of duplicates then create a two dimentional array based on that.
 	int max = 0;
 	for (int j = 0; j < duplicates.length; j++) if (duplicates[j] > max) max = duplicates[j];
 	clips = new Clip[soundfiles.length][max];
 
+	// Go through and load in a whole heap of sounds.
+	// Outer loop is for duplicants so that each file has some time to be read.
 	for (int i = 0; i < max; i++) {
 	    for (int s = 0; s < soundfiles.length; s++) {
 		if (i > duplicates[s]) continue;
@@ -91,6 +96,8 @@ public class GameSound {
 	}
     }
 
+    // Go though all sounds of said type and play the first one that is found
+    // that is not already playing, start it then give them the index of that clip.
     public int play(int s) {
 	for (int i = 0; i < clips[s].length; i++) {
 	    if (clips[s][i] == null) continue;
@@ -105,6 +112,8 @@ public class GameSound {
 	return -1;
     }
 
+    // Go though all sounds of said type and play the first one that is found
+    // that is not already playing, loop it then give them the index of that clip.
     public int loop(int s) {
 	for (int i = 0; i < clips[s].length; i++) {
 	    if (clips[s][i] == null) continue;
@@ -119,7 +128,7 @@ public class GameSound {
 	return -1;
     }
 
-
+    // Stop said sound.
     public void stop(int s, int i) {
 	if (i == -1) return;
 	clips[s][i].stop();

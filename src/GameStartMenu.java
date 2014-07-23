@@ -1,20 +1,21 @@
 /*
- *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
  *
- * Copyright (C) 2014 Mytchel Hammond
+ * Copyright: 2014 Mytchel Hammond <mytchel.hammond@gmail.com>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this file, and changing it is allowed as long
- * as the name is changed.
+ * 37bec-amvios is free software: you can redistribute it and/or modify
+ * it under the term of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the Licence, or
+ * (at your option) any later version.
+ * 
+ * 37bec-amvios is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with 37bec-amvios. If not, see <http://www.gnu.org/licenses/>
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- *
- * -----------------------------------------------------------------
- *
+ * --------------------------------------------------------------------
  *
  * Shows some instructions, rather bad ones but that's half the point.
  */
@@ -22,7 +23,7 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameStartMenu implements KeyListener {
+public class GameStartMenu implements KeyListener, MouseListener {
 
     static String[] message = new String[] {
 	"37Bec-Amvios",
@@ -95,17 +96,28 @@ public class GameStartMenu implements KeyListener {
 	show = true;
 	position();
         panel.addKeyListener(this);
+	panel.addMouseListener(this);
     }
     
     public void hide() {
 	show = false;
 	panel.removeKeyListener(this);
+	panel.removeMouseListener(this);
     }
-    
+
+    // Start the game on key press or mouse press.
     public void keyReleased(KeyEvent e) {
+	panel.startGame();
+    }
+
+    public void mouseReleased(MouseEvent e) {
 	panel.startGame();
     }
 
     public void keyTyped(KeyEvent e) {}
     public void keyPressed(KeyEvent e) {}
+    public void mousePressed(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
 }

@@ -1,22 +1,23 @@
 /*
- *          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
  *
- * Copyright (C) 2014 Mytchel Hammond
+ * Copyright: 2014 Mytchel Hammond <mytchel.hammond@gmail.com>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this file, and changing it is allowed as long
- * as the name is changed.
+ * 37bec-amvios is free software: you can redistribute it and/or modify
+ * it under the term of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the Licence, or
+ * (at your option) any later version.
+ * 
+ * 37bec-amvios is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with 37bec-amvios. If not, see <http://www.gnu.org/licenses/>
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * --------------------------------------------------------------------
  *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- *
- * -----------------------------------------------------------------
- *
- *
- * Just draw shit bro.
+ * Just draw bro.
  */
 
 import javax.swing.Timer;
@@ -30,6 +31,9 @@ public class RenderTimer implements ActionListener {
     public RenderTimer(GamePanel p, int f) {
 	panel = p;
 
+	// Create a timer that will call actionPerformed every f milliseconds.
+	// Supposidly better than a thread like I have for the updaterloop when
+	// dealing with graphics, damn java.
 	timer = new Timer(f, this);
     }
 
@@ -40,7 +44,9 @@ public class RenderTimer implements ActionListener {
     public void stop() {
 	timer.stop();
     }
-    
+
+    // This is called by the timer every so often, it redraws the frame,
+    // or doesnt if it shill hasn't finished.
     public void actionPerformed(ActionEvent ev) {
 	if (!panel.frameDone()) {
 	    System.out.println("Not finished in time so skipping");
